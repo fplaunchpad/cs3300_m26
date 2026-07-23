@@ -1,0 +1,60 @@
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.log
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.cdt.make.core/specs.c
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.cdt.make.core/specs.cpp
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.resources/.history/34/5081eb655241001d14b48b263e11c12d
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.resources/.history/82/a072e9805241001d14b48b263e11c12d
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.resources/.history/be/c03d6c005641001d14b48b263e11c12d
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.resources/.projects/.org.eclipse.egit.core.cmp/.location
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.resources/.projects/.org.eclipse.egit.core.cmp/.markers.snap
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.resources/.projects/.org.eclipse.egit.core.cmp/.syncinfo.snap
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.resources/.projects/P4/.indexes/e4/history.index
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.resources/.projects/P4/.location
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.resources/.projects/P4/.markers.snap
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.resources/.projects/P4/.syncinfo.snap
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/properties.index
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.resources/.root/.markers.snap
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.resources/.safetable/org.eclipse.core.resources
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.resources/0.snap
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.core.resources.prefs
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.debug.ui.prefs
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.core.prefs
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.junit.prefs
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.launching.prefs
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.ui.prefs
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jsch.core.prefs
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.prefs
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.urischeme.prefs
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.egit.core/.org.eclipse.egit.core.cmp/.project
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.egit.core/.org.eclipse.egit.core.cmp/.settings/org.eclipse.core.resources.prefs
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.jdt.core/1068589741.index
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.jdt.core/1865797976.index
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.jdt.core/32024359.index
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.jdt.core/externalLibsTimeStamps
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.jdt.core/javaLikeNames.txt
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.jdt.core/savedIndexNames.txt
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.jdt.core/variablesAndContainers.dat
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.jdt.launching/.install.xml
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.jdt.launching/libraryInfos.xml
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/0.png
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/1.png
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/2.png
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/3.png
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/4.png
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.jdt.ui/jdt-images/5.png
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.m2e.core/workspaceState.ser
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.m2e.logback.configuration/logback.2.0.0.20220705-1221.xml
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.oomph.setup/workspace.setup
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.ui.intro/introstate
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/.plugins/org.eclipse.ui.workbench/workingsets.xml
+	deleted:    assignments/04_micro_to_miniRA/RollNo_P4/P4/.metadata/version.ini
+	modified:   schedule.md
+	modified:   slides/10_basic_blocks_cfg.pdf
+
+no changes added to commit (use "git add" and/or "git commit -a")
