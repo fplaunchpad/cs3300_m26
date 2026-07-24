@@ -28,8 +28,9 @@ will have hands on experience on implementing a compiler for a subset of Java.
 * **Instructor:** [KC Sivaramakrishnan](http://kcsrk.info), who goes by "KC".
 * **Where:** TBA
 * **When:** 
-  + **Lectures:** TBA
-  + **Lab:** TBA
+  + **Lectures:** B Slot: M 09:00 to 09:50, Tu 08:00 to 08:50, W 13:00 to 13:50,
+    F 11:00 to 11:50. 
+  + **Lab:** Q slot: Tu 14:00 to 16:45.
 * **Slack**: TBA
 * **Moodle**: TBA
 * **TAs:** TBA
