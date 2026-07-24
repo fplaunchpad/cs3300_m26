@@ -81,7 +81,7 @@ $ find . -name "*.class" | xargs rm
 Then produce the compressed gzip archive as follows:
 
 ```bash
-$ tar cvzf cs99b999_P2.tar.gz cs99b999_P1
+$ tar cvzf cs99b999_P2.tar.gz cs99b999_P2
 ```
 
 Submit the `.tar.gz` file. 
