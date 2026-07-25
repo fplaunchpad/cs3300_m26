@@ -43,8 +43,8 @@ announced in advance.**
   capped at 20%.
 
 The take-home part is where you learn the material; the lab is where you show
-that you did. Use whatever resources you like on the take-home, but be aware
-that submitting code you do not understand will cost you the lab marks.
+that you did. Do the take-home yourself: code you did not write will cost you
+the lab marks.
 
 ## Assignment late penalties
 
@@ -67,3 +67,9 @@ work.**
 
 **Properly attribute any work that you use**. It is part of your job as a
 scholar to understand what counts as plagiarism, and make sure you avoid it.
+
+**No LLM use is permitted in this course**, for any part of any assignment or
+evaluation. Using one is treated as plagiarism. If you are caught, you get zero
+for that evaluation, a drop in your final grade, and a report to the Students
+Welfare and Disciplinary Committee. A second violation means a U grade in the
+course.
