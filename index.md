@@ -52,12 +52,18 @@ Palsberg. Cambridge University Press, 2002.
 | Item          | Weightage (%) |
 |---------------|---------------|
 | Assignments   | 40% |
-| Quiz1         | 15% |
-| Quiz2         | 15% |
-| EndSem        | 30% |
+| Short quizzes (3 x 3%) | 9% |
+| Quiz1         | 12% |
+| Quiz2         | 12% |
+| EndSem        | 27% |
 | **Extra:** Class Participation | Upto 5% |
 
 <br/> 
+
+The three short quizzes are 15 minutes each, held in class, and are multiple
+choice or one-line answers. They fall roughly midway between the start of the
+course and Quiz 1, between Quiz 1 and Quiz 2, and between Quiz 2 and the end
+semester exam. Dates are announced in class.
 
 ## Acknowledgements
 
