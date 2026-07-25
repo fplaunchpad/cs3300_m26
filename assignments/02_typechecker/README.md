@@ -4,8 +4,8 @@ title: Assignment 02 - Type Checker
 permalink: /assignments/typechecker
 ---
 
-| Release Date | 23/08/2021 |
-| Deadline     | 11/09/2021, 23:59 hours |
+| Release Date | 25/08/2026 |
+| Deadline     | 13/09/2026, 23:59 hours |
 
 <br/>
 
@@ -28,7 +28,7 @@ should print either "Program type checked successfully" or "Type error". Note,
 your program must take input from standard input and write to standard output
 (so that we can use redirection).
 
-Note: Please do not alter the directory structure of `RollN0_P1`. Only edit `GJDepthFirst.java` and `P1.java`
+Note: Please do not alter the directory structure of `RollNo_P1`. Only edit `GJDepthFirst.java` and `P1.java`
 ## Resources
 
 The source files are on
@@ -55,7 +55,7 @@ The type checking rules for MiniJava is
 
 ## Submission
 
-Rename the folder `RollN0_P1` with your roll number. For example, if your roll
+Rename the folder `RollNo_P1` with your roll number. For example, if your roll
 number is `cs99b999`, then the folder should be named `cs99b999_P1`. Remove all
 the `.class` files before submission. For example, you can do:
 

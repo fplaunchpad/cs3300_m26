@@ -2,9 +2,9 @@ options {
   JAVA_UNICODE_ESCAPE = true;
 }
 
-PARSER_BEGIN(microIRParser)
-  public class microIRParser {}
-PARSER_END(microIRParser)
+PARSER_BEGIN(MiniIRParser)
+  public class MiniIRParser {}
+PARSER_END(MiniIRParser)
 
 SKIP : /* WHITE SPACE */
 {
@@ -22,7 +22,6 @@ SPECIAL_TOKEN : /* COMMENTS */
 | <MULTI_LINE_COMMENT: "/*" (~["*"])* "*" ("*" | (~["*","/"] (~["*"])* "*"))* "/">
 }
 
-
 TOKEN : 
 {
   < LPAREN: "(" >
@@ -34,12 +33,8 @@ TOKEN :
 | < DOT: "." >
 | < LE: "LE" >
 | < NE: "NE" >
-| < EQ: "EQ" >
 | < PLUS: "PLUS" >
 | < MINUS: "MINUS" >
-| < AND : "AND" >   
-| < OR : "OR" >   
-| < NOT : "NOT" >   
 | < TIMES : "TIMES" >  
 | < DIV : "DIV" >  
 | < MAIN: "MAIN" >    
@@ -110,9 +105,9 @@ TOKEN : /* IDENTIFIERS */
   >
 }
 
-/***********************************
- * The microIR Grammar Starts Here (Source Jens Palsberg)*
- ***********************************/
+/**********************************
+ * The MiniIR Grammar Starts Here *
+ **********************************/
 
 
 void Goal() :
@@ -168,7 +163,7 @@ void ErrorStmt() :
 void CJumpStmt() :
 {}
 {	
-  "CJUMP" Temp() Label() 
+  "CJUMP" Exp() Label() 
 }
 
 void JumpStmt() :
@@ -180,13 +175,13 @@ void JumpStmt() :
 void HStoreStmt() :
 {}
 {
-  "HSTORE" Temp() IntegerLiteral() Temp()
+  "HSTORE" Exp() IntegerLiteral() Exp()
 }
 
 void HLoadStmt() :
 {}
 {
-  "HLOAD" Temp() Temp() IntegerLiteral() 
+  "HLOAD" Temp() Exp() IntegerLiteral() 
 }
 
 void MoveStmt() :
@@ -198,43 +193,49 @@ void MoveStmt() :
 void PrintStmt() :
 {}
 {
-  "PRINT" SimpleExp() 
+  "PRINT" Exp() 
 }
 
 void Exp():
 {}
 {
+  StmtExp()
+|
   Call()
 |
   HAllocate()
 |
   BinOp()
-| 
-  SimpleExp()
+|
+  Temp()
+|
+  IntegerLiteral()
+|
+  Label()
 }
 
 void StmtExp() :
 {}
 {
-  "BEGIN" StmtList() "RETURN" SimpleExp() "END"
+  "BEGIN" StmtList() "RETURN" Exp() "END"
 }
 
 void Call() :
 {}
 {       
-  "CALL" SimpleExp() "(" ( Temp() )* ")"
+  "CALL" Exp() "(" ( Exp() )* ")"
 }
 
 void HAllocate() :
 {}
 {       
-  "HALLOCATE" SimpleExp()
+  "HALLOCATE" Exp()
 }
 
 void BinOp() :
 {}
 {
-  Operator() Temp() SimpleExp()
+  Operator() Exp() Exp()
 }
 
 void Operator() :
@@ -251,16 +252,6 @@ void Operator() :
   "TIMES" 
 | 
   "DIV" 
-}
-
-void SimpleExp() :
-{}
-{
-  Temp()
-|
-  IntegerLiteral()
-|
-  Label()
 }
 
 void Temp() :
@@ -280,6 +271,7 @@ void Label() :
 {
   <IDENTIFIER>
 }
+
 
 
 

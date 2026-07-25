@@ -11,10 +11,11 @@ moodle (link TBA). They are due at
 | # | Topic | Release Date | Due Date | # days | Points | Link |
 |--:|-------|--------------|----------|--------|--------|------|
 | 1 | MacroJava to MiniJava | 03/08/2026 | 23/08/2026 | 20 | 19 | [macro_to_mini](/cs3300_m26/assignments/macro_to_mini.html) |
-| 2 | Type Checker          | 25/08/2026 | 13/09/2026 | 19 | 19 | [typechecker](/cs3300_m26/assignments/typechecker.html) |
-| 3 | MiniJava to microIR   | 15/09/2026 | 04/10/2026 | 19 | 19 | [mini_to_micro](/cs3300_m26/assignments/mini_to_micro.html) |
-| 4 | microIR to miniRA     | 06/10/2026 | 28/10/2026 | 19 | 19 | [micro_to_mini](/cs3300_m26/assignments/micro_to_mini.html) |
-| 5 | miniRA to MIPS Assembly| 27/10/2026 | 08/11/2026 | 12 | 19 | [miniRA_to_mips](/cs3300_m26/assignments/miniRA_to_mips.html) |
+| 2 | Type Checker          | 25/08/2026 | 13/09/2026 | 19 |  9 | [typechecker](/cs3300_m26/assignments/typechecker.html) |
+| 3 | MiniJava to miniIR    | 15/09/2026 | 29/09/2026 | 14 | 19 | [mini_to_miniIR](/cs3300_m26/assignments/mini_to_miniIR.html) |
+| 4 | miniIR to microIR     | 30/09/2026 | 11/10/2026 | 11 |  9 | [miniIR_to_micro](/cs3300_m26/assignments/miniIR_to_micro.html) |
+| 5 | microIR to miniRA     | 12/10/2026 | 28/10/2026 | 16 | 19 | [micro_to_miniRA](/cs3300_m26/assignments/micro_to_miniRA.html) |
+| 6 | miniRA to MIPS Assembly| 29/10/2026 | 06/11/2026 |  8 | 19 | [miniRA_to_mips](/cs3300_m26/assignments/miniRA_to_mips.html) |
 
 <br/>
 
