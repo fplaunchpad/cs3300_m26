@@ -69,7 +69,14 @@ work.**
 scholar to understand what counts as plagiarism, and make sure you avoid it.
 
 **No LLM use is permitted in this course**, for any part of any assignment or
-evaluation. Using one is treated as plagiarism. If you are caught, you get zero
-for that evaluation, a drop in your final grade, and a report to the Students
-Welfare and Disciplinary Committee. A second violation means a U grade in the
-course.
+evaluation. Using one is treated as plagiarism.
+
+Plagiarism is punished under the Institute's graded punishments for unfair means
+(Academic Section Circular 2B, dated 04.02.2025). For plagiarism in graded
+assignments, a first instance carries zero marks for the copied assignment, one
+grade lower in the course, and 50 hours of library work; if the grade obtained
+is E, U or P, that grade is retained. Repeated plagiarism carries a U grade in
+the course. In either case the student is not eligible to seek a supplementary
+exam or contact course in this subject.
+
+Submissions are checked with [MOSS](https://theory.stanford.edu/~aiken/moss/).
