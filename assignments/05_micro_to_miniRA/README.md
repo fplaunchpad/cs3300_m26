@@ -5,7 +5,7 @@ permalink: /assignments/micro_to_miniRA
 ---
 
 | Release Date | 12/10/2026 |
-| Deadline     | 20/10/2026, 23:59 hours |
+| Deadline     | 23/10/2026, 23:59 hours |
 
 <br/>
 

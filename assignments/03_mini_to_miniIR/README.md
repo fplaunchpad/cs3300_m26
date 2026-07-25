@@ -4,13 +4,13 @@ title: Assignment 03 - MiniJava to miniIR Translator
 permalink: /assignments/mini_to_miniIR
 ---
 
-| Release Date | 14/09/2026 |
-| Deadline     | 25/09/2026, 23:59 hours |
+| Release Date | 07/09/2026 |
+| Deadline     | 18/09/2026, 23:59 hours |
 
 <br/>
 
 This assignment is graded out of 15: 9 for this take-home part and 6 for an
-extension you implement in the lab session on 29/09/2026. See the
+extension you implement in the lab session on 22/09/2026. See the
 [assignments page](/cs3300_m26/assignments/) for how the lab component works.
 
 This assignment is the third part of a multi part project to write an 

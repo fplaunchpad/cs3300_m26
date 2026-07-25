@@ -4,7 +4,7 @@ title: Assignment 06 - miniRA to MIPS
 permalink: /assignments/miniRA_to_mips
 ---
 
-| Release Date | 21/10/2026 |
+| Release Date | 19/10/2026 |
 | Deadline     | 30/10/2026, 23:59 hours |
 
 <br/>
