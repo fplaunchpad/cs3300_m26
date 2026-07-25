@@ -40,6 +40,9 @@ say the generated miniRA code is stored in A.miniRA,
 then to invoke the interpreter use: java -jar interp-miniRA.jar < A.miniRA
 
 
+Alternatively, `make` compiles the assignment, `make run FILE=<input>` runs it,
+and `make clean` removes the `.class` files you must delete before submitting.
+
 Note: Please do not alter the directory structure of `RollNo_P4`. 
 Only edit `GJDepthFirst.java` and `P4.java`
 ## Resources

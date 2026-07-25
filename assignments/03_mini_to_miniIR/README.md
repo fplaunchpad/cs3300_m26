@@ -42,6 +42,9 @@ to compare the output of A.java with the output of your generated program;
 say the generated miniIR code is stored in A.miniIR, 
 then to invoke the interpreter use: java -jar interp-miniIR.jar < A.miniIR. 
 
+Alternatively, `make` compiles the assignment, `make run FILE=<input>` runs it,
+and `make clean` removes the `.class` files you must delete before submitting.
+
 Note: Please do not alter the directory structure of `RollNo_P2`. 
 Only edit `GJDepthFirst.java` and `P2.java`
 ## Resources

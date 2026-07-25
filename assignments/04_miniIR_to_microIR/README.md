@@ -69,6 +69,9 @@ $ java -jar interp-microIR.jar < A.microIR > actual.txt
 $ diff expected.txt actual.txt
 ```
 
+Alternatively, `make` compiles the assignment, `make run FILE=<input>` runs it,
+and `make clean` removes the `.class` files you must delete before submitting.
+
 Note: Please do not alter the directory structure of `RollNo_P3`.
 Only edit `GJDepthFirst.java` and `P3.java`
 
