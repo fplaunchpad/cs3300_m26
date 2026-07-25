@@ -8,21 +8,43 @@ All assignments should be submitted through the course
 moodle (link TBA). They are due at
 11:59 PM on the due date.
 
-| # | Topic | Release Date | Due Date | # days | Points | Link |
-|--:|-------|--------------|----------|--------|--------|------|
-| 1 | MacroJava to MiniJava | 03/08/2026 | 23/08/2026 | 20 | 19 | [macro_to_mini](/cs3300_m26/assignments/macro_to_mini.html) |
-| 2 | Type Checker          | 25/08/2026 | 13/09/2026 | 19 |  9 | [typechecker](/cs3300_m26/assignments/typechecker.html) |
-| 3 | MiniJava to miniIR    | 15/09/2026 | 29/09/2026 | 14 | 19 | [mini_to_miniIR](/cs3300_m26/assignments/mini_to_miniIR.html) |
-| 4 | miniIR to microIR     | 30/09/2026 | 11/10/2026 | 11 |  9 | [miniIR_to_micro](/cs3300_m26/assignments/miniIR_to_micro.html) |
-| 5 | microIR to miniRA     | 12/10/2026 | 28/10/2026 | 16 | 19 | [micro_to_miniRA](/cs3300_m26/assignments/micro_to_miniRA.html) |
-| 6 | miniRA to MIPS Assembly| 29/10/2026 | 06/11/2026 |  8 | 19 | [miniRA_to_mips](/cs3300_m26/assignments/miniRA_to_mips.html) |
+| # | Topic | Release | Take-home due | Lab session | Points | Link |
+|--:|-------|---------|---------------|-------------|--------|------|
+| 1 | MacroJava to MiniJava  | 03/08/2026 | 21/08/2026 | 25/08/2026 | 15 | [macro_to_mini](/cs3300_m26/assignments/macro_to_mini.html) |
+| 2 | Type Checker           | 24/08/2026 | 11/09/2026 | 15/09/2026 | 15 | [typechecker](/cs3300_m26/assignments/typechecker.html) |
+| 3 | MiniJava to miniIR     | 14/09/2026 | 25/09/2026 | 29/09/2026 | 15 | [mini_to_miniIR](/cs3300_m26/assignments/mini_to_miniIR.html) |
+| 4 | miniIR to microIR      | 28/09/2026 | 09/10/2026 | 13/10/2026 | 15 | [miniIR_to_micro](/cs3300_m26/assignments/miniIR_to_micro.html) |
+| 5 | microIR to miniRA      | 12/10/2026 | 20/10/2026 | 27/10/2026 | 15 | [micro_to_miniRA](/cs3300_m26/assignments/micro_to_miniRA.html) |
+| 6 | miniRA to MIPS Assembly| 21/10/2026 | 30/10/2026 | 03/11/2026 | 15 | [miniRA_to_mips](/cs3300_m26/assignments/miniRA_to_mips.html) |
 
 <br/>
 
-Six assignments and the in-lab mini assignments constitute 40% of the course
-grade. Six assignments in total add up to 94 assignment points. The in-lab mini
-assignments will account for 6 assignment points. Lab attendance is mandatory
-for getting the mini assignment points.
+## How each assignment is graded
+
+Each assignment carries 15 points: **9 for the take-home part** and **6 for an
+extension implemented in the lab**. Six assignments add up to 90 points and
+constitute 40% of the course grade.
+
+The lab extension is written during the Q-slot lab session on DCF machines,
+which have no network access other than the locally hosted Moodle. You extend
+the code *you* submitted for the take-home part. **The extension is not
+announced in advance.**
+
+* The lab task comes in several variants; which one you get is determined by
+  your roll number and announced at the start of the session.
+* The first part of each lab task is deliberately straightforward for anyone
+  whose submitted code compiles and runs, so attending is worth it even if you
+  found the take-home hard.
+* If you cannot work from your own submission, you may ask for the reference
+  implementation and extend that instead. Your total for that assignment is
+  then capped at 50%.
+* **Lab attendance is mandatory.** If you miss a lab session without an
+  institute-approved reason, your take-home marks for that assignment are
+  capped at 20%.
+
+The take-home part is where you learn the material; the lab is where you show
+that you did. Use whatever resources you like on the take-home, but be aware
+that submitting code you do not understand will cost you the lab marks.
 
 ## Assignment late penalties
 

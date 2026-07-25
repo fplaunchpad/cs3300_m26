@@ -4,10 +4,14 @@ title: Assignment 02 - Type Checker
 permalink: /assignments/typechecker
 ---
 
-| Release Date | 25/08/2026 |
-| Deadline     | 13/09/2026, 23:59 hours |
+| Release Date | 24/08/2026 |
+| Deadline     | 11/09/2026, 23:59 hours |
 
 <br/>
+
+This assignment is graded out of 15: 9 for this take-home part and 6 for an
+extension you implement in the lab session on 15/09/2026. See the
+[assignments page](/cs3300_m26/assignments/) for how the lab component works.
 
 This assignment is the first part of a multi part project to write an optimizing
 compiler for Minijava. We start with the LL(k) grammar for minijava and follow

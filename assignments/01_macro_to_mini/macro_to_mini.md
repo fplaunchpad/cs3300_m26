@@ -7,6 +7,15 @@ permalink: /assignments/macro_to_mini
 The goal of this assignment is to write a MacroJava to MiniJava translator using
 Flex and Bison. 
 
+| Release Date | 03/08/2026 |
+| Deadline     | 21/08/2026, 23:59 hours |
+
+<br/>
+
+This assignment is graded out of 15: 9 for this take-home part and 6 for an
+extension you implement in the lab session on 25/08/2026. See the
+[assignments page](/cs3300_m26/assignments/) for how the lab component works.
+
 ## Installation
 
 ### Ubuntu

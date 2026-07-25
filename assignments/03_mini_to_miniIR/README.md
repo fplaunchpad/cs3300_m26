@@ -4,10 +4,14 @@ title: Assignment 03 - MiniJava to miniIR Translator
 permalink: /assignments/mini_to_miniIR
 ---
 
-| Release Date | 15/09/2026 |
-| Deadline     | 29/09/2026, 23:59 hours |
+| Release Date | 14/09/2026 |
+| Deadline     | 25/09/2026, 23:59 hours |
 
 <br/>
+
+This assignment is graded out of 15: 9 for this take-home part and 6 for an
+extension you implement in the lab session on 29/09/2026. See the
+[assignments page](/cs3300_m26/assignments/) for how the lab component works.
 
 This assignment is the third part of a multi part project to write an 
 optimizing compiler for MiniJava. We start with type checked MiniJava 
@@ -71,8 +75,10 @@ The MiniJava grammar specification is
 The miniIR grammar specification is 
 [BNF-miniIR](https://github.com/fplaunchpad/cs3300_m26/tree/main/assets).
 
-The slides are available here
-[A3_slides](https://github.com/fplaunchpad/cs3300_m26/tree/main/assets)
+Slides from a previous offering are available as
+[A3_slides](https://github.com/fplaunchpad/cs3300_m26/tree/main/assets). Note that
+they translate MiniJava straight to microIR, combining this assignment with
+assignment 4; the material on generating IR from MiniJava still applies.
 
 ## Submission
 

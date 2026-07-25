@@ -4,10 +4,14 @@ title: Assignment 06 - miniRA to MIPS
 permalink: /assignments/miniRA_to_mips
 ---
 
-| Release Date | 29/10/2026 |
-| Deadline     | 06/11/2026, 23:59 hours |
+| Release Date | 21/10/2026 |
+| Deadline     | 30/10/2026, 23:59 hours |
 
 <br/>
+
+This assignment is graded out of 15: 9 for this take-home part and 6 for an
+extension you implement in the lab session on 03/11/2026. See the
+[assignments page](/cs3300_m26/assignments/) for how the lab component works.
 
 This assignment is the last part of a multi part project to 
 write an optimizing compiler for Minijava. In this assignment, 
@@ -30,7 +34,7 @@ should create A.s in MIPS assembly form and is semantically equivalent to A.mini
 Note, your program must take input from standard input 
 and write to standard output (so that we can use redirection).
 
-To check that a program is in miniRA form, you could use the [mips.jj](https://drive.google.com/file/d/16zTIe5YMit7XcQZD2VZ6Z2rcDGBrxzUV/view) to build a parser. 
+To check that a program is in miniRA form, you could use the [BNF for MIPS.jj](https://www.cse.iitm.ac.in/~krishna/cs3300/mips.html) to build a parser. 
 To ensure that your generated .s program is semantically equivalent to the miniRA program, 
 you can use the MIPS simulator available at [site](https://pages.cs.wisc.edu/~larus/spim.html)
 to compare the output of A.miniRA with the output of the 

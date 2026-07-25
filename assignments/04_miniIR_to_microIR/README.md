@@ -4,10 +4,14 @@ title: Assignment 04 - miniIR to microIR Translator
 permalink: /assignments/miniIR_to_micro
 ---
 
-| Release Date | 30/09/2026 |
-| Deadline     | 11/10/2026, 23:59 hours |
+| Release Date | 28/09/2026 |
+| Deadline     | 09/10/2026, 23:59 hours |
 
 <br/>
+
+This assignment is graded out of 15: 9 for this take-home part and 6 for an
+extension you implement in the lab session on 13/10/2026. See the
+[assignments page](/cs3300_m26/assignments/) for how the lab component works.
 
 This assignment is the fourth part of a multi part project to write an
 optimizing compiler for MiniJava. In the previous assignment you produced

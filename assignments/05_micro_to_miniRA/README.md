@@ -5,9 +5,13 @@ permalink: /assignments/micro_to_miniRA
 ---
 
 | Release Date | 12/10/2026 |
-| Deadline     | 28/10/2026, 23:59 hours |
+| Deadline     | 20/10/2026, 23:59 hours |
 
 <br/>
+
+This assignment is graded out of 15: 9 for this take-home part and 6 for an
+extension you implement in the lab session on 27/10/2026. See the
+[assignments page](/cs3300_m26/assignments/) for how the lab component works.
 
 This assignment is the fifth part of a multi part project to 
 write an optimizing compiler for Minijava. In this assignment, 
