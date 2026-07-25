@@ -1,8 +1,10 @@
 ---
 layout: page
-title: Lab 02 - Flex
+title: Lab 02 - Bison
 permalink: /labs/02_bison
 ---
+
+This is covered in the lab session on **04/08/2026**, together with Flex.
 
 In this lab, we will be using
 [Bison](https://www.gnu.org/software/bison/manual/bison.html), which is a parser

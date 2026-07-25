@@ -8,6 +8,10 @@ In the first assignment, we will be using
 [Flex](https://www.cs.virginia.edu/~cr4bd/flex-manual/), which is a tool for
 generating lexical analyzers.
 
+This is covered in the lab session on **04/08/2026**, together with Bison.
+Assignment 1 uses both tools, so work through the demo files before the
+assignment 1 lab session on 18/08/2026.
+
 The slides and demo files are available in the [Github repo](https://github.com/fplaunchpad/cs3300_m26/tree/main/labs/01_flex).
 
 # Mini-assignments

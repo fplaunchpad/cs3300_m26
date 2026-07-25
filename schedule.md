@@ -22,3 +22,23 @@ permalink: /schedule/
 | 12 | Global Optimizations | 27/10, 28/10, 30/10 | [12_global_opt.pdf](slides/12_global_opt.pdf) | |
 
 <br/>
+
+# Lab sessions
+
+Q slot, Tue 14:00 to 16:45, DCF. There is no lab in the first week.
+
+| Date | Session |
+|------|---------|
+| 04/08 | Flex and Bison tutorial ([flex](/cs3300_m26/labs/01_flex), [bison](/cs3300_m26/labs/02_bison)) |
+| 18/08 | Assignment 1 lab extension |
+| 08/09 | Assignment 2 lab extension |
+| 22/09 | Assignment 3 lab extension |
+| 13/10 | Assignment 4 lab extension |
+| 27/10 | Assignment 5 lab extension |
+| 03/11 | Assignment 6 lab extension |
+
+<br/>
+
+The lab extension is written during the session on DCF machines, with no network
+access other than the locally hosted Moodle. See the
+[assignments page](/cs3300_m26/assignments/) for how it is graded.
