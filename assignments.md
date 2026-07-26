@@ -4,9 +4,20 @@ title: Assignments
 permalink: /assignments/
 ---
 
-All assignments should be submitted through the course
-moodle (link TBA). They are due at
-11:59 PM on the due date.
+All assignment code lives in the `assignments/` directory of the course
+repository, [fplaunchpad/cs3300_m26](https://github.com/fplaunchpad/cs3300_m26).
+Clone it once and `git pull` for updates, rather than downloading files
+individually:
+
+```bash
+$ git clone https://github.com/fplaunchpad/cs3300_m26
+```
+
+Each assignment ships a skeleton (`RollNo_P<n>`) to work in, sample inputs, and
+the grammar of the language it consumes.
+
+Submit through the course moodle (link TBA). Assignments are due at 11:59 PM on
+the due date.
 
 | # | Topic | Release | Take-home due | Lab session | Points | Link |
 |--:|-------|---------|---------------|-------------|--------|------|
