@@ -12,18 +12,18 @@ are fixed and are on the [assignments page](/cs3300_m26/assignments/).
 
 | # | Topic | Dates | Slides | Comments | 
 |--:|-------|-------|-----------|----------|
-| 1 | Introduction | | [01_introduction.pdf](slides/01_introduction.pdf) | |
-| 2 | Lexical Analysis | | [02_lexical_analysis.pdf](slides/02_lexical_analysis.pdf) | |
-| 3 | Parsing | | [03_parsing.pdf](slides/03_parsing.pdf) | |
-| 4 | Bottom-up Parsing | | [04_bottom_up_parsing.pdf](slides/04_bottom_up_parsing.pdf) | |
-| 5 | Semantic Analysis | | [05_semantic_analysis.pdf](slides/05_semantic_analysis.pdf) | [MiniJava Type System](/cs3300_m26/assets/miniJava-typesystem.pdf) |
-| 6 | Syntax Directed Translation | | [06_sdt.pdf](slides/06_sdt.pdf) | |
-| 7 | Intermediate Representation | | [07_ir.pdf](slides/07_ir.pdf) | |
-| 8 | Runtime Management | | [08_runtime.pdf](slides/08_runtime.pdf) | |
-| 9 | Liveness Analysis and Register Allocation | | [09_register_allocation.pdf](slides/09_register_allocation.pdf) | [Linear Scan Register Allocation Paper](http://web.cs.ucla.edu/~palsberg/course/cs132/linearscan.pdf) |
-| 10 | Basic Blocks and CFG | | [10_basic_blocks_cfg.pdf](slides/10_basic_blocks_cfg.pdf) | |
-| 11 | Basic Block Optimizations | | [11_basic_block_opt.pdf](slides/11_basic_block_opt.pdf) | |
-| 12 | Global Optimizations | | [12_global_opt.pdf](slides/12_global_opt.pdf) | |
+| 1 | Introduction | | [01_introduction.pdf](/cs3300_m26/slides/01_introduction.pdf) | |
+| 2 | Lexical Analysis | | [02_lexical_analysis.pdf](/cs3300_m26/slides/02_lexical_analysis.pdf) | |
+| 3 | Parsing | | [03_parsing.pdf](/cs3300_m26/slides/03_parsing.pdf) | |
+| 4 | Bottom-up Parsing | | [04_bottom_up_parsing.pdf](/cs3300_m26/slides/04_bottom_up_parsing.pdf) | |
+| 5 | Semantic Analysis | | [05_semantic_analysis.pdf](/cs3300_m26/slides/05_semantic_analysis.pdf) | [MiniJava Type System](/cs3300_m26/assets/miniJava-typesystem.pdf) |
+| 6 | Syntax Directed Translation | | [06_sdt.pdf](/cs3300_m26/slides/06_sdt.pdf) | |
+| 7 | Intermediate Representation | | [07_ir.pdf](/cs3300_m26/slides/07_ir.pdf) | |
+| 8 | Runtime Management | | [08_runtime.pdf](/cs3300_m26/slides/08_runtime.pdf) | |
+| 9 | Liveness Analysis and Register Allocation | | [09_register_allocation.pdf](/cs3300_m26/slides/09_register_allocation.pdf) | [Linear Scan Register Allocation Paper](http://web.cs.ucla.edu/~palsberg/course/cs132/linearscan.pdf) |
+| 10 | Basic Blocks and CFG | | [10_basic_blocks_cfg.pdf](/cs3300_m26/slides/10_basic_blocks_cfg.pdf) | |
+| 11 | Basic Block Optimizations | | [11_basic_block_opt.pdf](/cs3300_m26/slides/11_basic_block_opt.pdf) | |
+| 12 | Global Optimizations | | [12_global_opt.pdf](/cs3300_m26/slides/12_global_opt.pdf) | |
 
 <br/>
 
