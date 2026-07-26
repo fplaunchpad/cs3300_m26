@@ -52,11 +52,9 @@ We are flexible about submitting assignments late. Unless otherwise specified,
 assignments may be turned in late with the following penalties applied to the
 score received:
 
-* 1 day late: −5%
-* 2 days late: −15%
-* 3 days late: −30%
-* 4 days late: −50%
-* &gt; 4 days late: we will not grade it. 
+* 1 day late: −25%
+* 2 days late: −50%
+* &gt; 2 days late: we will not grade it. 
 
 ## Academic Integrity
 

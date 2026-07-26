@@ -98,7 +98,7 @@ $ git pull
 ```
 
 The miniIR grammar specification is
-[BNF-miniIR](https://github.com/fplaunchpad/cs3300_m26/tree/main/assets).
+[BNF-miniIR](/cs3300_m26/grammar/miniIR/).
 
 The microIR grammar specification is
 [BNF-microIR](https://github.com/fplaunchpad/cs3300_m26/tree/main/assets).

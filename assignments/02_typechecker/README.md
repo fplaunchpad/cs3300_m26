@@ -55,7 +55,7 @@ $ git pull
 ```
 
 The MiniJava grammar specification is
-[here](https://www.cse.iitm.ac.in/~krishna/cs3300/minijava-spec.html).
+[here](/cs3300_m26/grammar/minijava/).
 
 The type checking rules for MiniJava is
 [here](/cs3300_m26/assets/miniJava-typesystem.pdf).

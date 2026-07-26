@@ -1,9 +1,16 @@
+---
+layout: page
+title: miniIR grammar
+permalink: /grammar/miniIR/
+---
+
 # miniIR grammar (BNF)
 
-Generated from `miniIR.jj`, the JavaCC grammar shipped with assignment 3.
+Generated from `miniIR.jj`, the JavaCC grammar shipped with the
+assignment kits, so it matches the parser your code is built on.
 Non-terminals are written `<Name>`; terminals are quoted.
-miniIR permits *nested* expressions; assignment 4 flattens it to microIR,
-in which every operand must be a bare temporary or literal.
+
+The grammar file itself is [miniIR.jj](miniIR.jj).
 
 ```
 <Goal> ::= "MAIN" <StmtList> "END" ( <Procedure> )* <EOF>
