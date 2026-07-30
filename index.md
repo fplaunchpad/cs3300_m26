@@ -31,7 +31,10 @@ will have hands on experience on implementing a compiler for a subset of Java.
   + **Lectures:** B Slot: M 09:00 to 09:50, Tu 08:00 to 08:50, W 13:00 to 13:50,
     F 11:00 to 11:50. 
   + **Lab:** Q slot: Tu 14:00 to 16:45.
-* **Slack**: TBA
+* **Slack**: [Join the course workspace](https://join.slack.com/t/cs3300m26iitm/signup).
+  Sign up with your IITM smail address (`@smail.iitm.ac.in`); signup is
+  restricted to smail, so a personal address will not work. Announcements and
+  questions go here.
 * **Moodle**: TBA
 * **TAs:** TBA
 
