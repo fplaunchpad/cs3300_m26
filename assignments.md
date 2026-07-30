@@ -16,8 +16,8 @@ $ git clone https://github.com/fplaunchpad/cs3300_m26
 Each assignment ships a skeleton (`RollNo_P<n>`) to work in, sample inputs, and
 the grammar of the language it consumes.
 
-Submit through the course moodle (link TBA). Assignments are due at 11:59 PM on
-the due date.
+Submit through the [course Moodle](https://courses.iitm.ac.in/course/view.php?id=12239).
+Assignments are due at 11:59 PM on the due date.
 
 | # | Topic | Release | Take-home due | Lab session | Points | Link |
 |--:|-------|---------|---------------|-------------|--------|------|

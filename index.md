@@ -35,7 +35,8 @@ will have hands on experience on implementing a compiler for a subset of Java.
   Sign up with your IITM smail address (`@smail.iitm.ac.in`); signup is
   restricted to smail, so a personal address will not work. Announcements and
   questions go here.
-* **Moodle**: TBA
+* **Moodle**: [courses.iitm.ac.in](https://courses.iitm.ac.in/course/view.php?id=12239).
+  Assignment bundles are released here, and all submissions go through it.
 * **TAs:** TBA
 
 ## Textbooks
