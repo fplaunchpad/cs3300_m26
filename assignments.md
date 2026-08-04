@@ -49,9 +49,10 @@ announced in advance.**
 * If you cannot work from your own submission, you may ask for the reference
   implementation and extend that instead. Your total for that assignment is
   then capped at 50%.
-* **Lab attendance is mandatory.** If you miss a lab session without an
-  institute-approved reason, your take-home marks for that assignment are
-  capped at 20%.
+* **Attendance at the six in-lab evaluation sessions is mandatory.** That is
+  where the 6 lab marks are decided, so a missed session cannot be made up
+  later. If you miss one without an institute-approved reason, your take-home
+  marks for that assignment are capped at 20%.
 
 The take-home part is where you learn the material; the lab is where you show
 that you did. Do the take-home yourself: code you did not write will cost you
