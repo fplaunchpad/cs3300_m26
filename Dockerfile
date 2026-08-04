@@ -2,27 +2,26 @@ FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y \
-    wget \
-    curl \
-    vim \
-    neovim \
-    flex \
-    bison \
-    ant \
-    make \
-    javacc \
-    openjdk-11-jdk \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      build-essential \
+      flex \
+      bison \
+      libfl-dev \
+      spim \
+      openjdk-21-jdk \
+      make \
+      vim \
+      neovim \
+      ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
 
-RUN update-alternatives --set java /usr/lib/jvm/java-11-openjdk-amd64/bin/java && \
-    update-alternatives --set javac /usr/lib/jvm/java-11-openjdk-amd64/bin/javac
+# Match the host user so files created in a bind mount are not root-owned.
+ARG UID=1000
+ARG GID=1000
 
+RUN groupadd -g "$GID" student 2>/dev/null || true \
+ && useradd -m -u "$UID" -g "$GID" student 2>/dev/null || true
+
+USER student
 WORKDIR /workspace
-
-RUN wget -q http://compilers.cs.ucla.edu/jtb/Files/jtb132.jar -O /usr/local/lib/jtb132.jar
-
-RUN echo '#!/bin/bash\njava -jar /usr/local/lib/jtb132.jar "$@"' > /usr/local/bin/jtb \
-    && chmod +x /usr/local/bin/jtb
-
 CMD ["/bin/bash"]
