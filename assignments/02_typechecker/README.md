@@ -80,3 +80,23 @@ $ tar cvzf cs99b999_P1.tar.gz cs99b999_P1
 Submit the `.tar.gz` file. 
 
 Note: You should thoroughly test your code. Some sample mini java programs are provided for testing. Create positive and negative tests per feature and test your code before submission. Please ensure that there are no compilation errors. If there are compilation errors, that code will yield zero marks.
+
+## Checking your work before you submit
+
+Run the same program that marks you over the public testcases:
+
+```bash
+$ python3 ../selftest/eval.py <YOUR-ROLLNO>_P1.tar.gz
+```
+
+It builds your archive the way the grader does, so a packaging mistake shows
+up here instead of costing you marks. Note that assignment 2 submits as
+`_P1`, one behind the assignment number.
+
+There are three sets of testcases: the **public** set you can run here, a
+**private** set behind the online checker that reports only how many passed,
+and a **hidden** set used for marking that you never see. You are marked on
+all three together, every test counting equally, so passing the first two is
+necessary and not sufficient. A submission that does not build scores zero.
+
+See [selftest/README.md](https://github.com/fplaunchpad/cs3300_m26/tree/main/assignments/selftest).

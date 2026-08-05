@@ -16,6 +16,11 @@ $ git clone https://github.com/fplaunchpad/cs3300_m26
 Each assignment ships a skeleton (`RollNo_P<n>`) to work in, sample inputs, and
 the grammar of the language it consumes.
 
+Before submitting, check your work with the self-test: `selftest/` for
+assignments 2 to 6, `01_macro_to_mini/selftest/` for assignment 1. It runs the
+same program that marks you, over the tests you can see, and catches packaging
+mistakes that would otherwise cost you marks.
+
 Each assignment is tested against three sets of testcases: a **public** set you
 can read and run yourself, a **private** set behind an online checker that
 reports only how many passed, and a **hidden** set used for marking that you
