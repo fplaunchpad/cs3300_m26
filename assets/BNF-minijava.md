@@ -31,12 +31,12 @@ The grammar file itself is [minijava.jj](minijava.jj).
 <Block> ::= "{" ( <Statement> )* "}"
 <AssignmentStatement> ::= <Identifier> "=" <Expression> ";"
 <ArrayAssignmentStatement> ::= <Identifier> "[" <Expression> "]" "=" <Expression> ";"
-<IfStatement> ::= // Add if-then stmt as well ) <IfthenElseStatement> | <IfthenStatement>
+<IfStatement> ::= <IfthenElseStatement> | <IfthenStatement>
 <IfthenStatement> ::= "if" "(" <Expression> ")" <Statement>
 <IfthenElseStatement> ::= "if" "(" <Expression> ")" <Statement> "else" <Statement>
 <WhileStatement> ::= "while" "(" <Expression> ")" <Statement>
 <PrintStatement> ::= "System.out.println" "(" <Expression> ")" ";"
-<Expression> ::= "||" ) <OrExpression> | "&&" ) <AndExpression> | "<=" ) <CompareExpression> | "!=" ) <neqExpression> | "+" ) <PlusExpression> | "-" ) <MinusExpression> | "*" ) <TimesExpression> | "/" ) <DivExpression> | "[" ) <ArrayLookup> | "." "length" ) <ArrayLength> | "." <Identifier> "(" ) <MessageSend> | <PrimaryExpression>
+<Expression> ::= <OrExpression> | <AndExpression> | <CompareExpression> | <neqExpression> | <PlusExpression> | <MinusExpression> | <TimesExpression> | <DivExpression> | <ArrayLookup> | <ArrayLength> | <MessageSend> | <PrimaryExpression>
 <AndExpression> ::= <PrimaryExpression> "&&" <PrimaryExpression>
 <OrExpression> ::= <PrimaryExpression> "||" <PrimaryExpression>
 <CompareExpression> ::= <PrimaryExpression> "<=" <PrimaryExpression>

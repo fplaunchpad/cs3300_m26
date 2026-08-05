@@ -28,10 +28,10 @@ if A.microIR contains a program to be register allocated then
 
 ```bash
 $ javac P4.java
-$ java P4 < A.microIR > A.RA
+$ java P4 < A.microIR > A.miniRA
 ```
 
-should create A.RA in miniRA form and is semantically equivalent to A.microIR. 
+should create A.miniRA in miniRA form and is semantically equivalent to A.microIR. 
 Note, your program must take input from standard input 
 and write to standard output (so that we can use redirection).
 

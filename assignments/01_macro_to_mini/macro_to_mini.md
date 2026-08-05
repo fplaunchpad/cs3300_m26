@@ -229,7 +229,7 @@ Some sample MiniJava programs can be found [here](https://github.com/fplaunchpad
               BooleanType ::= "boolean"
               IntegerType ::= "int"
                PublicType ::= "public"
-             PrivatedType ::= "private"
+              PrivateType ::= "private"
             ProtectedType ::= "protected"
                 Statement ::= Block
                             | AssignmentStatement
