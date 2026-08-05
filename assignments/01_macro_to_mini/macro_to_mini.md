@@ -18,10 +18,16 @@ extension you implement in the lab session on 18/08/2026. See the
 
 ## Installation
 
-### Ubuntu
+This assignment needs `flex`, `bison` and a C compiler. The course repository
+ships a container with these already installed, along with everything the later
+assignments need; see [Development
+environment](/cs3300_m26/resources/#development-environment). To install
+natively instead:
+
+### Ubuntu / WSL
 
 ```bash
-$ sudo apt install flex bison
+$ sudo apt install build-essential flex bison libfl-dev
 ```
 
 ### macOS
@@ -29,19 +35,14 @@ $ sudo apt install flex bison
 I recommend installing through [Homebrew](https://brew.sh/). Install Homebrew
 first using the instructions on the Homebrew website and then:
 
-
 ```bash
 $ brew install flex bison
 ```
 
 ### Windows
 
-Install 
-
-* [Ubuntu on VirtualBox](https://ubuntu.com/tutorials/how-to-run-ubuntu-desktop-on-a-virtual-machine-using-virtualbox#1-overview) or
-* [Ubuntu on WSL](https://ubuntu.com/wsl)
-
-Then follow instructions for Ubuntu.
+Use [Ubuntu on WSL](https://ubuntu.com/wsl), then follow the Ubuntu
+instructions above.
 
 ## Submission details
 
@@ -55,12 +56,16 @@ If `X.java` is a valid MacroJava program, then the following commands should
 generate the correct MiniJava code `Y.java`. Take input from standard input and
 write to standard output.
 
-```
-$ bison A1.y
+```bash
+$ bison -d A1.y
 $ flex A1.l
-$ gcc A1.tab.c -lfl -o A1
+$ cc A1.tab.c lex.yy.c -lfl -o A1
 $ ./A1 < X.java > Y.java
 ```
+
+`bison -d` is what writes `A1.tab.h`, which your `A1.l` needs to include in
+order to use the token names. On macOS the flex library has a different name:
+use `-ll` in place of `-lfl`.
 
 If the X.java file is not a valid MacroJava program, then output 
 

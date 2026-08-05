@@ -16,6 +16,11 @@ $ git clone https://github.com/fplaunchpad/cs3300_m26
 Each assignment ships a skeleton (`RollNo_P<n>`) to work in, sample inputs, and
 the grammar of the language it consumes.
 
+For the tools you need (JDK, flex, bison, a C compiler, and spim for assignment
+6), see [Development
+environment](/cs3300_m26/resources/#development-environment). The repository
+includes a `Dockerfile` with all of them, which saves installing them yourself.
+
 Submit through the [course Moodle](https://courses.iitm.ac.in/course/view.php?id=12239).
 Assignments are due at 11:59 PM on the due date.
 
