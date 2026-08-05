@@ -51,9 +51,11 @@ There are three sets of testcases, and you can only ever see one of them.
 | **Private** | the online checker | how many passed, never the tests |
 | **Hidden** | final marking only | nothing |
 
-Your **mark comes from the hidden set**. Passing the public and private sets is
-necessary and not sufficient: they catch mistakes early, they do not tell you
-your grade. The invalid programs in the public set in particular cover only
+You are marked on **all three sets together**, every test counting equally, so
+most of the tests behind your mark are ones you never see. Passing the public
+and private sets is necessary and not sufficient: they catch mistakes early,
+they do not tell you your grade. A submission that does not build scores zero,
+which is why the packaging check above is worth running. The invalid programs in the public set in particular cover only
 some of the ways a MacroJava program can be malformed, so read the grammar and
 work out the rest.
 

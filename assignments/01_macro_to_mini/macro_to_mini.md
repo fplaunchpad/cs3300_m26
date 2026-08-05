@@ -84,8 +84,9 @@ for what it checks.
 There are three sets of testcases: the **public** set ships in `selftest/` and
 you can read it; the **private** set runs in the online checker and reports
 counts only; the **hidden** set is used for marking and you never see it.
-Passing the first two is necessary and not sufficient, because your mark comes
-from the third.
+You are marked on all three together, every test counting equally, so passing
+the first two is necessary and not sufficient. A submission that does not build
+scores zero.
 
 If the X.java file is not a valid MacroJava program, then output 
 

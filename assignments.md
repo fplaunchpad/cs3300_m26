@@ -19,7 +19,9 @@ the grammar of the language it consumes.
 Each assignment is tested against three sets of testcases: a **public** set you
 can read and run yourself, a **private** set behind an online checker that
 reports only how many passed, and a **hidden** set used for marking that you
-never see. Passing the public and private sets is necessary and not sufficient.
+never see. You are marked on all three together, with every test counting
+equally, so passing the public and private sets is necessary and not
+sufficient. A submission that does not build scores zero.
 
 For the tools you need (JDK, flex, bison, a C compiler, and spim for assignment
 6), see [Development

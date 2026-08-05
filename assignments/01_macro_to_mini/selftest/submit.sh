@@ -17,8 +17,8 @@
 #   private  what this script checks against; you get counts, never the tests
 #   hidden   used for marking, and you never see it
 #
-# So passing everything here is necessary and not sufficient: your mark comes
-# from the hidden set.
+# You are marked on all three together, every test counting equally, so passing
+# everything here is necessary and not sufficient.
 
 set -eu
 
