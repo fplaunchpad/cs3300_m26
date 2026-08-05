@@ -188,10 +188,13 @@ def main():
     if not os.path.exists(mk):
         fail('Error: no build Makefile found next to evaluator.py')
     shutil.copy(mk, dirname)
-    if sp.run(['make', '-C', dirname], stdout=sp.DEVNULL,
-              stderr=sp.DEVNULL).returncode != 0:
+    build = sp.run(['make', '-C', dirname], stdout=sp.PIPE, stderr=sp.STDOUT)
+    if build.returncode != 0:
+        # bison and flex say exactly what is wrong and where. Discarding that
+        # leaves a student with "failed to build" and nothing to act on.
+        why = build.stdout.decode(errors='replace').strip().split('\n')
         shutil.rmtree(unpack, ignore_errors=True)
-        fail('Error: The submission failed to build')
+        fail('Error: The submission failed to build\n' + '\n'.join(why[-8:]))
     exe = os.path.abspath(os.path.join(dirname, 'A1.exe'))
 
     print('Grading against tier: %s' % (args.testcases or args.tier))

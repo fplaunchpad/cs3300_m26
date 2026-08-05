@@ -79,8 +79,13 @@ $ python3 selftest/evaluator.py cs23b087_P0.tar.gz
 It builds your archive the way the grader does, so packaging mistakes surface
 here instead of costing you marks. See
 [selftest/README.md](https://github.com/fplaunchpad/cs3300_m26/tree/main/assignments/01_macro_to_mini/selftest)
-for what it checks. Passing everything there is necessary but not sufficient:
-you are marked against more tests than it contains.
+for what it checks.
+
+There are three sets of testcases: the **public** set ships in `selftest/` and
+you can read it; the **private** set runs in the online checker and reports
+counts only; the **hidden** set is used for marking and you never see it.
+Passing the first two is necessary and not sufficient, because your mark comes
+from the third.
 
 If the X.java file is not a valid MacroJava program, then output 
 

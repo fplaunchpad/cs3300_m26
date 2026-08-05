@@ -16,6 +16,11 @@ $ git clone https://github.com/fplaunchpad/cs3300_m26
 Each assignment ships a skeleton (`RollNo_P<n>`) to work in, sample inputs, and
 the grammar of the language it consumes.
 
+Each assignment is tested against three sets of testcases: a **public** set you
+can read and run yourself, a **private** set behind an online checker that
+reports only how many passed, and a **hidden** set used for marking that you
+never see. Passing the public and private sets is necessary and not sufficient.
+
 For the tools you need (JDK, flex, bison, a C compiler, and spim for assignment
 6), see [Development
 environment](/cs3300_m26/resources/#development-environment). The repository

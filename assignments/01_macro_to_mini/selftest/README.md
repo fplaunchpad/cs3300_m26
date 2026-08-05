@@ -41,23 +41,28 @@ packaging mistake shows up here rather than costing you marks. Then:
 * **Invalid programs** (`negative`). The first line of your output must
   begin with `//Failed`, as the assignment specifies.
 
-## Checking against tests you cannot see
+## How your assignment is tested
 
-`selftest/` runs the 17 public tests. The online grader runs a further set you
-have not seen and reports how many passed, without showing you the tests. Two
-ways to use it, both needing the key from the course Slack:
+There are three sets of testcases, and you can only ever see one of them.
+
+| Set | Where it runs | What you see |
+|---|---|---|
+| **Public** | `selftest/`, on your machine | the testcases themselves |
+| **Private** | the online checker | how many passed, never the tests |
+| **Hidden** | final marking only | nothing |
+
+Your **mark comes from the hidden set**. Passing the public and private sets is
+necessary and not sufficient: they catch mistakes early, they do not tell you
+your grade. The invalid programs in the public set in particular cover only
+some of the ways a MacroJava program can be malformed, so read the grammar and
+work out the rest.
+
+### Checking against the private set
+
+Both routes need the key from the course Slack:
 
 * the web page, whose URL is on Slack; or
 * `./submit.sh cs23b087_P0.tar.gz` from a terminal.
 
-Both take the same `.tar.gz` you upload to Moodle, so a packaging mistake
-shows up there too. It records no mark and is limited to 20 submissions an
-hour.
-
-## What it does not tell you
-
-These are 17 of the tests. Your submission is marked against more, including
-tests neither this nor the online grader ever runs, so passing both is
-necessary and not sufficient. In particular the invalid programs here cover only some of the
-ways a MacroJava program can be malformed. Read the grammar in the
-assignment and work out the rest.
+Both take the same `.tar.gz` you upload to Moodle, so a packaging mistake shows
+up there too. Limited to 20 submissions an hour, and it records no mark.
