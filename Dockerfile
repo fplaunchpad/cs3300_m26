@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       spim \
       openjdk-21-jdk \
       make \
+      python3 \
       vim \
       neovim \
       ca-certificates \

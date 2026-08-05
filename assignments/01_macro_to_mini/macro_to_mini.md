@@ -65,7 +65,22 @@ $ ./A1 < X.java > Y.java
 
 `bison -d` is what writes `A1.tab.h`, which your `A1.l` needs to include in
 order to use the token names. On macOS the flex library has a different name:
-use `-ll` in place of `-lfl`.
+use `-ll` in place of `-lfl`. The `Makefile` in `selftest/` does all of this
+for you and picks the right library for your platform.
+
+## Checking your work before you submit
+
+`selftest/` runs the same program that marks you, over a subset of the tests:
+
+```bash
+$ python3 selftest/evaluator.py cs23b087_P0.tar.gz
+```
+
+It builds your archive the way the grader does, so packaging mistakes surface
+here instead of costing you marks. See
+[selftest/README.md](https://github.com/fplaunchpad/cs3300_m26/tree/main/assignments/01_macro_to_mini/selftest)
+for what it checks. Passing everything there is necessary but not sufficient:
+you are marked against more tests than it contains.
 
 If the X.java file is not a valid MacroJava program, then output 
 
