@@ -41,10 +41,23 @@ packaging mistake shows up here rather than costing you marks. Then:
 * **Invalid programs** (`negative`). The first line of your output must
   begin with `//Failed`, as the assignment specifies.
 
+## Checking against tests you cannot see
+
+`selftest/` runs the 17 public tests. The online grader runs a further set you
+have not seen and reports how many passed, without showing you the tests. Two
+ways to use it, both needing the key from the course Slack:
+
+* the web page, whose URL is on Slack; or
+* `./submit.sh cs23b087_P0.tar.gz` from a terminal.
+
+Both take the same `.tar.gz` you upload to Moodle, so a packaging mistake
+shows up there too. It records no mark and is limited to 20 submissions an
+hour.
+
 ## What it does not tell you
 
 These are 17 of the tests. Your submission is marked against more, including
-tests you have not seen, so scoring 17/17 here is necessary and not
-sufficient. In particular the invalid programs here cover only some of the
+tests neither this nor the online grader ever runs, so passing both is
+necessary and not sufficient. In particular the invalid programs here cover only some of the
 ways a MacroJava program can be malformed. Read the grammar in the
 assignment and work out the rest.
