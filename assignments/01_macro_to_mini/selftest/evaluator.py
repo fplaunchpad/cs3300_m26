@@ -147,18 +147,34 @@ def main():
         description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('archive', help='<rollno>_P0.tar.gz')
-    ap.add_argument('--tier', default='public',
-                    choices=['public', 'private', 'hidden'],
-                    help='which tier to grade against (default: public)')
+    ap.add_argument('--tier', default='all',
+                    choices=['public', 'private', 'hidden', 'all'],
+                    help='which tier to grade against (default: all tiers '
+                         'present). A student copy holds only the public tier, '
+                         'so the default is right in both places.')
     ap.add_argument('--testcases', help='an explicit directory, for lab variants')
     ap.add_argument('-v', '--verbose', action='store_true')
     args = ap.parse_args()
     verbose = args.verbose or bool(os.getenv('VERBOSE'))
 
     here = os.path.dirname(os.path.abspath(__file__))
-    tests = args.testcases or os.path.join(here, 'testcases', args.tier)
-    if not os.path.isdir(tests):
-        fail('No such testcase directory: ' + tests)
+    if args.testcases:
+        tier_dirs = [args.testcases]
+    elif args.tier == 'all':
+        # Every tier that is present. The copy shipped to students holds only
+        # the public tier, so this does the right thing there too, and a TA
+        # who forgets the flag grades everything rather than the 17 tests
+        # every student passes.
+        tier_dirs = [d for d in (os.path.join(here, 'testcases', t)
+                                 for t in ('public', 'private', 'hidden'))
+                     if os.path.isdir(d)]
+        if not tier_dirs:
+            fail('No testcase tiers found under ' + os.path.join(here, 'testcases'))
+    else:
+        tier_dirs = [os.path.join(here, 'testcases', args.tier)]
+    for d in tier_dirs:
+        if not os.path.isdir(d):
+            fail('No such testcase directory: ' + d)
 
     if '_P0.tar.gz' not in args.archive:
         fail('Error: Archive does not have the prescribed naming scheme')
@@ -197,12 +213,18 @@ def main():
         fail('Error: The submission failed to build\n' + '\n'.join(why[-8:]))
     exe = os.path.abspath(os.path.join(dirname, 'A1.exe'))
 
-    print('Grading against tier: %s' % (args.testcases or args.tier))
+    label = args.testcases or (
+        args.tier if args.tier != 'all'
+        else 'all (%s)' % ', '.join(os.path.basename(d) for d in tier_dirs))
+    print('Grading against tier: %s' % label)
     work = tempfile.mkdtemp()
+    macro = pos = neg = (0, 0)
+    add = lambda a, b: (a[0] + b[0], a[1] + b[1])
     try:
-        macro = run_group(exe, os.path.join(tests, 'macro_tests'), run_valid, work)
-        pos = run_group(exe, os.path.join(tests, 'positive'), run_valid, work)
-        neg = run_group(exe, os.path.join(tests, 'negative'), run_invalid, work)
+        for tests in tier_dirs:
+            macro = add(macro, run_group(exe, os.path.join(tests, 'macro_tests'), run_valid, work))
+            pos = add(pos, run_group(exe, os.path.join(tests, 'positive'), run_valid, work))
+            neg = add(neg, run_group(exe, os.path.join(tests, 'negative'), run_invalid, work))
     finally:
         shutil.rmtree(work, ignore_errors=True)
         shutil.rmtree(unpack, ignore_errors=True)
