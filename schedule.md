@@ -13,20 +13,20 @@ are fixed and are on the [assignments page](/cs3300_m26/assignments/).
 *Lectures* counts the classes spent on each topic so far. A class split
 between two topics counts as 0.5 to each.
 
-| # | Topic | Dates | Lectures | Slides | Comments |
+| # | Topic | Dates | Lectures | Slides | Resources |
 |--:|-------|-------|---------:|--------|----------|
-| 1 | Introduction | 27/07, 28/07, 29/07 | 3 | [01_introduction.pdf](/cs3300_m26/slides/01_introduction.pdf) | |
-| 2 | Lexical Analysis | 31/07 | 1 | [02_lexical_analysis.pdf](/cs3300_m26/slides/02_lexical_analysis.pdf) | |
-| 3 | Parsing | | | [03_parsing.pdf](/cs3300_m26/slides/03_parsing.pdf) | |
-| 4 | Bottom-up Parsing | | | [04_bottom_up_parsing.pdf](/cs3300_m26/slides/04_bottom_up_parsing.pdf) | |
-| 5 | Semantic Analysis | | | [05_semantic_analysis.pdf](/cs3300_m26/slides/05_semantic_analysis.pdf) | [MiniJava Type System](/cs3300_m26/assets/miniJava-typesystem.pdf) |
-| 6 | Syntax Directed Translation | | | [06_sdt.pdf](/cs3300_m26/slides/06_sdt.pdf) | |
-| 7 | Intermediate Representation | | | [07_ir.pdf](/cs3300_m26/slides/07_ir.pdf) | |
-| 8 | Runtime Management | | | [08_runtime.pdf](/cs3300_m26/slides/08_runtime.pdf) | |
-| 9 | Liveness Analysis and Register Allocation | | | [09_register_allocation.pdf](/cs3300_m26/slides/09_register_allocation.pdf) | [Linear Scan Register Allocation Paper](http://web.cs.ucla.edu/~palsberg/course/cs132/linearscan.pdf) |
-| 10 | Basic Blocks and CFG | | | [10_basic_blocks_cfg.pdf](/cs3300_m26/slides/10_basic_blocks_cfg.pdf) | |
-| 11 | Basic Block Optimizations | | | [11_basic_block_opt.pdf](/cs3300_m26/slides/11_basic_block_opt.pdf) | |
-| 12 | Global Optimizations | | | [12_global_opt.pdf](/cs3300_m26/slides/12_global_opt.pdf) | |
+| 1 | Introduction | 27/07, 28/07, 29/07 | 3 | [01_introduction.pdf](/cs3300_m26/lectures/01_introduction/01_introduction.pdf) | |
+| 2 | Lexical Analysis | 31/07, 03/08 | 2 | [02_lexical_analysis.pdf](/cs3300_m26/lectures/02_lexical_analysis/02_lexical_analysis.pdf) | |
+| 3 | Parsing | 04/08, 05/08 | 2 | [03_parsing.pdf](/cs3300_m26/lectures/03_parsing/03_parsing.pdf) | [Dangling-else equivalence, proved in Lean](https://github.com/fplaunchpad/cs3300_m26/blob/main/lectures/03_parsing/dangling_else_equivalence.lean) |
+| 4 | Bottom-up Parsing | | | [04_bottom_up_parsing.pdf](/cs3300_m26/lectures/04_bottom_up_parsing/04_bottom_up_parsing.pdf) | |
+| 5 | Semantic Analysis | | | [05_semantic_analysis.pdf](/cs3300_m26/lectures/05_semantic_analysis/05_semantic_analysis.pdf) | [MiniJava Type System](/cs3300_m26/assets/miniJava-typesystem.pdf) |
+| 6 | Syntax Directed Translation | | | [06_sdt.pdf](/cs3300_m26/lectures/06_sdt/06_sdt.pdf) | |
+| 7 | Intermediate Representation | | | [07_ir.pdf](/cs3300_m26/lectures/07_ir/07_ir.pdf) | |
+| 8 | Runtime Management | | | [08_runtime.pdf](/cs3300_m26/lectures/08_runtime/08_runtime.pdf) | |
+| 9 | Liveness Analysis and Register Allocation | | | [09_register_allocation.pdf](/cs3300_m26/lectures/09_register_allocation/09_register_allocation.pdf) | [Linear Scan Register Allocation Paper](http://web.cs.ucla.edu/~palsberg/course/cs132/linearscan.pdf) |
+| 10 | Basic Blocks and CFG | | | [10_basic_blocks_cfg.pdf](/cs3300_m26/lectures/10_basic_blocks_cfg/10_basic_blocks_cfg.pdf) | |
+| 11 | Basic Block Optimizations | | | [11_basic_block_opt.pdf](/cs3300_m26/lectures/11_basic_block_opt/11_basic_block_opt.pdf) | |
+| 12 | Global Optimizations | | | [12_global_opt.pdf](/cs3300_m26/lectures/12_global_opt/12_global_opt.pdf) | |
 
 <br/>
 
