@@ -34,13 +34,19 @@ while IFS= read -r secret; do
   [ -f "$secret" ] || continue
   h=$(shasum -a 256 "$secret" | awk '{print $1}')
   if hit=$(grep -m1 "^$h " "$pub_hashes"); then
-    note "$(basename "$(dirname "$(dirname "$secret")")")/$(basename "$secret") is published at ${hit#* }"
+    p=${hit#* }; p=${p# }
+    note "${secret#"$PRIV"/} is published at ${p#"$PUB"/}"
   fi
 done < <(
   ls "$PRIV"/assignments/ACE/solutions/*/visitor/GJDepthFirst.java 2>/dev/null
   ls "$PRIV"/assignments/ACE/utils/ans/*.java 2>/dev/null
   ls "$PRIV"/assignments/ACE/utils/codes/*.tar.gz 2>/dev/null
-  ls "$PRIV"/assignments/assignment1/solution/* 2>/dev/null
+  # A1's answer is the grammar pair, not everything in solution/.
+  # solution/Makefile is build rules with no answer in it and is published
+  # on purpose, as selftest/Makefile, so students get the platform-correct
+  # link line instead of typing it by hand.
+  ls "$PRIV"/assignments/assignment1/solution/A1.l \
+     "$PRIV"/assignments/assignment1/solution/A1.y 2>/dev/null
 )
 
 # 2. Private and hidden testcase tiers must never appear publicly.
@@ -49,9 +55,20 @@ while IFS= read -r secret; do
   [ -f "$secret" ] || continue
   h=$(shasum -a 256 "$secret" | awk '{print $1}')
   if hit=$(grep -m1 "^$h " "$pub_hashes"); then
-    note "non-public testcase $(basename "$secret") is published at ${hit#* }"
+    p=${hit#* }; p=${p# }
+    note "non-public testcase ${secret#"$PRIV"/} is published at ${p#"$PUB"/}"
   fi
-done < <(find "$PRIV/assignments/ACE/testcases" -type d \( -name private -o -name hidden \) -exec find {} -type f \; 2>/dev/null)
+done < <(
+  # Assignment 1 is tiered the same way as P1-P5, so cover both trees. Only
+  # the public tier is meant to ship, as assignments/01_macro_to_mini/selftest.
+  #
+  # Test inputs only. A .expected file holds a program's output, often a
+  # single integer, so identical ones collide across tiers for no reason:
+  # hidden P06 and P07 both print 6, as does public T4. Knowing that some
+  # hidden test prints 6 tells a student nothing without its input.
+  find "$PRIV/assignments/ACE/testcases" "$PRIV/assignments/assignment1/testcases" \
+       -type d \( -name private -o -name hidden \) \
+       -exec find {} -type f -name '*.java' \; 2>/dev/null)
 
 # 3. A published answer file must not be a near-copy of its solution. Compares the
 #    set of non-trivial lines; JTB boilerplate overlaps, a pasted solution does not.
