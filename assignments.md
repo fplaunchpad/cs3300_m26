@@ -60,9 +60,11 @@ announced in advance.**
 
 * The lab task comes in several variants; which one you get is determined by
   your roll number and announced at the start of the session.
-* The first part of each lab task is deliberately straightforward for anyone
-  whose submitted code compiles and runs, so attending is worth it even if you
-  found the take-home hard.
+* The 6 lab marks are awarded as **6** if your extension works, **3** if your
+  code compiles and you have made a real attempt at the change in the place the
+  task names, and **0** if it does not compile or the named place is unchanged.
+  A partial attempt counts, so get it compiling before the session ends even if
+  the change is incomplete.
 * If you cannot work from your own submission, you may ask for the reference
   implementation and extend that instead. Your total for that assignment is
   then capped at 50%.
