@@ -11,3 +11,4 @@ _site
 *.vok
 *.cache
 .DS_Store
+.parser-tools/
