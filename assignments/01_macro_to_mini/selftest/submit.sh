@@ -11,8 +11,14 @@
 # There is also a web page if you would rather not use the terminal; the URL
 # is on the course Slack alongside the key.
 #
-# This grades a different set of tests from the local self-test. Neither is the
-# set you are finally marked on, so passing both is necessary, not sufficient.
+# There are three sets of testcases:
+#
+#   public   shipped in selftest/, you can read and run them yourself
+#   private  what this script checks against; you get counts, never the tests
+#   hidden   used for marking, and you never see it
+#
+# So passing everything here is necessary and not sufficient: your mark comes
+# from the hidden set.
 
 set -eu
 
