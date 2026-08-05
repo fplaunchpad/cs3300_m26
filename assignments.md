@@ -62,9 +62,11 @@ announced in advance.**
   implementation and extend that instead. Your total for that assignment is
   then capped at 50%.
 * **Attendance at the six in-lab evaluation sessions is mandatory.** That is
-  where the 6 lab marks are decided, so a missed session cannot be made up
-  later. If you miss one without an institute-approved reason, your take-home
-  marks for that assignment are capped at 20%.
+  where the 6 lab marks are decided. If you miss one without an
+  institute-approved reason, your take-home marks for that assignment are
+  capped at 20%. With an institute-approved reason, you sit a makeup session
+  at the end of the semester, taking a fresh extension on the assignment you
+  missed; tell us as early as you can so it can be scheduled.
 
 The take-home part is where you learn the material; the lab is where you show
 that you did. Do the take-home yourself: code you did not write will cost you
