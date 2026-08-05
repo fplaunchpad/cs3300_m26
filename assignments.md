@@ -79,13 +79,17 @@ the lab marks.
 
 ## Assignment late penalties
 
-We are flexible about submitting assignments late. Unless otherwise specified,
-assignments may be turned in late with the following penalties applied to the
-score received:
+We are flexible about submitting assignments late. The penalty applies to the
+**9 take-home marks only**; the 6 lab marks are unaffected, since those are
+decided in the lab session:
 
-* 1 day late: −25%
-* 2 days late: −50%
-* &gt; 2 days late: we will not grade it. 
+* 1 day late: −25% of your take-home marks
+* 2 days late: −50% of your take-home marks
+* &gt; 2 days late: the take-home part is not graded, so 0 out of 9
+
+Submitting late does not excuse you from the lab session, and it does not stop
+you earning the 6 lab marks. Even if your take-home scores 0, attend: you
+extend the code you submitted, and the lab marks are still yours to earn. 
 
 ## Academic Integrity
 
