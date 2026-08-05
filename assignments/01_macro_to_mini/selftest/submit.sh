@@ -16,7 +16,7 @@
 
 set -eu
 
-GRADER="${CS3300_GRADER:-https://cs3300-autograder.kcsrk.workers.dev}"
+GRADER="${CS3300_GRADER:-https://cs3300-autograder.kc-7c7.workers.dev}"
 
 archive=${1:-}
 if [ -z "$archive" ]; then
@@ -50,8 +50,28 @@ command -v curl >/dev/null || { echo "curl is not installed" >&2; exit 2; }
 
 echo "Submitting $(basename "$archive") ..."
 # --data-binary, not -d: -d mangles a .tar.gz.
-curl -sS --fail-with-body -X POST "$GRADER/submit" \
+response=$(curl -sS -X POST "$GRADER/submit" \
   -H "X-Submit-Key: $key" \
   -H "X-Filename: $(basename "$archive")" \
-  --data-binary "@$archive" |
-  sed -e 's/[{,]/\n/g' -e 's/[}"]//g' | sed -e 's/^ *//' -e '/^$/d'
+  --data-binary "@$archive") || {
+    echo "could not reach the grader" >&2; exit 1; }
+
+if command -v python3 >/dev/null 2>&1; then
+  printf '%s' "$response" | python3 -c '
+import json, sys
+d = json.load(sys.stdin)
+if not d.get("graded"):
+    print("Not graded: " + str(d.get("error", "unknown error")))
+    sys.exit(1)
+rows = [("Macro programs", "macro"), ("Valid programs", "positive"),
+        ("Invalid programs", "negative"), ("Total", "total")]
+for label, k in rows:
+    s = d.get(k)
+    if not s:
+        continue
+    mark = "" if s["passed"] == s["total"] else "   <-- some failed"
+    print("  %-18s %3d / %-3d%s" % (label, s["passed"], s["total"], mark))
+'
+else
+  printf '%s\n' "$response"
+fi
