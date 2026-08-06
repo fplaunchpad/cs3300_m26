@@ -48,6 +48,13 @@ prints is compared with what the input program prints.
 So it checks that your translation *means the same thing*, not that it looks a
 particular way. How you format your output is up to you.
 
+Assignment 4 has one extra check. Its job is to reduce miniIR to the microIR
+subset, and a program can compute the right answer while still using miniIR
+constructs that microIR does not allow. So your output is first parsed against
+the microIR grammar, and a testcase whose output is not microIR fails even if
+running it would have printed the right numbers. Running the self-test with
+`-v` tells you which testcase, with the message `output is not microIR`.
+
 Any `.class` files left in your archive are removed before compiling, so a
 forgotten `make clean` will not fail your submission. Remove them anyway: the
 assignment asks for the sources only.

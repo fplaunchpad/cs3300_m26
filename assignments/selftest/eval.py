@@ -52,11 +52,35 @@ from pathlib import Path
 
 ACE_ROOT = Path(__file__).resolve().parent
 OUTPUT_FILE_EXT = ['.out', '.miniIR', '.microIR', '.miniRA', '.s']
+MICROIR_CHECK = ACE_ROOT / 'utils' / 'interp' / 'microIRCheck.jar'
 testcase_types_list: list[str] = []
 
+# Sub-directories of a tier are visited in whatever order the filesystem hands
+# them over, which differs between machines. Pin the column order so two TAs
+# marking the same batch produce CSVs that can be compared line by line.
+TESTCASE_TYPE_ORDER = ['public', 'private', 'hidden']
 
-def run(cmd, cwd=None, stdin=None, stdout=None) -> int:
-    """Run a command, returning its exit status. Never uses a shell."""
+
+def ordered_testcase_types() -> list[str]:
+    known = [t for t in TESTCASE_TYPE_ORDER if t in testcase_types_list]
+    rest = sorted(t for t in testcase_types_list if t not in TESTCASE_TYPE_ORDER)
+    return known + rest
+
+
+# Nothing a submission runs may take longer than this. Without it a student
+# whose translator loops, or whose emitted program never halts, hangs the
+# grader for good: a TA marking a hundred submissions stalls on the first one.
+# A timed-out command counts as a failed testcase, which is the right answer
+# for a program that does not terminate.
+TIMEOUT = 10          # a translator run, or one program under the interpreter
+COMPILE_TIMEOUT = 120  # javac on a whole submission
+
+
+def run(cmd, cwd=None, stdin=None, stdout=None, timeout=TIMEOUT) -> int:
+    """Run a command, returning its exit status. Never uses a shell.
+
+    Returns 124 on timeout, as `timeout(1)` does, so callers that only check
+    for zero treat it as a failure without needing to know why."""
     try:
         with open(stdin) if stdin else _null() as fin, \
              open(stdout, 'w') if stdout else _null() as fout:
@@ -65,8 +89,11 @@ def run(cmd, cwd=None, stdin=None, stdout=None) -> int:
                 stdin=fin if stdin else subprocess.DEVNULL,
                 stdout=fout if stdout else subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
+                timeout=timeout,
             )
         return proc.returncode
+    except subprocess.TimeoutExpired:
+        return 124
     except OSError:
         return 1
 
@@ -152,7 +179,8 @@ def evaluate(code_file: Path, verbose: bool, tier: str | None = None) -> dict:
         if verbose and stale:
             print(f'Removed {len(stale)} stale .class file(s) from the submission')
 
-        if run(['javac', f'{assn_name}.java'], cwd=assn_dir) != 0:
+        if run(['javac', f'{assn_name}.java'], cwd=assn_dir,
+               timeout=COMPILE_TIMEOUT) != 0:
             info['compile'] = False
             return info
 
@@ -199,6 +227,16 @@ def evaluate(code_file: Path, verbose: bool, tier: str | None = None) -> dict:
                         print('Runtime error')
                     continue
 
+                # Assignment 4 is "reduce miniIR to the microIR subset", but the
+                # interpreter used below accepts the whole miniIR superset, so
+                # on its own it cannot tell a reduced program from an unreduced
+                # one. Check the syntax against the microIR grammar first.
+                if assn_num == 3:
+                    if run(['java', '-jar', str(MICROIR_CHECK)], stdin=produced) != 0:
+                        if verbose:
+                            print('Fail: output is not microIR')
+                        continue
+
                 executed = out_dir / f'{stem}.out'
                 if 2 <= assn_num <= 4:
                     if run(['java', '-jar', str(interp_jar)],
@@ -219,8 +257,16 @@ def evaluate(code_file: Path, verbose: bool, tier: str | None = None) -> dict:
 
                 normalise(executed, assn_num)
                 expected = expected_dir / f'{stem}.out'
-                passed = (expected.is_file()
-                          and executed.read_bytes() == expected.read_bytes())
+                if not expected.is_file():
+                    # The testcase set is broken, not the submission. Marking
+                    # this as a failed testcase would quietly cost the student
+                    # a mark for a file we forgot to add.
+                    raise SystemExit(
+                        f'Error: no expected output for {tier_name}/{testcase_type}/{name}.\n'
+                        f'       Expected it at {expected}.\n'
+                        f'       Add the file, or remove the testcase. Refusing to\n'
+                        f'       grade, because this would score as a wrong answer.')
+                passed = executed.read_bytes() == expected.read_bytes()
                 if passed:
                     num_correct[testcase_type] += 1
                 if verbose:
@@ -300,7 +346,16 @@ def main() -> int:
             print('Evaluating ' + assn_file.name)
             results.append(evaluate(assn_file, args.verbose, args.tier))
 
-        headings = ['rollNo', 'tier', 'format', 'mainFile', 'compiled'] + testcase_types_list
+        # A missing spim invalidates every assignment-5 row, so say so and stop
+        # rather than writing a CSV that is silently short of students.
+        if any(r.get('assn_num') == 5 and not r.get('spim', True) for r in results):
+            print('Error: spim is not installed, so assignment 6 cannot be graded.')
+            print('       Install it (`sudo apt install spim`) and re-run.')
+            print('       No CSV written.')
+            return 1
+
+        headings = (['rollNo', 'tier', 'format', 'mainFile', 'compiled']
+                    + ordered_testcase_types())
         with open(output_name + '.csv', 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(headings)
@@ -314,11 +369,8 @@ def main() -> int:
                     row += ['Correct', 'Found', 'No']
                 else:
                     row += ['Correct', 'Found', 'Yes']
-                    if result.get('assn_num') == 5 and not result.get('spim', True):
-                        print('Please install spim using the command `sudo apt install spim`')
-                        break
                     num_correct = result['num_correct']
-                    row += [str(num_correct.get(t, '')) for t in testcase_types_list]
+                    row += [str(num_correct.get(t, '')) for t in ordered_testcase_types()]
                 row += [''] * (len(headings) - len(row))
                 writer.writerow(row)
         print('Done')
@@ -343,7 +395,7 @@ def main() -> int:
             print('Please install spim using the command `sudo apt install spim`')
         else:
             print('\nFinal score:')
-            for case_type in testcase_types_list:
+            for case_type in ordered_testcase_types():
                 print("{} : {} / {} ".format(case_type,
                                              result['num_correct'][case_type],
                                              result['num_tests'][case_type]))
