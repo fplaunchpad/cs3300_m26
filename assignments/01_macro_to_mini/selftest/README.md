@@ -9,7 +9,7 @@ thing it will mean when your submission is graded.
 Build your submission archive exactly as the assignment describes, then:
 
 ```bash
-$ python3 selftest/evaluator.py cs23b087_P0.tar.gz
+$ python3 selftest/evaluator.py cs99b999_P0.tar.gz
 Grading against tier: public
 Macro test results		: 8/8
 Positive unit test results	: 3/3
@@ -20,7 +20,7 @@ Total				: 17/17
 Add `-v` to see which individual tests failed and why:
 
 ```bash
-$ python3 selftest/evaluator.py -v cs23b087_P0.tar.gz
+$ python3 selftest/evaluator.py -v cs99b999_P0.tar.gz
 ```
 
 It needs `flex`, `bison`, a C compiler, a JDK and `python3`. The
@@ -64,7 +64,7 @@ work out the rest.
 Both routes need the key from the course Slack:
 
 * the web page, whose URL is on Slack; or
-* `./submit.sh cs23b087_P0.tar.gz` from a terminal.
+* `./submit.sh cs99b999_P0.tar.gz` from a terminal.
 
 Both take the same `.tar.gz` you upload to Moodle, so a packaging mistake shows
 up there too. Limited to 20 submissions an hour, and it records no mark.

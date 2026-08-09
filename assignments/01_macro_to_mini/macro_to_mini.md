@@ -47,8 +47,8 @@ instructions above.
 ## Submission details
 
 Your submission should be named `<YOUR-ROLLNO>_P0.tar.gz` compressed file. For
-example, if your roll number is `cs20b220`, then the file should be named
-`cs20b220_P0.tar.gz`. The compressed gzip archive should contain a folder named
+example, if your roll number is `cs99b999`, then the file should be named
+`cs99b999_P0.tar.gz`. The compressed gzip archive should contain a folder named
 `<YOUR-ROLLNO>_P0` with two files **and nothing else**. A Flex file named as
 `A1.l` and a Bison file named as `A1.y`.
 
@@ -73,7 +73,7 @@ for you and picks the right library for your platform.
 `selftest/` runs the same program that marks you, over a subset of the tests:
 
 ```bash
-$ python3 selftest/evaluator.py cs23b087_P0.tar.gz
+$ python3 selftest/evaluator.py cs99b999_P0.tar.gz
 ```
 
 It builds your archive the way the grader does, so packaging mistakes surface
@@ -97,11 +97,11 @@ $ ./A1 < X.java
 
 ### Useful commands for assignment submission
 
-Assume that you have a folder called `cs20b220_P0` with the solution files. For
+Assume that you have a folder called `cs99b999_P0` with the solution files. For
 assignment 1, this will contain just the Flex and the Bison files. 
 
 ```bash
-$ ls cs20b220_P0
+$ ls cs99b999_P0
 A1.l A1.y
 ```
 
@@ -109,21 +109,21 @@ You can create a compressed archive (specifically a `.tar.gz` file) as
 follows:
 
 ```bash
-$ tar cvzf cs20b220_P0.tar.gz cs20b220_P0 
-a cs20b220_P0
-a cs20b220_P0/A1.y
-a cs20b220_P0/A1.l
-$ file cs20b220_P0.tar.gz 
-cs20b220_P0.tar.gz.: gzip compressed data, last modified: ....
+$ tar cvzf cs99b999_P0.tar.gz cs99b999_P0 
+a cs99b999_P0
+a cs99b999_P0/A1.y
+a cs99b999_P0/A1.l
+$ file cs99b999_P0.tar.gz 
+cs99b999_P0.tar.gz.: gzip compressed data, last modified: ....
 ```
 
 You can uncompress the archive as follows:
 
 ```bash
-tar xvzf cs20b220_P0.tar.gz
-x cs20b220_P0/
-x cs20b220_P0/A1.y
-x cs20b220_P0/A1.l
+tar xvzf cs99b999_P0.tar.gz
+x cs99b999_P0/
+x cs99b999_P0/A1.y
+x cs99b999_P0/A1.l
 ```
 
 ## MacroJava 

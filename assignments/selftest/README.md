@@ -11,7 +11,7 @@ Assignment 1 has its own self-test, in `01_macro_to_mini/selftest/`.
 Build your submission archive exactly as the assignment describes, then:
 
 ```bash
-$ python3 assignments/selftest/eval.py cs23b087_P2.tar.gz
+$ python3 assignments/selftest/eval.py cs99b999_P2.tar.gz
 ```
 
 ```

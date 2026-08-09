@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 # Check your assignment against tests you have not seen.
 #
-#   ./submit.sh cs23b087_P0.tar.gz
+#   ./submit.sh cs99b999_P0.tar.gz
 #
 # The key is on the course Slack. Put it in the environment so it is not in
 # your shell history, or in a file named .cs3300key next to this script:
