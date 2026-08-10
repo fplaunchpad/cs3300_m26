@@ -206,91 +206,11 @@ Some sample MiniJava programs can be found [here](https://github.com/fplaunchpad
 
 ### Specification
 
-```
-                     Goal ::= MainClass ( TypeDeclaration )* <EOF>
-                MainClass ::= "class" Identifier "{" "public" "static" "void" "main" "(" "String" "[" "]" Identifier ")" "{" PrintStatement "}" "}"
-          TypeDeclaration ::= ClassDeclaration
-                            | ClassExtendsDeclaration
-         ClassDeclaration ::= "class" Identifier "{" ( VarDeclaration )* ( MethodDeclaration )* "}"
-  ClassExtendsDeclaration ::= "class" Identifier "extends" Identifier "{" ( VarDeclaration )* ( MethodDeclaration )* "}"
-           VarDeclaration ::= Type Identifier ";"
-        MethodDeclaration ::= AccessType Type Identifier "(" ( FormalParameterList )? ")" "{" ( VarDeclaration )* ( Statement )* "return" Expression ";" "}"
-      FormalParameterList ::= FormalParameter ( FormalParameterRest )*
-          FormalParameter ::= Type Identifier
-      FormalParameterRest ::= "," FormalParameter
-                     Type ::= ArrayType
-                            | BooleanType
-                            | IntegerType
-                            | Identifier
-               AccessType ::= PublicType
-                            | PrivateType
-                            | ProtectedType
-                ArrayType ::= "int" "[" "]"
-              BooleanType ::= "boolean"
-              IntegerType ::= "int"
-               PublicType ::= "public"
-              PrivateType ::= "private"
-            ProtectedType ::= "protected"
-                Statement ::= Block
-                            | AssignmentStatement
-                            | ArrayAssignmentStatement
-                            | IfStatement
-                            | WhileStatement
-                            | PrintStatement
-                    Block ::= "{" ( Statement )* "}"
-      AssignmentStatement ::= Identifier "=" Expression ";"
- ArrayAssignmentStatement ::= Identifier "[" Expression "]" "=" Expression ";"
-              IfStatement ::= IfthenElseStatement
-                            | IfthenStatement
-          IfthenStatement ::= "if" "(" Expression ")" Statement
-      IfthenElseStatement ::= "if" "(" Expression ")" Statement "else" Statement
-           WhileStatement ::= "while" "(" Expression ")" Statement
-           PrintStatement ::= "System.out.println" "(" Expression ")" ";"
-               Expression ::= OrExpression
-                            | AndExpression
-                            | CompareExpression
-                            | neqExpression
-                            | PlusExpression
-                            | MinusExpression
-                            | TimesExpression
-                            | DivExpression
-                            | ArrayLookup
-                            | ArrayLength
-                            | MessageSend
-                            | TernaryExpression
-                            | PrimaryExpression
-            AndExpression ::= PrimaryExpression "&&" PrimaryExpression
-             OrExpression ::= PrimaryExpression "||" PrimaryExpression
-        CompareExpression ::= PrimaryExpression "<=" PrimaryExpression
-            neqExpression ::= PrimaryExpression "!=" PrimaryExpression
-           PlusExpression ::= PrimaryExpression "+" PrimaryExpression
-          MinusExpression ::= PrimaryExpression "-" PrimaryExpression
-          TimesExpression ::= PrimaryExpression "*" PrimaryExpression
-            DivExpression ::= PrimaryExpression "/" PrimaryExpression
-              ArrayLookup ::= PrimaryExpression "[" PrimaryExpression "]"
-              ArrayLength ::= PrimaryExpression "." "length"
-              MessageSend ::= PrimaryExpression "." Identifier "(" ( ExpressionList )? ")"
-        TernaryExpression ::= PrimaryExpression "?" PrimaryExpression ":" PrimaryExpression
-           ExpressionList ::= Expression ( ExpressionRest )*
-           ExpressionRest ::= "," Expression
-        PrimaryExpression ::= IntegerLiteral
-                            | TrueLiteral
-                            | FalseLiteral
-                            | Identifier
-                            | ThisExpression
-                            | ArrayAllocationExpression
-                            | AllocationExpression
-                            | NotExpression
-                            | BracketExpression
-           IntegerLiteral ::= <INTEGER_LITERAL>
-              TrueLiteral ::= "true"
-             FalseLiteral ::= "false"
-               Identifier ::= <IDENTIFIER>
-           ThisExpression ::= "this"
-ArrayAllocationExpression ::= "new" "int" "[" Expression "]"
-     AllocationExpression ::= "new" Identifier "(" ")"
-            NotExpression ::= "!" Expression
-        BracketExpression ::= "(" Expression ")"
-           IdentifierList ::= Identifier ( IdentifierRest )*
-           IdentifierRest ::= "," Identifier
-```
+Use the [canonical MiniJava grammar]({{ '/grammar/minijava/' | relative_url }}).
+The corresponding [JavaCC grammar]({{ '/assets/minijava.jj' | relative_url }})
+is the authoritative specification used to generate the assignment parser.
+
+**Clarification (10 August 2026).** An earlier version of this page also listed
+`private` and `protected` method access and ternary expressions as MiniJava
+extensions. Submissions that support these extensions remain valid. This
+clarification does not change the released test cases or grading.
