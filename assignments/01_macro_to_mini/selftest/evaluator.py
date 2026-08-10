@@ -58,6 +58,29 @@ CXX_MARKERS = re.compile(
     r'|stack|memory|utility)>')
 
 
+def build_errors(raw):
+    """The lines of a failed build worth showing.
+
+    Drops warnings and the source-context lines under them. Building the
+    generated parser as C++ emits dozens, which would otherwise bury the real
+    message. Everything else is kept, including linker diagnostics: those say
+    "undefined reference" and never use the word "error", so selecting on that
+    word alone loses them entirely.
+    """
+    lines = raw.strip().split('\n')
+    kept, skipping = [], False
+    for ln in lines:
+        if re.search(r'\bwarning:', ln, re.I):
+            skipping = True
+            continue
+        if skipping:
+            if not ln.strip() or re.match(r'\s*(\d+\s*\||\||\^|~|\.\.\.)', ln):
+                continue
+            skipping = False
+        kept.append(ln)
+    return kept[-12:] if kept else lines[-8:]
+
+
 def looks_like_cxx(dirname):
     for name in ('A1.l', 'A1.y'):
         path = os.path.join(dirname, name)
@@ -225,6 +248,11 @@ def main():
     if not os.path.exists(mk):
         fail('Error: no build Makefile found next to evaluator.py')
     shutil.copy(mk, dirname)
+    # Build from source, always. An archive that still contains A1.exe, or the
+    # generated A1.tab.c and lex.yy.c, would otherwise be newer than A1.l and
+    # A1.y, and make would consider the target up to date and skip compiling.
+    # The submitted binary would then be what gets marked.
+    sp.run(['make', '-C', dirname, 'clean'], stdout=sp.DEVNULL, stderr=sp.DEVNULL)
     # C first, then C++. Actions in A1.l and A1.y may be written in either, so
     # the second attempt is what lets a submission use the STL. Trying C first
     # means a C submission builds exactly as it always did: nothing about the
@@ -234,7 +262,13 @@ def main():
     if build.returncode != 0:
         sp.run(['make', '-C', dirname, 'clean'],
                stdout=sp.DEVNULL, stderr=sp.DEVNULL)
-        build_cxx = sp.run(['make', '-C', dirname, 'CC=c++'],
+        # LEXLIB is dropped on purpose. libfl is a C library: it exports
+        # yywrap, and on GNU/Linux libfl.so itself refers to yylex. Compiling
+        # the lexer as C++ mangles both names, so linking it produces
+        # "undefined reference to yylex" from inside libfl. Without the
+        # library the lexer must supply yywrap, which is what
+        # `%option noyywrap` does.
+        build_cxx = sp.run(['make', '-C', dirname, 'CC=c++', 'LEXLIB='],
                            stdout=sp.PIPE, stderr=sp.STDOUT)
         if build_cxx.returncode == 0:
             build = build_cxx
@@ -250,12 +284,15 @@ def main():
         # Show the lines that actually say "error" rather than the tail of the
         # log: a C++ build can emit dozens of warnings about the generated
         # parser, which would otherwise push the real message out of view.
-        out = build.stdout.decode(errors='replace').strip().split('\n')
-        why = [ln for ln in out if re.search(r'\berror\b', ln, re.I)][:8]
-        if not why:
-            why = out[-8:]
+        raw = build.stdout.decode(errors='replace')
+        why = build_errors(raw)
+        hint = ''
+        if re.search(r'yywrap', raw):
+            hint = ('\n\nA C++ lexer must supply yywrap itself, because the C '
+                    'lex library\ncannot be linked into a C++ build. Add this '
+                    'as the first line of A1.l:\n\n    %option noyywrap')
         shutil.rmtree(unpack, ignore_errors=True)
-        fail('Error: The submission failed to build\n' + '\n'.join(why))
+        fail('Error: The submission failed to build\n' + '\n'.join(why) + hint)
     exe = os.path.abspath(os.path.join(dirname, 'A1.exe'))
 
     label = args.testcases or (

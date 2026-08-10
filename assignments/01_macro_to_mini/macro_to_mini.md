@@ -83,12 +83,25 @@ STL is available; you still have to include the headers you use, in the
 %}
 ```
 
-Building it yourself is the same as above with `c++` in place of `cc`. The
-generated files are named `.c`, but the compiler you invoke decides the
-language, not the file extension:
+If you write C++, put this as the first line of `A1.l`:
+
+```
+%option noyywrap
+```
+
+It is needed because the lex library is a C library, and it cannot be linked
+into a C++ build: on GNU/Linux the library itself refers to `yylex`, and
+compiling the lexer as C++ changes that name, so the link fails with
+`undefined reference to yylex`. Dropping the library means your lexer has to
+supply `yywrap`, and that option is what does it. Leave it out and the grader
+will tell you so.
+
+Building it yourself is then the same as above with `c++` in place of `cc` and
+no lex library. The generated files are named `.c`, but the compiler you invoke
+decides the language, not the file extension:
 
 ```bash
-$ c++ A1.tab.c lex.yy.c -lfl -o A1
+$ c++ A1.tab.c lex.yy.c -o A1
 ```
 
 Two things catch people out when moving to C++. Function declarations are
