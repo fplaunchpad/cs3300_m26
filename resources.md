@@ -6,8 +6,9 @@ permalink: /resources/
 
 ## Development environment
 
-Across the six assignments you need a JDK, `flex`, `bison`, a C compiler, and
-`spim` (assignment 6 only). You can install these natively or use the container
+Across the six assignments you need a JDK, `flex`, `bison`, a C and C++
+compiler, and `spim` (assignment 6 only). Assignment 1 may be written in either
+C or C++; the packages below give you both. You can install these natively or use the container
 in the [course repository](https://github.com/fplaunchpad/cs3300_m26), which has
 all of them. The container is the least trouble on Windows, and on Apple Silicon
 where `spim` is awkward to install.

@@ -68,6 +68,39 @@ order to use the token names. On macOS the flex library has a different name:
 use `-ll` in place of `-lfl`. The `Makefile` in `selftest/` does all of this
 for you and picks the right library for your platform.
 
+### C or C++
+
+You may write the action code in either. The grader builds your submission as
+C first, and if that fails, builds it again as C++, so you do not have to
+declare which you are using. The standard library is linked for you, so the
+STL is available; you still have to include the headers you use, in the
+`%{ ... %}` block:
+
+```c
+%{
+#include <map>
+#include <string>
+%}
+```
+
+Building it yourself is the same as above with `c++` in place of `cc`. The
+generated files are named `.c`, but the compiler you invoke decides the
+language, not the file extension:
+
+```bash
+$ c++ A1.tab.c lex.yy.c -lfl -o A1
+```
+
+Two things catch people out when moving to C++. Function declarations are
+stricter: `int yyerror();` in C means "unspecified arguments" and lets you call
+`yyerror("...")`, while in C++ it means "no arguments" and that call will not
+compile. Declare and define it with the parameters you actually pass. And a
+declaration and its definition must agree exactly, or the two will be different
+symbols and the link will fail.
+
+Still submit exactly `A1.l` and `A1.y`. Any other source file is ignored,
+whichever language you use.
+
 ## Checking your work before you submit
 
 `selftest/` runs the same program that marks you, over a subset of the tests:

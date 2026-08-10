@@ -49,6 +49,27 @@ def fail(s):
     sys.exit(1)
 
 
+# Only used to choose which compiler's errors to show when a submission builds
+# under neither C nor C++. Guessing wrong costs a confusing message, nothing
+# more, so a rough test is enough.
+CXX_MARKERS = re.compile(
+    r'\bstd::|\busing\s+namespace\b|\btemplate\s*<|#include\s*<(?:iostream|vector'
+    r'|string|map|set|algorithm|sstream|unordered_map|unordered_set|list|queue'
+    r'|stack|memory|utility)>')
+
+
+def looks_like_cxx(dirname):
+    for name in ('A1.l', 'A1.y'):
+        path = os.path.join(dirname, name)
+        try:
+            with open(path, errors='replace') as f:
+                if CXX_MARKERS.search(f.read()):
+                    return True
+        except OSError:
+            pass
+    return False
+
+
 def translate(exe, test, workdir):
     """Run the submission on one test. Returns (stdout, first_line)."""
     with open(test) as inp:
@@ -204,13 +225,37 @@ def main():
     if not os.path.exists(mk):
         fail('Error: no build Makefile found next to evaluator.py')
     shutil.copy(mk, dirname)
+    # C first, then C++. Actions in A1.l and A1.y may be written in either, so
+    # the second attempt is what lets a submission use the STL. Trying C first
+    # means a C submission builds exactly as it always did: nothing about the
+    # majority path changes, and a plain C file that a C++ compiler would
+    # reject is unaffected.
     build = sp.run(['make', '-C', dirname], stdout=sp.PIPE, stderr=sp.STDOUT)
+    if build.returncode != 0:
+        sp.run(['make', '-C', dirname, 'clean'],
+               stdout=sp.DEVNULL, stderr=sp.DEVNULL)
+        build_cxx = sp.run(['make', '-C', dirname, 'CC=c++'],
+                           stdout=sp.PIPE, stderr=sp.STDOUT)
+        if build_cxx.returncode == 0:
+            build = build_cxx
+        else:
+            # Both failed. Report the attempt matching the language the
+            # sources appear to be in, so a C student is not handed C++
+            # errors and the other way round.
+            build = build_cxx if looks_like_cxx(dirname) else build
     if build.returncode != 0:
         # bison and flex say exactly what is wrong and where. Discarding that
         # leaves a student with "failed to build" and nothing to act on.
-        why = build.stdout.decode(errors='replace').strip().split('\n')
+        #
+        # Show the lines that actually say "error" rather than the tail of the
+        # log: a C++ build can emit dozens of warnings about the generated
+        # parser, which would otherwise push the real message out of view.
+        out = build.stdout.decode(errors='replace').strip().split('\n')
+        why = [ln for ln in out if re.search(r'\berror\b', ln, re.I)][:8]
+        if not why:
+            why = out[-8:]
         shutil.rmtree(unpack, ignore_errors=True)
-        fail('Error: The submission failed to build\n' + '\n'.join(why[-8:]))
+        fail('Error: The submission failed to build\n' + '\n'.join(why))
     exe = os.path.abspath(os.path.join(dirname, 'A1.exe'))
 
     label = args.testcases or (
