@@ -17,7 +17,7 @@ between two topics counts as 0.5 to each.
 |--:|-------|-------|---------:|--------|----------|
 | 1 | Introduction | 27/07, 28/07, 29/07 | 3 | [01_introduction.pdf](/cs3300_m26/lectures/01_introduction/01_introduction.pdf) | |
 | 2 | Lexical Analysis | 31/07, 03/08 | 2 | [02_lexical_analysis.pdf](/cs3300_m26/lectures/02_lexical_analysis/02_lexical_analysis.pdf) | |
-| 3 | Parsing | 04/08, 05/08, 10/08, 11/08 | 4 | [03_parsing.pdf](/cs3300_m26/lectures/03_parsing/03_parsing.pdf) | • [Recursive descent parser demo](/cs3300_m26/demos/recursive-descent/)<br>• [LL(1) table parser workbench](/cs3300_m26/demos/ll1-workbench/)<br>• [Dangling-else equivalence, proved in Lean](https://github.com/fplaunchpad/cs3300_m26/blob/main/lectures/03_parsing/dangling_else_equivalence.lean) |
+| 3 | Parsing | 04/08, 05/08, 10/08, 11/08, 12/08 | 5 | [03_parsing.pdf](/cs3300_m26/lectures/03_parsing/03_parsing.pdf) | • [Recursive descent parser demo](/cs3300_m26/demos/recursive-descent/)<br>• [LL(1) table parser workbench](/cs3300_m26/demos/ll1-workbench/)<br>• [Dangling-else equivalence, proved in Lean](https://github.com/fplaunchpad/cs3300_m26/blob/main/lectures/03_parsing/dangling_else_equivalence.lean) |
 | 4 | Bottom-up Parsing | | | [04_bottom_up_parsing.pdf](/cs3300_m26/lectures/04_bottom_up_parsing/04_bottom_up_parsing.pdf) | |
 | 5 | Semantic Analysis | | | [05_semantic_analysis.pdf](/cs3300_m26/lectures/05_semantic_analysis/05_semantic_analysis.pdf) | [MiniJava Type System](/cs3300_m26/assets/miniJava-typesystem.pdf) |
 | 6 | Syntax Directed Translation | | | [06_sdt.pdf](/cs3300_m26/lectures/06_sdt/06_sdt.pdf) | |
