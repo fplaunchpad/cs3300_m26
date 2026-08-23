@@ -28,9 +28,20 @@ $ javac P1.java
 $ java P1 < A.java
 ```
 
-should print either "Program type checked successfully" or "Type error". Note,
-your program must take input from standard input and write to standard output
-(so that we can use redirection).
+Your program must print exactly one line and no other output:
+
+- Print `Symbol not found` if name resolution fails: a referenced class
+  (including a superclass or a class used as a type), variable, or method has no
+  declaration in the appropriate scope.
+- Print `Type error` if all referenced symbols can be resolved, but the program
+  violates any other static-semantic rule. Examples include incompatible types,
+  duplicate declarations, invalid method overriding, and cyclic inheritance.
+- Print `Program type checked successfully` if the program has no
+  static-semantic errors.
+
+You may assume that each test program has an unambiguous expected error
+category. Your program must take input from standard input and write to standard
+output (so that we can use redirection).
 
 Alternatively, `make` compiles the assignment, `make run FILE=<input>` runs it,
 and `make clean` removes the `.class` files you must delete before submitting.
