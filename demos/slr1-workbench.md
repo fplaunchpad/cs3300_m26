@@ -9,7 +9,8 @@ permalink: /demos/slr1-workbench/
 <div class="lr0-demo" id="lr0-demo" data-parser-kind="slr1">
   <p class="lr0-lead">
     Build the canonical collection of LR(0) item sets, compute FIRST and FOLLOW,
-    and use FOLLOW sets to place reductions in an SLR(1) parsing table.
+    use FOLLOW sets to place reductions in an SLR(1) parsing table, and parse an
+    input one action at a time.
   </p>
 
   <div class="lr0-presets" role="group" aria-label="Grammar examples">
@@ -36,6 +37,7 @@ permalink: /demos/slr1-workbench/
   <div class="lr0-tabs" role="tablist" aria-label="Workbench stage">
     <button type="button" id="lr0-tab-items" class="lr0-tab is-active" role="tab" aria-selected="true" aria-controls="lr0-items">1. Canonical LR(0) item sets</button>
     <button type="button" id="lr0-tab-parser" class="lr0-tab" role="tab" aria-selected="false" aria-controls="lr0-parser">2. SLR(1) ACTION and GOTO table</button>
+    <button type="button" id="lr0-tab-run" class="lr0-tab" role="tab" aria-selected="false" aria-controls="lr0-run">3. Parse an input</button>
   </div>
 
   <section id="lr0-items" class="lr0-workspace" role="tabpanel" aria-labelledby="lr0-tab-items">
@@ -62,6 +64,49 @@ permalink: /demos/slr1-workbench/
     <section class="lr0-card lr0-table-card">
       <header><div><span class="lr0-eyebrow">FOLLOW-guided reductions</span><h2>SLR(1) parsing table</h2></div><span id="lr0-conflicts" class="lr0-conflicts"></span></header>
       <div id="lr0-parse-table" class="lr0-table-wrap"></div>
+    </section>
+  </section>
+
+  <section id="lr0-run" class="lr0-workspace" role="tabpanel" aria-labelledby="lr0-tab-run" hidden>
+    <div class="lr0-controls">
+      <label for="lr0-input">Input tokens</label>
+      <input id="lr0-input" type="text" spellcheck="false" autocomplete="off" aria-describedby="lr0-input-help">
+      <button type="button" id="lr0-parse" class="lr0-button lr0-button-primary">Start / reset</button>
+      <span id="lr0-input-help" class="lr0-note">Separate tokens with spaces; <code>$</code> is appended automatically.</span>
+    </div>
+    <div class="lr0-progress-row">
+      <button type="button" id="lr0-prev" class="lr0-button">Previous</button>
+      <button type="button" id="lr0-next" class="lr0-button">Next</button>
+      <button type="button" id="lr0-play" class="lr0-button" aria-pressed="false">Play</button>
+      <input id="lr0-progress" type="range" min="0" value="0" aria-label="Parsing step">
+      <span id="lr0-step-count" class="lr0-step-count"></span>
+      <span class="lr0-keyboard-hint"><kbd>←</kbd> <kbd>→</kbd> step</span>
+    </div>
+
+    <div class="lr0-now" aria-live="polite">
+      <div><strong id="lr0-message"></strong><small id="lr0-reason"></small></div>
+      <div><span id="lr0-action-label" class="lr0-chip"></span> <span id="lr0-outcome" class="lr0-outcome"></span></div>
+    </div>
+
+    <div class="lr0-grid lr0-grid-overview">
+      <section class="lr0-card">
+        <header><div><span class="lr0-eyebrow">Unread token highlighted</span><h2>Input</h2></div></header>
+        <div id="lr0-tape" class="lr0-tape"></div>
+      </section>
+      <section class="lr0-card">
+        <header><div><span class="lr0-eyebrow">Top at the right</span><h2>Grammar symbols and DFA states</h2></div></header>
+        <div id="lr0-stack" class="lr0-stack"></div>
+      </section>
+    </div>
+
+    <section class="lr0-card lr0-table-card">
+      <header><div><span class="lr0-eyebrow">Orange cell is consulted now</span><h2>Current ACTION/GOTO lookup</h2></div></header>
+      <div id="lr0-live-parse-table" class="lr0-table-wrap"></div>
+    </section>
+
+    <section class="lr0-card lr0-tree-card">
+      <header><div><span class="lr0-eyebrow">Built by reductions</span><h2>Partial parse forest</h2></div></header>
+      <div id="lr0-tree" class="lr0-tree"></div>
     </section>
   </section>
 </div>

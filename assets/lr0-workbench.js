@@ -13,10 +13,14 @@
   var activeTab = "items";
   var activePreset = "lecture";
   var dfaRenderGeneration = 0;
+  var trace = [];
+  var traceStep = 0;
+  var playTimer = null;
 
   var presets = {
     lecture: {
       start: "E",
+      input: "id + id",
       source: [
         "E -> E + T | T",
         "T -> id | ( E )"
@@ -24,12 +28,14 @@
     },
     "shift-reduce": {
       start: "E",
+      input: "id + id + id",
       source: [
         "E -> E + E | E * E | id"
       ].join("\n")
     },
     "reduce-reduce": {
       start: "S",
+      input: "id",
       source: [
         "S -> A | B",
         "A -> id",
@@ -41,6 +47,7 @@
   var slrPresets = {
     lecture: {
       start: "E",
+      input: "id + id * id",
       source: [
         "E -> E + T | T",
         "T -> T * F | F",
@@ -49,6 +56,7 @@
     },
     epsilon: {
       start: "S",
+      input: "a a b",
       source: [
         "S -> A B",
         "A -> a A | epsilon",
@@ -57,6 +65,7 @@
     },
     "not-slr": {
       start: "S",
+      input: "d a",
       source: [
         "S -> A a | b A c | B c | b B a",
         "A -> d",
@@ -394,6 +403,9 @@
       return itemText(action.item) + " has the dot immediately before " + lookahead + ", so GOTO(I" + state + ", " + lookahead + ") = I" + action.target + ".";
     }
     if (action.kind === "reduce") {
+      if (parserKind === "slr1") {
+        return itemText(action.item) + " is complete; SLR(1) places this reduction on FOLLOW(" + grammar.productions[action.production].lhs + ") = { " + firstFollow.follow[grammar.productions[action.production].lhs].join(", ") + " }.";
+      }
       return itemText(action.item) + " is complete; LR(0) places this reduction in every terminal column of row " + state + ".";
     }
     return itemText(action.item) + " has reached the end marker in the augmented start production.";
@@ -820,6 +832,10 @@
     });
     tableNode.appendChild(body);
     el.parseTable.appendChild(tableNode);
+    if (el.liveParseTable) {
+      clear(el.liveParseTable);
+      el.liveParseTable.appendChild(tableNode.cloneNode(true));
+    }
     if (!table.conflicts.length) {
       el.conflicts.textContent = "No conflicts: grammar is " + (parserKind === "slr1" ? "SLR(1)" : "LR(0)");
       el.conflicts.className = "lr0-conflicts is-clear";
@@ -910,18 +926,24 @@
       el.reason.textContent = "Tokens must be separated by spaces and must occur in the grammar.";
       el.outcome.className = "lr0-outcome is-rejected";
       el.outcome.textContent = "Input error";
+      renderParseTable(null);
     }
   }
 
   function setTab(tab) {
     activeTab = tab;
     var itemsActive = tab === "items";
+    var tableActive = tab === "parser";
+    var runActive = tab === "run";
     el.items.hidden = !itemsActive;
-    el.parser.hidden = itemsActive;
+    el.parser.hidden = !tableActive;
+    el.run.hidden = !runActive;
     el.tabItems.classList.toggle("is-active", itemsActive);
-    el.tabParser.classList.toggle("is-active", !itemsActive);
+    el.tabParser.classList.toggle("is-active", tableActive);
+    el.tabRun.classList.toggle("is-active", runActive);
     el.tabItems.setAttribute("aria-selected", itemsActive ? "true" : "false");
-    el.tabParser.setAttribute("aria-selected", itemsActive ? "false" : "true");
+    el.tabParser.setAttribute("aria-selected", tableActive ? "true" : "false");
+    el.tabRun.setAttribute("aria-selected", runActive ? "true" : "false");
   }
 
   function rebuild(source, start) {
@@ -934,6 +956,7 @@
     renderDfa();
     renderFirstFollow();
     renderParseTable(null);
+    parseCurrentInput();
     el.editorStatus.className = "lr0-editor-status";
     el.editorStatus.textContent = machine.states.length + " states; " + table.conflicts.length + " conflict cell" + (table.conflicts.length === 1 ? "" : "s");
   }
@@ -943,6 +966,7 @@
     var preset = presets[name];
     el.source.value = preset.source;
     el.start.value = preset.start;
+    el.input.value = preset.input;
     Array.prototype.forEach.call(document.querySelectorAll(".lr0-preset"), function (button) {
       button.classList.toggle("is-active", button.getAttribute("data-preset") === name);
     });
@@ -956,7 +980,7 @@
   }
 
   function bindElements() {
-    ["source", "start", "load", "editor-status", "tab-items", "tab-parser", "items", "parser", "dfa", "state-grid", "state-count", "first-follow", "conflicts", "parse-table"].forEach(function (suffix) {
+    ["source", "start", "load", "editor-status", "tab-items", "tab-parser", "tab-run", "items", "parser", "run", "dfa", "state-grid", "state-count", "first-follow", "conflicts", "parse-table", "live-parse-table", "input", "parse", "prev", "next", "play", "progress", "step-count", "message", "reason", "action-label", "outcome", "tape", "stack", "tree"].forEach(function (suffix) {
       var key = suffix.replace(/-([a-z])/g, function (_, letter) { return letter.toUpperCase(); });
       el[key] = byId("lr0-" + suffix);
     });
@@ -977,6 +1001,50 @@
     });
     el.tabItems.addEventListener("click", function () { setTab("items"); });
     el.tabParser.addEventListener("click", function () { setTab("parser"); });
+    el.tabRun.addEventListener("click", function () { setTab("run"); });
+    el.parse.addEventListener("click", parseCurrentInput);
+    el.input.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") parseCurrentInput();
+    });
+    el.prev.addEventListener("click", function () {
+      stopPlaying();
+      renderTraceStep(traceStep - 1);
+    });
+    el.next.addEventListener("click", function () {
+      stopPlaying();
+      renderTraceStep(traceStep + 1);
+    });
+    el.progress.addEventListener("input", function () {
+      stopPlaying();
+      renderTraceStep(Number(el.progress.value));
+    });
+    el.play.addEventListener("click", function () {
+      if (playTimer) {
+        stopPlaying();
+        return;
+      }
+      if (!trace.length) parseCurrentInput();
+      if (traceStep === trace.length - 1) renderTraceStep(0);
+      el.play.textContent = "Pause";
+      el.play.setAttribute("aria-pressed", "true");
+      playTimer = window.setInterval(function () {
+        if (traceStep >= trace.length - 1) stopPlaying();
+        else renderTraceStep(traceStep + 1);
+      }, 1100);
+    });
+    document.addEventListener("keydown", function (event) {
+      var tag = event.target && event.target.tagName;
+      if (activeTab !== "run" || tag === "INPUT" || tag === "TEXTAREA" || tag === "BUTTON") return;
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        stopPlaying();
+        renderTraceStep(traceStep - 1);
+      } else if (event.key === "ArrowRight") {
+        event.preventDefault();
+        stopPlaying();
+        renderTraceStep(traceStep + 1);
+      }
+    });
   }
 
   function init() {
