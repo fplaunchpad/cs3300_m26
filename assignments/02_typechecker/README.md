@@ -46,7 +46,6 @@ output (so that we can use redirection).
 Alternatively, `make` compiles the assignment, `make run FILE=<input>` runs it,
 and `make clean` removes the `.class` files you must delete before submitting.
 
-Note: Please do not alter the directory structure of `RollNo_P1`. Only edit `GJDepthFirst.java` and `P1.java`
 ## Resources
 
 The source files are on
