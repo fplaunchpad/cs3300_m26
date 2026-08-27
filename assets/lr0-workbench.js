@@ -74,6 +74,34 @@
     }
   };
 
+  var lr1Presets = {
+    lecture: {
+      start: "E",
+      input: "id + id * id",
+      source: [
+        "E -> E + T | T",
+        "T -> T * F | F",
+        "F -> ( E ) | id"
+      ].join("\n")
+    },
+    "lr1-not-slr": {
+      start: "S",
+      input: "* id = id",
+      source: [
+        "S -> L = R | R",
+        "L -> * R | id",
+        "R -> L"
+      ].join("\n")
+    },
+    "not-lr1": {
+      start: "E",
+      input: "id + id + id",
+      source: [
+        "E -> E + E | id"
+      ].join("\n")
+    }
+  };
+
   function byId(id) { return document.getElementById(id); }
   function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
   function make(tag, className, text) {
@@ -97,7 +125,9 @@
       return true;
     });
   }
-  function itemKey(item) { return item.production + ":" + item.dot; }
+  function itemKey(item) {
+    return item.production + ":" + item.dot + (parserKind === "lr1" ? ":" + item.lookahead : "");
+  }
   function itemSetKey(items) {
     return items.map(itemKey).sort().join("|");
   }
@@ -108,7 +138,8 @@
     var production = grammar.productions[item.production];
     var rhs = production.rhs.slice();
     rhs.splice(item.dot, 0, "•");
-    return production.lhs + " → " + rhs.join(" ");
+    var core = production.lhs + " → " + rhs.join(" ");
+    return parserKind === "lr1" ? "[" + core + ", " + item.lookahead + "]" : core;
   }
   function isNonterminal(symbol) {
     return grammar.nonterminals.indexOf(symbol) >= 0;
@@ -251,6 +282,22 @@
     return grammar.productions.filter(function (production) { return production.lhs === lhs; });
   }
 
+  function firstOfSequence(symbols) {
+    var result = [];
+    for (var index = 0; index < symbols.length; index += 1) {
+      var symbol = symbols[index];
+      if (!isNonterminal(symbol)) {
+        if (result.indexOf(symbol) < 0) result.push(symbol);
+        return result;
+      }
+      firstFollow.first[symbol].forEach(function (terminal) {
+        if (result.indexOf(terminal) < 0) result.push(terminal);
+      });
+      if (!firstFollow.nullable[symbol]) return result;
+    }
+    return result;
+  }
+
   function closure(seed) {
     var items = [];
     var present = {};
@@ -258,7 +305,7 @@
       var key = itemKey(item);
       if (!present[key]) {
         present[key] = true;
-        items.push({ production: item.production, dot: item.dot });
+        items.push({ production: item.production, dot: item.dot, lookahead: item.lookahead });
       }
     });
     for (var cursor = 0; cursor < items.length; cursor += 1) {
@@ -266,17 +313,22 @@
       var production = grammar.productions[item.production];
       var symbol = production.rhs[item.dot];
       if (!isNonterminal(symbol)) continue;
+      var lookaheads = parserKind === "lr1"
+        ? firstOfSequence(production.rhs.slice(item.dot + 1).concat([item.lookahead]))
+        : [undefined];
       productionsFor(symbol).forEach(function (candidate) {
-        var next = { production: candidate.id, dot: 0 };
-        var key = itemKey(next);
-        if (!present[key]) {
-          present[key] = true;
-          items.push(next);
-        }
+        lookaheads.forEach(function (lookahead) {
+          var next = { production: candidate.id, dot: 0, lookahead: lookahead };
+          var key = itemKey(next);
+          if (!present[key]) {
+            present[key] = true;
+            items.push(next);
+          }
+        });
       });
     }
     return items.sort(function (a, b) {
-      return a.production - b.production || a.dot - b.dot;
+      return a.production - b.production || a.dot - b.dot || String(a.lookahead || "").localeCompare(String(b.lookahead || ""));
     });
   }
 
@@ -285,14 +337,14 @@
     items.forEach(function (item) {
       var production = grammar.productions[item.production];
       if (production.rhs[item.dot] === symbol) {
-        advanced.push({ production: item.production, dot: item.dot + 1 });
+        advanced.push({ production: item.production, dot: item.dot + 1, lookahead: item.lookahead });
       }
     });
     return advanced.length ? closure(advanced) : [];
   }
 
   function buildMachine() {
-    var startItems = closure([{ production: 0, dot: 0 }]);
+    var startItems = closure([{ production: 0, dot: 0, lookahead: parserKind === "lr1" ? END : undefined }]);
     var states = [{ id: 0, items: startItems, via: null }];
     var stateByKey = {};
     var transitions = [];
@@ -351,7 +403,9 @@
           addAction(actions, state.id, symbol, { kind: "shift", target: transitionFrom(state.id, symbol), item: item });
         } else if (item.dot === production.rhs.length) {
           if (!production.augmented) {
-            var reductionTerminals = parserKind === "slr1" ? firstFollow.follow[production.lhs] : grammar.terminals;
+            var reductionTerminals = parserKind === "lr1"
+              ? [item.lookahead]
+              : parserKind === "slr1" ? firstFollow.follow[production.lhs] : grammar.terminals;
             reductionTerminals.forEach(function (terminal) {
               addAction(actions, state.id, terminal, { kind: "reduce", production: production.id, item: item });
             });
@@ -387,6 +441,12 @@
     return "multiple-action";
   }
 
+  function parserLabel() {
+    if (parserKind === "lr1") return "LR(1)";
+    if (parserKind === "slr1") return "SLR(1)";
+    return "LR(0)";
+  }
+
   function decisionAt(state, lookahead) {
     return (table.actions[state] && table.actions[state][lookahead]) || [];
   }
@@ -403,6 +463,9 @@
       return itemText(action.item) + " has the dot immediately before " + lookahead + ", so GOTO(I" + state + ", " + lookahead + ") = I" + action.target + ".";
     }
     if (action.kind === "reduce") {
+      if (parserKind === "lr1") {
+        return itemText(action.item) + " is complete, so this state reduces only when the lookahead is " + action.item.lookahead + ".";
+      }
       if (parserKind === "slr1") {
         return itemText(action.item) + " is complete; SLR(1) places this reduction on FOLLOW(" + grammar.productions[action.production].lhs + ") = { " + firstFollow.follow[grammar.productions[action.production].lhs].join(", ") + " }.";
       }
@@ -523,9 +586,32 @@
         firstToken = false;
       }
     }
+    if (parserKind === "lr1") {
+      label.appendChild(make("span", "lr0-lookaheads", ", { " + item.lookaheads.join(", ") + " }"));
+    }
     row.appendChild(label);
     row.appendChild(make("small", "", kernel ? "kernel" : "closure"));
     return row;
+  }
+
+  function itemsForDisplay(items) {
+    if (parserKind !== "lr1") return items;
+    var grouped = {};
+    var result = [];
+    items.forEach(function (item) {
+      var key = item.production + ":" + item.dot;
+      if (!grouped[key]) {
+        grouped[key] = { production: item.production, dot: item.dot, lookaheads: [] };
+        result.push(grouped[key]);
+      }
+      if (grouped[key].lookaheads.indexOf(item.lookahead) < 0) grouped[key].lookaheads.push(item.lookahead);
+    });
+    result.forEach(function (item) {
+      item.lookaheads.sort(function (left, right) {
+        return grammar.terminals.indexOf(left) - grammar.terminals.indexOf(right);
+      });
+    });
+    return result;
   }
 
   function selectState(id) {
@@ -534,12 +620,14 @@
     el.stateTitle.textContent = "State I" + id;
     el.stateKind.textContent = state.via ? "GOTO(I" + state.via.from + ", " + state.via.symbol + ")" : "initial closure";
     clear(el.stateItems);
-    state.items.forEach(function (item) { el.stateItems.appendChild(renderItem(item)); });
+    itemsForDisplay(state.items).forEach(function (item) { el.stateItems.appendChild(renderItem(item)); });
     var kernelCount = state.items.filter(function (item) { return item.production === 0 || item.dot > 0; }).length;
     var closureCount = state.items.length - kernelCount;
     el.stateExplanation.textContent = state.via
       ? "Advance the dot over “" + state.via.symbol + "” in I" + state.via.from + ", then apply CLOSURE. This gives " + kernelCount + " kernel item" + (kernelCount === 1 ? "" : "s") + " and " + closureCount + " closure-added item" + (closureCount === 1 ? "" : "s") + "."
-      : "Start with “" + grammar.augmented + " → • " + grammar.start + " $”, then repeatedly add productions for every nonterminal immediately after a dot.";
+      : parserKind === "lr1"
+        ? "Start with [" + grammar.augmented + " → • " + grammar.start + " $, $]. For [A → α • B β, a], add [B → • γ, b] for every b in FIRST(βa)."
+        : "Start with “" + grammar.augmented + " → • " + grammar.start + " $”, then repeatedly add productions for every nonterminal immediately after a dot.";
     clear(el.stateTransitions);
     var outgoing = machine.transitions.filter(function (transition) { return transition.from === id; });
     if (!outgoing.length) {
@@ -620,7 +708,7 @@
       svg.removeAttribute("height");
       svg.classList.add("lr0-dfa-svg", "is-graphviz");
       svg.setAttribute("role", "img");
-      svg.setAttribute("aria-label", "DFA of LR(0) item sets");
+      svg.setAttribute("aria-label", "DFA of " + (parserKind === "lr1" ? "LR(1)" : "LR(0)") + " item sets");
       clear(el.dfa);
       el.dfa.appendChild(svg);
     }).catch(function () {
@@ -663,7 +751,7 @@
       });
     });
 
-    var svg = makeSvg("svg", { "class": "lr0-dfa-svg", viewBox: "0 0 " + width + " " + height, role: "img", "aria-label": "DFA of LR(0) item sets" });
+    var svg = makeSvg("svg", { "class": "lr0-dfa-svg", viewBox: "0 0 " + width + " " + height, role: "img", "aria-label": "DFA of " + (parserKind === "lr1" ? "LR(1)" : "LR(0)") + " item sets" });
     var defs = makeSvg("defs");
     var marker = makeSvg("marker", { id: "lr0-arrow", markerWidth: "8", markerHeight: "8", refX: "7", refY: "4", orient: "auto", markerUnits: "strokeWidth" });
     marker.appendChild(makeSvg("path", { d: "M 0 0 L 8 4 L 0 8 z" }));
@@ -727,10 +815,10 @@
       var card = make("section", "lr0-state-card");
       var heading = make("header", "lr0-state-card-header");
       heading.appendChild(make("strong", "", "I" + state.id));
-      heading.appendChild(make("span", "", state.via ? "GOTO(I" + state.via.from + ", " + state.via.symbol + ")" : "CLOSURE({" + grammar.augmented + " → • " + grammar.start + " $})"));
+      heading.appendChild(make("span", "", state.via ? "GOTO(I" + state.via.from + ", " + state.via.symbol + ")" : "CLOSURE({" + (parserKind === "lr1" ? "[" : "") + grammar.augmented + " → • " + grammar.start + " $" + (parserKind === "lr1" ? ", $]" : "") + "})"));
       card.appendChild(heading);
       var items = make("div", "lr0-state-card-items");
-      state.items.forEach(function (item) { items.appendChild(renderItem(item)); });
+      itemsForDisplay(state.items).forEach(function (item) { items.appendChild(renderItem(item)); });
       card.appendChild(items);
       el.stateGrid.appendChild(card);
     });
@@ -773,7 +861,8 @@
     var tableNode = make("table", "lr0-table lr0-first-follow-table");
     var head = make("thead");
     var headRow = make("tr");
-    ["Nonterminal", "FIRST", "FOLLOW"].forEach(function (label) { headRow.appendChild(make("th", "", label)); });
+    var headings = parserKind === "lr1" ? ["Nonterminal", "FIRST"] : ["Nonterminal", "FIRST", "FOLLOW"];
+    headings.forEach(function (label) { headRow.appendChild(make("th", "", label)); });
     head.appendChild(headRow);
     tableNode.appendChild(head);
     var body = make("tbody");
@@ -785,7 +874,7 @@
       var firstValues = firstFollow.first[nonterminal].slice();
       if (firstFollow.nullable[nonterminal]) firstValues.push("ε");
       row.appendChild(make("td", "", "{ " + firstValues.join(", ") + " }"));
-      row.appendChild(make("td", "", "{ " + firstFollow.follow[nonterminal].join(", ") + " }"));
+      if (parserKind !== "lr1") row.appendChild(make("td", "", "{ " + firstFollow.follow[nonterminal].join(", ") + " }"));
       body.appendChild(row);
     });
     tableNode.appendChild(body);
@@ -837,7 +926,7 @@
       el.liveParseTable.appendChild(tableNode.cloneNode(true));
     }
     if (!table.conflicts.length) {
-      el.conflicts.textContent = "No conflicts: grammar is " + (parserKind === "slr1" ? "SLR(1)" : "LR(0)");
+      el.conflicts.textContent = "No conflicts: grammar is " + parserLabel();
       el.conflicts.className = "lr0-conflicts is-clear";
     } else {
       var kinds = uniqueStrings(table.conflicts.map(function (conflict) { return conflictKind(conflict.actions); }));
@@ -1050,8 +1139,10 @@
   function init() {
     var root = byId("lr0-demo");
     if (!root) return;
-    parserKind = root.getAttribute("data-parser-kind") === "slr1" ? "slr1" : "lr0";
+    var requestedKind = root.getAttribute("data-parser-kind");
+    parserKind = requestedKind === "lr1" ? "lr1" : requestedKind === "slr1" ? "slr1" : "lr0";
     if (parserKind === "slr1") presets = slrPresets;
+    if (parserKind === "lr1") presets = lr1Presets;
     bindElements();
     bindEvents();
     loadPreset(activePreset);

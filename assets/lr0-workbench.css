@@ -69,6 +69,7 @@
 .lr0-item.is-kernel { border-left-color: var(--lr0-purple); background: #faf7fc; }
 .lr0-item.is-closure { border-left-color: #8db7d8; }
 .lr0-item-label { min-width: 0; }
+.lr0-lookaheads { color: var(--lr0-blue); font-weight: 700; }
 .lr0-item small { flex: 0 0 auto; color: var(--lr0-muted); font: .68rem/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: .04em; text-transform: uppercase; }
 .lr0-dot { color: var(--lr0-orange); font-size: 1.16em; }
 .lr0-state-explanation { margin: 4px 15px 10px; padding: 10px 12px; border-left: 4px solid var(--lr0-blue); background: #edf6fd; color: #25455e; font-size: .84rem; line-height: 1.45; }
@@ -102,6 +103,7 @@
 
 .lr0-collection-card { margin-bottom: 14px; }
 .lr0-state-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(245px, 1fr)); align-items: start; gap: 10px; padding: 13px; background: var(--lr0-canvas); }
+.lr0-demo[data-parser-kind="lr1"] .lr0-state-grid { grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); }
 .lr0-state-card { min-width: 0; border: 1px solid #c6ceda; border-radius: 7px; background: #fff; overflow: hidden; }
 .lr0-state-card-header { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 9px 11px; border-bottom: 1px solid #e5e9ef; background: #fbfcfe; }
 .lr0-state-card-header strong { color: var(--lr0-purple); font-size: 1rem; }
