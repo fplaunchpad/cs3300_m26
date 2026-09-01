@@ -39,7 +39,7 @@ Assignments are due at 11:59 PM on the due date.
 | # | Topic | Release | Take-home due | Lab session | Points | Link |
 |--:|-------|---------|---------------|-------------|--------|------|
 | 1 | MacroJava to MiniJava   | 27/07/2026 | 14/08/2026 | 18/08/2026 | 15 | [macro_to_mini](/cs3300_m26/assignments/macro_to_mini.html) |
-| 2 | Type Checker            | 17/08/2026 | 04/09/2026 | 08/09/2026 | 15 | [typechecker](/cs3300_m26/assignments/typechecker.html) |
+| 2 | Type Checker            | 17/08/2026 | 07/09/2026 | 08/09/2026 | 15 | [typechecker](/cs3300_m26/assignments/typechecker.html) |
 | 3 | MiniJava to miniIR      | 07/09/2026 | 18/09/2026 | 22/09/2026 | 15 | [mini_to_miniIR](/cs3300_m26/assignments/mini_to_miniIR.html) |
 | 4 | miniIR to microIR       | 21/09/2026 | 09/10/2026 | 13/10/2026 | 15 | [miniIR_to_micro](/cs3300_m26/assignments/miniIR_to_micro.html) |
 | 5 | microIR to miniRA       | 12/10/2026 | 23/10/2026 | 27/10/2026 | 15 | [micro_to_miniRA](/cs3300_m26/assignments/micro_to_miniRA.html) |

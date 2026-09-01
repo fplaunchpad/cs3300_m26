@@ -5,7 +5,7 @@ permalink: /assignments/typechecker
 ---
 
 | Release Date | 17/08/2026 |
-| Deadline     | 04/09/2026, 23:59 hours |
+| Deadline     | 07/09/2026, 23:59 hours |
 
 <br/>
 
