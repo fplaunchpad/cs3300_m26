@@ -6,22 +6,22 @@ package syntaxtree;
 
 /**
  * Grammar production:
- * f0 -> PrimaryExpression()
+ * f0 -> UnaryExpression()
  * f1 -> "/"
- * f2 -> PrimaryExpression()
+ * f2 -> UnaryExpression()
  */
 public class DivExpression implements Node {
-   public PrimaryExpression f0;
+   public UnaryExpression f0;
    public NodeToken f1;
-   public PrimaryExpression f2;
+   public UnaryExpression f2;
 
-   public DivExpression(PrimaryExpression n0, NodeToken n1, PrimaryExpression n2) {
+   public DivExpression(UnaryExpression n0, NodeToken n1, UnaryExpression n2) {
       f0 = n0;
       f1 = n1;
       f2 = n2;
    }
 
-   public DivExpression(PrimaryExpression n0, PrimaryExpression n1) {
+   public DivExpression(UnaryExpression n0, UnaryExpression n1) {
       f0 = n0;
       f1 = new NodeToken("/");
       f2 = n1;

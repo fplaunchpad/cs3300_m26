@@ -710,61 +710,50 @@ Expression Expression() :
    MinusExpression n6;
    TimesExpression n7;
    DivExpression n8;
-   ArrayLookup n9;
-   ArrayLength n10;
-   MessageSend n11;
-   PrimaryExpression n12;
+   NotExpression n9;
+   PostfixExpression n10;
 
    
 }
 {
    (
-      LOOKAHEAD(PrimaryExpression() "||")
+      LOOKAHEAD(UnaryExpression() "||")
       n1=OrExpression()
       { n0 = new NodeChoice(n1, 0); }
    |
-      LOOKAHEAD(PrimaryExpression() "&&")
+      LOOKAHEAD(UnaryExpression() "&&")
       n2=AndExpression()
       { n0 = new NodeChoice(n2, 1); }
    |
-      LOOKAHEAD(PrimaryExpression() "<=")
+      LOOKAHEAD(UnaryExpression() "<=")
       n3=CompareExpression()
       { n0 = new NodeChoice(n3, 2); }
    |
-      LOOKAHEAD(PrimaryExpression() "!=")
+      LOOKAHEAD(UnaryExpression() "!=")
       n4=neqExpression()
       { n0 = new NodeChoice(n4, 3); }
    |
-      LOOKAHEAD(PrimaryExpression() "+")
+      LOOKAHEAD(UnaryExpression() "+")
       n5=PlusExpression()
       { n0 = new NodeChoice(n5, 4); }
    |
-      LOOKAHEAD(PrimaryExpression() "-")
+      LOOKAHEAD(UnaryExpression() "-")
       n6=MinusExpression()
       { n0 = new NodeChoice(n6, 5); }
    |
-      LOOKAHEAD(PrimaryExpression() "*")
+      LOOKAHEAD(UnaryExpression() "*")
       n7=TimesExpression()
       { n0 = new NodeChoice(n7, 6); }
    |
-      LOOKAHEAD(PrimaryExpression() "/")
+      LOOKAHEAD(UnaryExpression() "/")
       n8=DivExpression()
       { n0 = new NodeChoice(n8, 7); }
    |
-      LOOKAHEAD(PrimaryExpression() "[")
-      n9=ArrayLookup()
+      n9=NotExpression()
       { n0 = new NodeChoice(n9, 8); }
    |
-      LOOKAHEAD(PrimaryExpression() "." "length")
-      n10=ArrayLength()
+      n10=PostfixExpression()
       { n0 = new NodeChoice(n10, 9); }
-   |
-      LOOKAHEAD(PrimaryExpression() "." Identifier() "(")
-      n11=MessageSend()
-      { n0 = new NodeChoice(n11, 10); }
-   |
-      n12=PrimaryExpression()
-      { n0 = new NodeChoice(n12, 11); }
    )
    
    { return new Expression(n0); }
@@ -772,136 +761,136 @@ Expression Expression() :
 
 AndExpression AndExpression() :
 {
-   PrimaryExpression n0;
+   UnaryExpression n0;
    NodeToken n1;
    Token n2;
-   PrimaryExpression n3;
+   UnaryExpression n3;
 
    
 }
 {
-   n0=PrimaryExpression()
+   n0=UnaryExpression()
    n2="&&" { n1 = JTBToolkit.makeNodeToken(n2); }
-   n3=PrimaryExpression()
+   n3=UnaryExpression()
    
    { return new AndExpression(n0,n1,n3); }
 }
 
 OrExpression OrExpression() :
 {
-   PrimaryExpression n0;
+   UnaryExpression n0;
    NodeToken n1;
    Token n2;
-   PrimaryExpression n3;
+   UnaryExpression n3;
 
    
 }
 {
-   n0=PrimaryExpression()
+   n0=UnaryExpression()
    n2="||" { n1 = JTBToolkit.makeNodeToken(n2); }
-   n3=PrimaryExpression()
+   n3=UnaryExpression()
    
    { return new OrExpression(n0,n1,n3); }
 }
 
 CompareExpression CompareExpression() :
 {
-   PrimaryExpression n0;
+   UnaryExpression n0;
    NodeToken n1;
    Token n2;
-   PrimaryExpression n3;
+   UnaryExpression n3;
 
    
 }
 {
-   n0=PrimaryExpression()
+   n0=UnaryExpression()
    n2="<=" { n1 = JTBToolkit.makeNodeToken(n2); }
-   n3=PrimaryExpression()
+   n3=UnaryExpression()
    
    { return new CompareExpression(n0,n1,n3); }
 }
 
 neqExpression neqExpression() :
 {
-   PrimaryExpression n0;
+   UnaryExpression n0;
    NodeToken n1;
    Token n2;
-   PrimaryExpression n3;
+   UnaryExpression n3;
 
    
 }
 {
-   n0=PrimaryExpression()
+   n0=UnaryExpression()
    n2="!=" { n1 = JTBToolkit.makeNodeToken(n2); }
-   n3=PrimaryExpression()
+   n3=UnaryExpression()
    
    { return new neqExpression(n0,n1,n3); }
 }
 
 PlusExpression PlusExpression() :
 {
-   PrimaryExpression n0;
+   UnaryExpression n0;
    NodeToken n1;
    Token n2;
-   PrimaryExpression n3;
+   UnaryExpression n3;
 
    
 }
 {
-   n0=PrimaryExpression()
+   n0=UnaryExpression()
    n2="+" { n1 = JTBToolkit.makeNodeToken(n2); }
-   n3=PrimaryExpression()
+   n3=UnaryExpression()
    
    { return new PlusExpression(n0,n1,n3); }
 }
 
 MinusExpression MinusExpression() :
 {
-   PrimaryExpression n0;
+   UnaryExpression n0;
    NodeToken n1;
    Token n2;
-   PrimaryExpression n3;
+   UnaryExpression n3;
 
    
 }
 {
-   n0=PrimaryExpression()
+   n0=UnaryExpression()
    n2="-" { n1 = JTBToolkit.makeNodeToken(n2); }
-   n3=PrimaryExpression()
+   n3=UnaryExpression()
    
    { return new MinusExpression(n0,n1,n3); }
 }
 
 TimesExpression TimesExpression() :
 {
-   PrimaryExpression n0;
+   UnaryExpression n0;
    NodeToken n1;
    Token n2;
-   PrimaryExpression n3;
+   UnaryExpression n3;
 
    
 }
 {
-   n0=PrimaryExpression()
+   n0=UnaryExpression()
    n2="*" { n1 = JTBToolkit.makeNodeToken(n2); }
-   n3=PrimaryExpression()
+   n3=UnaryExpression()
    
    { return new TimesExpression(n0,n1,n3); }
 }
 
 DivExpression DivExpression() :
 {
-   PrimaryExpression n0;
+   UnaryExpression n0;
    NodeToken n1;
    Token n2;
-   PrimaryExpression n3;
+   UnaryExpression n3;
 
    
 }
 {
-   n0=PrimaryExpression()
+   n0=UnaryExpression()
    n2="/" { n1 = JTBToolkit.makeNodeToken(n2); }
-   n3=PrimaryExpression()
+   n3=UnaryExpression()
    
    { return new DivExpression(n0,n1,n3); }
 }
@@ -911,7 +900,7 @@ ArrayLookup ArrayLookup() :
    PrimaryExpression n0;
    NodeToken n1;
    Token n2;
-   PrimaryExpression n3;
+   UnaryExpression n3;
    NodeToken n4;
    Token n5;
 
@@ -920,7 +909,7 @@ ArrayLookup ArrayLookup() :
 {
    n0=PrimaryExpression()
    n2="[" { n1 = JTBToolkit.makeNodeToken(n2); }
-   n3=PrimaryExpression()
+   n3=UnaryExpression()
    n5="]" { n4 = JTBToolkit.makeNodeToken(n5); }
    
    { return new ArrayLookup(n0,n1,n3,n4); }
@@ -1007,6 +996,57 @@ ExpressionRest ExpressionRest() :
    { return new ExpressionRest(n0,n2); }
 }
 
+UnaryExpression UnaryExpression() :
+{
+   NodeChoice n0;
+   PrimaryExpression n1;
+   NotExpression n2;
+
+   
+}
+{
+   (
+      n1=PrimaryExpression()
+      { n0 = new NodeChoice(n1, 0); }
+   |
+      n2=NotExpression()
+      { n0 = new NodeChoice(n2, 1); }
+   )
+   
+   { return new UnaryExpression(n0); }
+}
+
+PostfixExpression PostfixExpression() :
+{
+   NodeChoice n0;
+   ArrayLookup n1;
+   ArrayLength n2;
+   MessageSend n3;
+   PrimaryExpression n4;
+
+   
+}
+{
+   (
+      LOOKAHEAD(PrimaryExpression() "[")
+      n1=ArrayLookup()
+      { n0 = new NodeChoice(n1, 0); }
+   |
+      LOOKAHEAD(PrimaryExpression() "." "length")
+      n2=ArrayLength()
+      { n0 = new NodeChoice(n2, 1); }
+   |
+      LOOKAHEAD(PrimaryExpression() "." Identifier() "(")
+      n3=MessageSend()
+      { n0 = new NodeChoice(n3, 2); }
+   |
+      n4=PrimaryExpression()
+      { n0 = new NodeChoice(n4, 3); }
+   )
+   
+   { return new PostfixExpression(n0); }
+}
+
 PrimaryExpression PrimaryExpression() :
 {
    NodeChoice n0;
@@ -1017,8 +1057,7 @@ PrimaryExpression PrimaryExpression() :
    ThisExpression n5;
    ArrayAllocationExpression n6;
    AllocationExpression n7;
-   NotExpression n8;
-   BracketExpression n9;
+   BracketExpression n8;
 
    
 }
@@ -1046,11 +1085,8 @@ PrimaryExpression PrimaryExpression() :
       n7=AllocationExpression()
       { n0 = new NodeChoice(n7, 6); }
    |
-      n8=NotExpression()
+      n8=BracketExpression()
       { n0 = new NodeChoice(n8, 7); }
-   |
-      n9=BracketExpression()
-      { n0 = new NodeChoice(n9, 8); }
    )
    
    { return new PrimaryExpression(n0); }
@@ -1170,13 +1206,24 @@ NotExpression NotExpression() :
 {
    NodeToken n0;
    Token n1;
-   Expression n2;
+   NodeChoice n2;
+   PostfixExpression n3;
+   NotExpression n4;
 
    
 }
 {
    n1="!" { n0 = JTBToolkit.makeNodeToken(n1); }
-   n2=Expression()
+   (
+      (
+         n3=PostfixExpression()
+         { n2 = new NodeChoice(n3, 0); }
+      |
+         n4=NotExpression()
+         { n2 = new NodeChoice(n4, 1); }
+      )
+      
+   )
    
    { return new NotExpression(n0,n2); }
 }

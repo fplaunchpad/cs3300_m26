@@ -6,21 +6,14 @@ package syntaxtree;
 
 /**
  * Grammar production:
- * f0 -> "!"
- * f1 -> ( PostfixExpression() | NotExpression() )
+ * f0 -> PrimaryExpression()
+ *       | NotExpression()
  */
-public class NotExpression implements Node {
-   public NodeToken f0;
-   public NodeChoice f1;
+public class UnaryExpression implements Node {
+   public NodeChoice f0;
 
-   public NotExpression(NodeToken n0, NodeChoice n1) {
+   public UnaryExpression(NodeChoice n0) {
       f0 = n0;
-      f1 = n1;
-   }
-
-   public NotExpression(NodeChoice n0) {
-      f0 = new NodeToken("!");
-      f1 = n0;
    }
 
    public void accept(visitor.Visitor v) {

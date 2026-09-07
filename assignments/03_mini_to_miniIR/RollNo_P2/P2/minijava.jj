@@ -295,96 +295,89 @@ void PrintStatement() :
 void Expression() :
 {}
 {
-  LOOKAHEAD( PrimaryExpression() "||" )
+  LOOKAHEAD( UnaryExpression() "||" )
   OrExpression()
 |
-  LOOKAHEAD( PrimaryExpression() "&&" )
+  LOOKAHEAD( UnaryExpression() "&&" )
   AndExpression()
 |
-  LOOKAHEAD( PrimaryExpression() "<=" )
+  LOOKAHEAD( UnaryExpression() "<=" )
   CompareExpression()
 |
-  LOOKAHEAD( PrimaryExpression() "!=" )
+  LOOKAHEAD( UnaryExpression() "!=" )
   neqExpression()
 |
-  LOOKAHEAD( PrimaryExpression() "+" )
+  LOOKAHEAD( UnaryExpression() "+" )
   PlusExpression()
 |
-  LOOKAHEAD( PrimaryExpression() "-" )
+  LOOKAHEAD( UnaryExpression() "-" )
   MinusExpression()
 |
-  LOOKAHEAD( PrimaryExpression() "*" )
+  LOOKAHEAD( UnaryExpression() "*" )
   TimesExpression()
 |
-  LOOKAHEAD( PrimaryExpression() "/" )
+  LOOKAHEAD( UnaryExpression() "/" )
   DivExpression()
 |
-  LOOKAHEAD( PrimaryExpression() "[" )
-  ArrayLookup()
+  NotExpression()
 |
-  LOOKAHEAD( PrimaryExpression() "." "length" )
-  ArrayLength()
-|
-  LOOKAHEAD( PrimaryExpression() "." Identifier() "(" )
-  MessageSend()
-| 
-  PrimaryExpression()
+  PostfixExpression()
 }
 
 void AndExpression() :
-{} 
+{}
 {
-  PrimaryExpression() "&&" PrimaryExpression()
+  UnaryExpression() "&&" UnaryExpression()
 }
 
 void OrExpression() :
-{} 
+{}
 {
-  PrimaryExpression() "||" PrimaryExpression()
+  UnaryExpression() "||" UnaryExpression()
 }
 
 
 void CompareExpression() :
-{} 
+{}
 {
-  PrimaryExpression() "<=" PrimaryExpression()
+  UnaryExpression() "<=" UnaryExpression()
 }
 
 void neqExpression() :
-{} 
+{}
 {
-  PrimaryExpression() "!=" PrimaryExpression()
+  UnaryExpression() "!=" UnaryExpression()
 }
 
 
 void PlusExpression() :
 {}
 {
-  PrimaryExpression() "+" PrimaryExpression()
+  UnaryExpression() "+" UnaryExpression()
 }
 
 void MinusExpression() :
 {}
 {
-  PrimaryExpression() "-" PrimaryExpression()
+  UnaryExpression() "-" UnaryExpression()
 }
 
 void TimesExpression() :
 {}
 {
-  PrimaryExpression() "*" PrimaryExpression()
+  UnaryExpression() "*" UnaryExpression()
 }
 
 void DivExpression() :
 {}
 {
-  PrimaryExpression() "/" PrimaryExpression()
+  UnaryExpression() "/" UnaryExpression()
 }
 
 void ArrayLookup() :
 {}
 {
-  PrimaryExpression() "[" PrimaryExpression() "]"
+  PrimaryExpression() "[" UnaryExpression() "]"
 }
 
 void ArrayLength() :
@@ -411,6 +404,35 @@ void ExpressionRest() :
   "," Expression()
 }
 
+void UnaryExpression() :
+{}
+{
+  PrimaryExpression()
+|
+  NotExpression()
+}
+
+/*
+ * The LOOKAHEAD alternatives must stay ahead of the bare PrimaryExpression()
+ * one: JavaCC tries choices in written order (also inside syntactic
+ * lookaheads), so with PrimaryExpression() first, an operand like `a[i]` in
+ * `!a[i] && b` would only ever match as `a` and the parse would misroute.
+ */
+void PostfixExpression() :
+{}
+{
+  LOOKAHEAD( PrimaryExpression() "[" )
+  ArrayLookup()
+|
+  LOOKAHEAD( PrimaryExpression() "." "length" )
+  ArrayLength()
+|
+  LOOKAHEAD( PrimaryExpression() "." Identifier() "(" )
+  MessageSend()
+|
+  PrimaryExpression()
+}
+
 void PrimaryExpression() :
 {}
 {
@@ -428,9 +450,7 @@ void PrimaryExpression() :
   ArrayAllocationExpression()
 |
   AllocationExpression()
-|   
-  NotExpression()
-|   
+|
   BracketExpression()
 }
 
@@ -480,7 +500,7 @@ void AllocationExpression() :
 void NotExpression() :
 {}
 {
-  "!" Expression() 
+  "!" ( PostfixExpression() | NotExpression() )
 }
 
 void BracketExpression() :
