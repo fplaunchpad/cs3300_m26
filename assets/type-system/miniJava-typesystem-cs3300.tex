@@ -1,0 +1,276 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=22mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,array,booktabs}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
+\hypersetup{pdftitle={The MiniJava Type System - CS3300 course revision},pdfauthor={CS3300 course staff; based on Jens Palsberg (2011)}}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small MiniJava Type System}
+\fancyhead[R]{\small CS3300 / September 2026}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\newcommand{\kw}[1]{\text{\texttt{#1}}}
+\newcommand{\mt}{\operatorname{methodtype}}
+\newcommand{\mn}{\operatorname{methodname}}
+\newcommand{\cn}{\operatorname{classname}}
+\newcommand{\fld}{\operatorname{fields}}
+\newcommand{\dist}{\operatorname{distinct}}
+\newcommand{\noov}{\operatorname{noOverloading}}
+\newcommand{\id}{\mathit{id}}
+\newcommand{\ty}{\mathit{t}}
+\newcommand{\ruleeq}[3]{\begin{equation}\frac{\begin{gathered}#2\end{gathered}}{\begin{gathered}#3\end{gathered}}\tag{#1}\end{equation}}
+\newcommand{\axiom}[2]{\begin{equation}#2\tag{#1}\end{equation}}
+\newcommand{\method}{\kw{public}\ t\ \id^M(t_1^F\ \id_1^F,\ldots,t_n^F\ \id_n^F)\ \{t_1\ \id_1;\ldots;t_r\ \id_r;\ s_1\ldots s_q\ \kw{return}\ e;\}}
+\begin{document}
+\begin{center}
+{\LARGE\bfseries The MiniJava Type System}\\[7pt]
+{\large CS3300 course revision --- 7 September 2026}\\[5pt]
+Based on Jens Palsberg's \emph{The MiniJava Type System}, October 2011
+\end{center}
+
+This course revision incorporates the Assignment 2 clarifications into the rules
+ themselves. Rule (16) permits covariant return types in overriding; rule (21)
+ permits a return expression to have a subtype of the declared return type.
+ Section 4 explicitly includes reflexivity for all MiniJava types. Rule (15)
+ remains unchanged. Original section and rule numbers are retained; rule (16)
+ is split into (16a) and (16b). Method types consistently omit parameter names.
+
+\section{What is MiniJava?}
+MiniJava is a small Java-like language with classes, single inheritance, methods,
+integer arrays, and basic statements and expressions. Method overloading is not
+allowed.
+
+The statement \texttt{System.out.println(...);} prints integers, and
+\texttt{e.length} applies to an expression of type \texttt{int[]}.
+
+\section{Syntax}
+The core syntax below follows the original reference. The
+\href{https://fplaunchpad.org/cs3300_m26/grammar/minijava/}{course MiniJava grammar}
+ specifies the complete syntax accepted in Assignment 2, including its additional
+ operators and statement forms. Nonterminals are italic, keywords are in
+ typewriter font, and lists written with dots may be empty. Superscripts and
+ subscripts distinguish metavariables.
+
+\begingroup\small
+\begin{align*}
+\textit{Goal}\quad g &::= mc\ d_1\ldots d_n\\
+\textit{MainClass}\quad mc &::= \kw{class}\ \id\ \{\kw{public\ static\ void\ main}\ (\kw{String[]}\ \id^S)\{\\
+ &\qquad t_1\ \id_1;\ldots;t_r\ \id_r;\ s_1\ldots s_q\ \}\}\!\\
+\textit{TypeDeclaration}\quad d &::= \kw{class}\ \id\ \{t_1\ \id_1;\ldots;t_f\ \id_f;\ m_1\ldots m_k\}\\
+ &\mid \kw{class}\ \id\ \kw{extends}\ \id^P\ \{t_1\ \id_1;\ldots;t_f\ \id_f;\ m_1\ldots m_k\}\\
+\textit{MethodDeclaration}\quad m &::= \kw{public}\ t\ \id^M(t_1^F\ \id_1^F,\ldots,t_n^F\ \id_n^F)\ \{\\
+ &\qquad t_1\ \id_1;\ldots;t_r\ \id_r;\ s_1\ldots s_q\ \kw{return}\ e;\ \}\\
+\textit{Type}\quad t &::= \kw{int[]}\mid\kw{boolean}\mid\kw{int}\mid\id\\
+\textit{Statement}\quad s &::= \{s_1\ldots s_q\}\mid\id=e;\mid\id[e_1]=e_2;\\
+ &\mid\kw{if}\ (e)\ s_1\ \kw{else}\ s_2\mid\kw{while}\ (e)\ s\\
+ &\mid\kw{System.out.println}(e);\\
+\textit{Expression}\quad e &::= p_1\mathbin{\kw{\&\&}}p_2\mid p_1<p_2\mid p_1+p_2\mid p_1-p_2\mid p_1*p_2\\
+ &\mid p_1[p_2]\mid p.\kw{length}\mid p.\id(e_1,\ldots,e_n)\mid p\\
+\textit{PrimaryExpression}\quad p &::= c\mid\kw{true}\mid\kw{false}\mid\id\mid\kw{this}\\
+ &\mid\kw{new\ int}[e]\mid\kw{new}\ \id()\mid {!e}\mid(e)\\
+\textit{IntegerLiteral}\quad c &::= \langle\textsc{integer literal}\rangle\\
+\textit{Identifier}\quad\id &::= \langle\textsc{identifier}\rangle
+\end{align*}
+\endgroup
+In a type position, $\id$ must name a declared class: for example,
+\texttt{Animal} in \texttt{Animal pet;} is a class type.
+
+\newpage
+\section{Notation for Rules}
+An inference rule has the form
+\[
+\frac{\textit{hypothesis}_1\quad\textit{hypothesis}_2\quad\cdots\quad\textit{hypothesis}_n}
+{\textit{conclusion}}.
+\]
+It states that the conclusion follows whenever every hypothesis holds. A rule
+with no hypotheses is an axiom; its horizontal bar may be omitted. A derivation
+is a tree whose leaves are axioms and whose internal nodes apply inference rules.
+The root is the judgment established by the derivation.
+
+\section{Subtyping}
+We write $t_1\leq t_2$ when $t_1$ is a subtype of $t_2$. The relation is reflexive
+on \emph{all} MiniJava types. On class names, it is the reflexive, transitive
+closure of the declared \texttt{extends} relation.
+\axiom{1}{t\leq t}
+\ruleeq{2}{t_1\leq t_2\qquad t_2\leq t_3}{t_1\leq t_3}
+\ruleeq{3}{\kw{class}\ C\ \kw{extends}\ D\ \ldots\ \text{is in the program}}{C\leq D}
+In particular, rule (1) includes
+\[
+\kw{int}\leq\kw{int},\qquad
+\kw{boolean}\leq\kw{boolean},\qquad
+\kw{int[]}\leq\kw{int[]}.
+\]
+There are no subtype relationships between these three types, or between any of
+these types and a class type. Thus the only subtype of each of \texttt{int},
+\texttt{boolean}, and \texttt{int[]} is itself.
+
+\section{Type Environments}
+A type environment $A$ is a finite mapping from identifiers to types; its domain
+is written $\operatorname{dom}(A)$. For pairwise distinct identifiers,
+$[\id_1:t_1,\ldots,\id_r:t_r]$ maps $\id_i$ to $t_i$ for $i\in1..r$.
+Environment composition gives the right-hand environment precedence:
+\axiom{4}{(A_1\cdot A_2)(\id)=
+\begin{cases}A_2(\id)&\text{if }\id\in\operatorname{dom}(A_2),\\
+A_1(\id)&\text{otherwise.}\end{cases}}
+
+\newpage
+\section{Helper Functions}
+\subsection{The \textit{classname} Helper Function}
+The function $\cn$ returns the name of a class declaration.
+\axiom{5}{\cn(\kw{class}\ \id\ \{\kw{public\ static\ void\ main}(\kw{String[]}\ \id^S)\{\ldots\}\})=\id}
+\axiom{6}{\cn(\kw{class}\ \id\ \{t_1\ \id_1;\ldots;t_f\ \id_f;\ m_1\ldots m_k\})=\id}
+\axiom{7}{\cn(\kw{class}\ \id\ \kw{extends}\ \id^P\ \{t_1\ \id_1;\ldots;t_f\ \id_f;\ m_1\ldots m_k\})=\id}
+\subsection{The \textit{methodname} Helper Function}
+The function $\mn$ returns the name of a method declaration.
+\axiom{8}{\mn(\kw{public}\ t\ \id^M(\ldots)\ \ldots)=\id^M}
+\subsection{The \textit{distinct} Helper Function}
+The predicate $\dist$ checks that identifiers in a list are pairwise distinct.
+\ruleeq{9}{\forall i\in1..n:\ \forall j\in1..n:\ \id_i=\id_j\Rightarrow i=j}
+{\dist(\id_1,\ldots,\id_n)}
+\subsection{The \textit{fields} Helper Function}
+The environment $\fld(C)$ contains the fields of $C$ and its superclasses.
+Fields declared in $C$ take precedence over inherited fields of the same name.
+\ruleeq{10}{\kw{class}\ \id\ \{t_1\ \id_1;\ldots;t_f\ \id_f;\ m_1\ldots m_k\}\ \text{is in the program}}
+{\fld(\id)=[\id_1:t_1,\ldots,\id_f:t_f]}
+\ruleeq{11}{\kw{class}\ \id\ \kw{extends}\ \id^P\ \{t_1\ \id_1;\ldots;t_f\ \id_f;\ m_1\ldots m_k\}\ \text{is in the program}}
+{\fld(\id)=\fld(\id^P)\cdot[\id_1:t_1,\ldots,\id_f:t_f]}
+
+\newpage
+\subsection{The \textit{methodtype} Helper Function}
+The value $\mt(\id,\id^M)$ is the ordered list of parameter types and return
+type of method $\id^M$ in class $\id$, including inherited methods. It is
+$\bot$ if no such method exists. A method type has the form
+$(t_1,\ldots,t_n)\to t$. Parameter names are not part of the method type.
+\begingroup\small
+\ruleeq{12}{\kw{class}\ \id\ \{\ldots\ m_1\ldots m_k\}\ \text{is in the program}\\
+\text{for some }j\in1..k:\ \mn(m_j)=\id^M\\
+m_j\text{ is of the form }\method}
+{\mt(\id,\id^M)=(t_1^F,\ldots,t_n^F)\to t}
+\ruleeq{13}{\kw{class}\ \id\ \{\ldots\ m_1\ldots m_k\}\ \text{is in the program}\\
+\text{for all }j\in1..k:\ \mn(m_j)\neq\id^M}
+{\mt(\id,\id^M)=\bot}
+\ruleeq{14}{\kw{class}\ \id\ \kw{extends}\ \id^P\ \{\ldots\ m_1\ldots m_k\}\ \text{is in the program}\\
+\text{for some }j\in1..k:\ \mn(m_j)=\id^M\\
+m_j\text{ is of the form }\method}
+{\mt(\id,\id^M)=(t_1^F,\ldots,t_n^F)\to t}
+\ruleeq{15}{\kw{class}\ \id\ \kw{extends}\ \id^P\ \{\ldots\ m_1\ldots m_k\}\ \text{is in the program}\\
+\text{for all }j\in1..k:\ \mn(m_j)\neq\id^M}
+{\mt(\id,\id^M)=\mt(\id^P,\id^M)}
+\endgroup
+Rule (15) is an inheritance lookup rule: it applies only when the subclass does
+not declare the method. Its equality is unchanged.
+
+\subsection{The \textit{noOverloading} Helper Function}
+For a method declared in class $\id$ with direct superclass $\id^P$, either
+there is no inherited method of that name, or the declaration must be a valid
+override. An override has exactly the same parameter types, in the same order,
+and a return type that is the same as, or a subtype of, the inherited return type.
+\ruleeq{16a}{\mt(\id^P,\id^M)=\bot}{\noov(\id,\id^P,\id^M)}
+\ruleeq{16b}{\mt(\id,\id^M)=(t_1,\ldots,t_n)\to t\\
+\mt(\id^P,\id^M)=(t'_1,\ldots,t'_n)\to t'\\
+t_i=t'_i\quad(i\in1..n)\qquad t\leq t'}{\noov(\id,\id^P,\id^M)}
+Both parameter lists have length $n$; parameter names may differ. Changing a
+parameter type, even to a subtype, or changing the parameter count is forbidden.
+
+\newpage
+\section{Type Rules}
+\subsection{Type Judgments}
+We use the following seven forms of judgments:
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Judgment & Meaning\\\midrule
+$\vdash g$ & The goal (whole program) type checks.\\
+$\vdash mc$ & The main class type checks.\\
+$\vdash d$ & The type declaration type checks.\\
+$C\vdash m$ & The method declaration type checks in class $C$.\\
+$A,C\vdash s$ & The statement type checks in environment $A$, class $C$.\\
+$A,C\vdash e:t$ & The expression has type $t$ in environment $A$, class $C$.\\
+$A,C\vdash p:t$ & The primary expression has type $t$ in that context.\\
+\bottomrule
+\end{tabular}
+\end{center}
+\subsection{Goal}
+\ruleeq{17}{\dist(\cn(mc),\cn(d_1),\ldots,\cn(d_n))\\
+\vdash mc\qquad\vdash d_i\quad(i\in1..n)}{\vdash mc\ d_1\ldots d_n}
+\subsection{Main Class}
+\begingroup\small
+\ruleeq{18}{\dist(\id_1,\ldots,\id_r)\qquad
+[\id_1:t_1,\ldots,\id_r:t_r],\bot\vdash s_i\quad(i\in1..q)}
+{\vdash\kw{class}\ \id\ \{\kw{public\ static\ void\ main}(\kw{String[]}\ \id^S)\{t_1\ \id_1;\ldots;t_r\ \id_r;\ s_1\ldots s_q\}\}}
+\endgroup
+Here $\bot$ in the class position denotes the absence of an instance context;
+\texttt{this} is unavailable in the static main method.
+
+\subsubsection*{Examples of the corrected return and overriding rules}
+Assume \texttt{B extends A}. Each row considers the stated type constraint;
+the rest of the program must also type check.
+\begin{center}\small
+\begin{tabular}{@{}p{0.71\linewidth}p{0.23\linewidth}@{}}
+\toprule
+Situation & Result\\\midrule
+A method declared to return \texttt{A} returns \texttt{new B()}. & Allowed\\[5pt]
+A method declared to return \texttt{B} returns \texttt{new A()}. & Type error\\[5pt]
+An inherited \texttt{A f(A x)} is overridden by \texttt{B f(A y)}. & Allowed\\[5pt]
+An inherited \texttt{A f(A x)} is replaced by \texttt{B f(B x)}. & Type error: parameter type changed\\[5pt]
+An inherited \texttt{B f(A x)} is overridden by \texttt{A f(A x)}. & Type error: return type widened\\
+\bottomrule
+\end{tabular}\end{center}
+The parameter equality in rule (16b) concerns method \emph{declarations}.
+At a method \emph{call}, rule (35) permits argument expressions whose types
+are subtypes of the declared parameter types.
+
+\newpage
+\subsection{Type Declarations}
+\ruleeq{19}{\dist(\id_1,\ldots,\id_f)\\
+\dist(\mn(m_1),\ldots,\mn(m_k))\\
+\id\vdash m_i\quad(i\in1..k)}
+{\vdash\kw{class}\ \id\ \{t_1\ \id_1;\ldots;t_f\ \id_f;\ m_1\ldots m_k\}}
+\ruleeq{20}{\dist(\id_1,\ldots,\id_f)\\
+\dist(\mn(m_1),\ldots,\mn(m_k))\\
+\noov(\id,\id^P,\mn(m_i))\qquad\id\vdash m_i\quad(i\in1..k)}
+{\vdash\kw{class}\ \id\ \kw{extends}\ \id^P\ \{t_1\ \id_1;\ldots;t_f\ \id_f;\ m_1\ldots m_k\}}
+\subsection{Method Declarations}
+\begingroup\small
+\ruleeq{21}{\dist(\id_1^F,\ldots,\id_n^F)\qquad\dist(\id_1,\ldots,\id_r)\\
+A=\fld(C)\cdot[\id_1^F:t_1^F,\ldots,\id_n^F:t_n^F]\cdot[\id_1:t_1,\ldots,\id_r:t_r]\\
+A,C\vdash s_i\quad(i\in1..q)\qquad A,C\vdash e:t'\qquad t'\leq t}
+{C\vdash\method}
+\endgroup
+The return expression's type $t'$ may be a subtype of the declared return type
+$t$. This check applies to every method, whether or not it overrides another.
+\subsection{Statements}
+\ruleeq{22}{A,C\vdash s_i\quad(i\in1..q)}{A,C\vdash\{s_1\ldots s_q\}}
+\ruleeq{23}{A(\id)=t_1\qquad A,C\vdash e:t_2\qquad t_2\leq t_1}{A,C\vdash\id=e;}
+\ruleeq{24}{A(\id)=\kw{int[]}\qquad A,C\vdash e_1:\kw{int}\qquad A,C\vdash e_2:\kw{int}}{A,C\vdash\id[e_1]=e_2;}
+\ruleeq{25}{A,C\vdash e:\kw{boolean}\qquad A,C\vdash s_1\qquad A,C\vdash s_2}{A,C\vdash\kw{if}\ (e)\ s_1\ \kw{else}\ s_2}
+\ruleeq{26}{A,C\vdash e:\kw{boolean}\qquad A,C\vdash s}{A,C\vdash\kw{while}\ (e)\ s}
+\ruleeq{27}{A,C\vdash e:\kw{int}}{A,C\vdash\kw{System.out.println}(e);}
+
+\newpage
+\subsection{Expressions and Primary Expressions}
+\begingroup
+\setlength{\abovedisplayskip}{7pt}\setlength{\belowdisplayskip}{7pt}
+\ruleeq{28}{A,C\vdash p_1:\kw{boolean}\qquad A,C\vdash p_2:\kw{boolean}}{A,C\vdash p_1\mathbin{\kw{\&\&}}p_2:\kw{boolean}}
+\ruleeq{29}{A,C\vdash p_1:\kw{int}\qquad A,C\vdash p_2:\kw{int}}{A,C\vdash p_1<p_2:\kw{boolean}}
+\ruleeq{30}{A,C\vdash p_1:\kw{int}\qquad A,C\vdash p_2:\kw{int}}{A,C\vdash p_1+p_2:\kw{int}}
+\ruleeq{31}{A,C\vdash p_1:\kw{int}\qquad A,C\vdash p_2:\kw{int}}{A,C\vdash p_1-p_2:\kw{int}}
+\ruleeq{32}{A,C\vdash p_1:\kw{int}\qquad A,C\vdash p_2:\kw{int}}{A,C\vdash p_1*p_2:\kw{int}}
+\ruleeq{33}{A,C\vdash p_1:\kw{int[]}\qquad A,C\vdash p_2:\kw{int}}{A,C\vdash p_1[p_2]:\kw{int}}
+\ruleeq{34}{A,C\vdash p:\kw{int[]}}{A,C\vdash p.\kw{length}:\kw{int}}
+\ruleeq{35}{A,C\vdash p:D\qquad\mt(D,\id)=(t'_1,\ldots,t'_n)\to t\\
+A,C\vdash e_i:t_i\qquad t_i\leq t'_i\quad(i\in1..n)}{A,C\vdash p.\id(e_1,\ldots,e_n):t}
+\axiom{36}{A,C\vdash c:\kw{int}}
+\axiom{37}{A,C\vdash\kw{true}:\kw{boolean}}
+\axiom{38}{A,C\vdash\kw{false}:\kw{boolean}}
+\ruleeq{39}{\id\in\operatorname{dom}(A)}{A,C\vdash\id:A(\id)}
+\ruleeq{40}{C\neq\bot}{A,C\vdash\kw{this}:C}
+\ruleeq{41}{A,C\vdash e:\kw{int}}{A,C\vdash\kw{new\ int}[e]:\kw{int[]}}
+\axiom{42}{A,C\vdash\kw{new}\ \id():\id}
+\ruleeq{43}{A,C\vdash e:\kw{boolean}}{A,C\vdash {!e}:\kw{boolean}}
+\ruleeq{44}{A,C\vdash e:t}{A,C\vdash(e):t}
+\endgroup
+\end{document}

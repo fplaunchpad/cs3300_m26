@@ -67,8 +67,11 @@ $ git pull
 The MiniJava grammar specification is
 [here](/cs3300_m26/grammar/minijava/).
 
-The type checking rules for MiniJava is
-[here](/cs3300_m26/assets/miniJava-typesystem.pdf).
+Use the [MiniJava Type System — CS3300 revision (7 September 2026)](/cs3300_m26/assets/miniJava-typesystem-cs3300.pdf).
+The corrected PDF incorporates covariant return types in method overriding
+(rule 16), subtyping for return expressions (rule 21), and reflexivity for all
+MiniJava types (Section 4). It supersedes the October 2011 reference for this
+assignment; no separate errata need to be applied.
 
 ## Submission
 
