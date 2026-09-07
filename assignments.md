@@ -60,7 +60,9 @@ announced in advance.**
 
 * The lab task comes in several variants; which one you get is determined by
   your roll number and announced at the start of the session.
-* The 6 lab marks are awarded as **6** if your extension works, **3** if your
+* For assignments 1 and 2, the lab handout gives a breakdown of the 6 marks
+  by task component. A submission that does not compile receives zero.
+* For assignments 3-6, the 6 lab marks are awarded as **6** if your extension works, **3** if your
   code compiles and you have made a real attempt at the change in the place the
   task names, and **0** if it does not compile or the named place is unchanged.
   A partial attempt counts, so get it compiling before the session ends even if
