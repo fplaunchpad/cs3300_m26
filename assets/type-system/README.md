@@ -2,8 +2,9 @@
 
 `miniJava-typesystem-cs3300.tex` is the editable source of the course revision,
 rebuilt from Jens Palsberg's October 2011 *The MiniJava Type System*. The original
-reference remains at `../miniJava-typesystem.pdf` for provenance. Student-facing
-links use `../miniJava-typesystem-cs3300.pdf`.
+reference is preserved in repository history. Student-facing links use
+`../miniJava-typesystem-cs3300.pdf`; the legacy `../miniJava-typesystem.pdf` URL
+serves an identical corrected copy so that old bookmarks remain consistent.
 
 The revision preserves the original section and rule numbers. Its changes are:
 
@@ -33,6 +34,7 @@ pdflatex -interaction=nonstopmode -halt-on-error \
   -output-directory=/tmp/cs3300-minijava-typesystem \
   assets/type-system/miniJava-typesystem-cs3300.tex
 cp /tmp/cs3300-minijava-typesystem/miniJava-typesystem-cs3300.pdf assets/
+cp assets/miniJava-typesystem-cs3300.pdf assets/miniJava-typesystem.pdf
 ```
 
 Check the build log for overfull boxes and render all pages for visual review

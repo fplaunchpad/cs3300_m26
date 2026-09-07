@@ -10,7 +10,7 @@ Generated from `minijava.jj`, the JavaCC grammar shipped with the
 assignment kits, so it matches the parser your code is built on.
 Non-terminals are written `<Name>`; terminals are quoted.
 
-The grammar file itself is [minijava.jj](minijava.jj).
+The grammar file itself is [minijava.jj](/cs3300_m26/assets/minijava.jj).
 
 ```
 <Goal> ::= <MainClass> ( <TypeDeclaration> )* <EOF>

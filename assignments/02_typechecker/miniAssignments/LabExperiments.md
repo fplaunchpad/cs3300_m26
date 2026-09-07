@@ -1,5 +1,12 @@
 # Lab Experiments
 
+These are practice exercises, not the graded lab extension. Diagnostic printing
+below is for practice only. Remove it before submitting Assignment 2: the
+[type-checker handout](/cs3300_m26/assignments/typechecker) requires exactly one
+result line and no other output. Use the
+[corrected course typing rules](/cs3300_m26/assets/miniJava-typesystem-cs3300.pdf)
+for exercise 6.
+
 1. Print in console all the classes and their parent class. If there is no
    parent, print null.
 2. Print all class variables along with their type and class name.
