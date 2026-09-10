@@ -377,19 +377,17 @@ public class DepthFirstVisitor implements Visitor {
     *       | MinusExpression()
     *       | TimesExpression()
     *       | DivExpression()
-    *       | ArrayLookup()
-    *       | ArrayLength()
-    *       | MessageSend()
-    *       | PrimaryExpression()
+    *       | NotExpression()
+    *       | PostfixExpression()
     */
    public void visit(Expression n) {
       n.f0.accept(this);
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "&&"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(AndExpression n) {
       n.f0.accept(this);
@@ -398,9 +396,9 @@ public class DepthFirstVisitor implements Visitor {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "||"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(OrExpression n) {
       n.f0.accept(this);
@@ -409,9 +407,9 @@ public class DepthFirstVisitor implements Visitor {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "<="
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(CompareExpression n) {
       n.f0.accept(this);
@@ -420,9 +418,9 @@ public class DepthFirstVisitor implements Visitor {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "!="
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(neqExpression n) {
       n.f0.accept(this);
@@ -431,9 +429,9 @@ public class DepthFirstVisitor implements Visitor {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "+"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(PlusExpression n) {
       n.f0.accept(this);
@@ -442,9 +440,9 @@ public class DepthFirstVisitor implements Visitor {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "-"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(MinusExpression n) {
       n.f0.accept(this);
@@ -453,9 +451,9 @@ public class DepthFirstVisitor implements Visitor {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "*"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(TimesExpression n) {
       n.f0.accept(this);
@@ -464,9 +462,9 @@ public class DepthFirstVisitor implements Visitor {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "/"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(DivExpression n) {
       n.f0.accept(this);
@@ -477,7 +475,7 @@ public class DepthFirstVisitor implements Visitor {
    /**
     * f0 -> PrimaryExpression()
     * f1 -> "["
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     * f3 -> "]"
     */
    public void visit(ArrayLookup n) {
@@ -534,6 +532,24 @@ public class DepthFirstVisitor implements Visitor {
    }
 
    /**
+    * f0 -> PrimaryExpression()
+    *       | NotExpression()
+    */
+   public void visit(UnaryExpression n) {
+      n.f0.accept(this);
+   }
+
+   /**
+    * f0 -> ArrayLookup()
+    *       | ArrayLength()
+    *       | MessageSend()
+    *       | PrimaryExpression()
+    */
+   public void visit(PostfixExpression n) {
+      n.f0.accept(this);
+   }
+
+   /**
     * f0 -> IntegerLiteral()
     *       | TrueLiteral()
     *       | FalseLiteral()
@@ -541,7 +557,6 @@ public class DepthFirstVisitor implements Visitor {
     *       | ThisExpression()
     *       | ArrayAllocationExpression()
     *       | AllocationExpression()
-    *       | NotExpression()
     *       | BracketExpression()
     */
    public void visit(PrimaryExpression n) {
@@ -613,7 +628,7 @@ public class DepthFirstVisitor implements Visitor {
 
    /**
     * f0 -> "!"
-    * f1 -> Expression()
+    * f1 -> ( PostfixExpression() | NotExpression() )
     */
    public void visit(NotExpression n) {
       n.f0.accept(this);

@@ -13,7 +13,6 @@ package syntaxtree;
  *       | ThisExpression()
  *       | ArrayAllocationExpression()
  *       | AllocationExpression()
- *       | NotExpression()
  *       | BracketExpression()
  */
 public class PrimaryExpression implements Node {

@@ -8,23 +8,23 @@ package syntaxtree;
  * Grammar production:
  * f0 -> PrimaryExpression()
  * f1 -> "["
- * f2 -> PrimaryExpression()
+ * f2 -> UnaryExpression()
  * f3 -> "]"
  */
 public class ArrayLookup implements Node {
    public PrimaryExpression f0;
    public NodeToken f1;
-   public PrimaryExpression f2;
+   public UnaryExpression f2;
    public NodeToken f3;
 
-   public ArrayLookup(PrimaryExpression n0, NodeToken n1, PrimaryExpression n2, NodeToken n3) {
+   public ArrayLookup(PrimaryExpression n0, NodeToken n1, UnaryExpression n2, NodeToken n3) {
       f0 = n0;
       f1 = n1;
       f2 = n2;
       f3 = n3;
    }
 
-   public ArrayLookup(PrimaryExpression n0, PrimaryExpression n1) {
+   public ArrayLookup(PrimaryExpression n0, UnaryExpression n1) {
       f0 = n0;
       f1 = new NodeToken("[");
       f2 = n1;

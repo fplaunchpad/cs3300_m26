@@ -500,10 +500,8 @@ public void printVarTable() {
     *       | MinusExpression()
     *       | TimesExpression()
     *       | DivExpression()
-    *       | ArrayLookup()
-    *       | ArrayLength()
-    *       | MessageSend()
-    *       | PrimaryExpression()
+    *       | NotExpression()
+    *       | PostfixExpression()
     */
    public R visit(Expression n, A argu) {
 		/* YOUR CODE HERE */
@@ -514,9 +512,9 @@ public void printVarTable() {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "&&"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public R visit(AndExpression n, A argu) {
 		/* YOUR CODE HERE */
@@ -529,9 +527,9 @@ public void printVarTable() {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "||"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public R visit(OrExpression n, A argu) {
 		/* YOUR CODE HERE */
@@ -544,9 +542,9 @@ public void printVarTable() {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "<="
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public R visit(CompareExpression n, A argu) {
 		/* YOUR CODE HERE */
@@ -559,9 +557,9 @@ public void printVarTable() {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "!="
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public R visit(neqExpression n, A argu) {
 		/* YOUR CODE HERE */
@@ -574,9 +572,9 @@ public void printVarTable() {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "+"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public R visit(PlusExpression n, A argu) {
 		/* YOUR CODE HERE */
@@ -589,9 +587,9 @@ public void printVarTable() {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "-"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public R visit(MinusExpression n, A argu) {
 		/* YOUR CODE HERE */
@@ -604,9 +602,9 @@ public void printVarTable() {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "*"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public R visit(TimesExpression n, A argu) {
 		/* YOUR CODE HERE */
@@ -619,9 +617,9 @@ public void printVarTable() {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "/"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public R visit(DivExpression n, A argu) {
 		/* YOUR CODE HERE */
@@ -636,7 +634,7 @@ public void printVarTable() {
    /**
     * f0 -> PrimaryExpression()
     * f1 -> "["
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     * f3 -> "]"
     */
    public R visit(ArrayLookup n, A argu) {
@@ -713,6 +711,32 @@ public void printVarTable() {
    }
 
    /**
+    * f0 -> PrimaryExpression()
+    *       | NotExpression()
+    */
+   public R visit(UnaryExpression n, A argu) {
+		/* YOUR CODE HERE */
+
+      R _ret=null;
+      n.f0.accept(this, argu);
+      return _ret;
+   }
+
+   /**
+    * f0 -> ArrayLookup()
+    *       | ArrayLength()
+    *       | MessageSend()
+    *       | PrimaryExpression()
+    */
+   public R visit(PostfixExpression n, A argu) {
+		/* YOUR CODE HERE */
+
+      R _ret=null;
+      n.f0.accept(this, argu);
+      return _ret;
+   }
+
+   /**
     * f0 -> IntegerLiteral()
     *       | TrueLiteral()
     *       | FalseLiteral()
@@ -720,7 +744,6 @@ public void printVarTable() {
     *       | ThisExpression()
     *       | ArrayAllocationExpression()
     *       | AllocationExpression()
-    *       | NotExpression()
     *       | BracketExpression()
     */
    public R visit(PrimaryExpression n, A argu) {
@@ -824,7 +847,7 @@ public void printVarTable() {
 
    /**
     * f0 -> "!"
-    * f1 -> Expression()
+    * f1 -> ( PostfixExpression() | NotExpression() )
     */
    public R visit(NotExpression n, A argu) {
 		/* YOUR CODE HERE */

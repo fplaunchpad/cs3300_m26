@@ -18,7 +18,7 @@ optimizing compiler for MiniJava. We start with type checked MiniJava
 programs and generate programs in miniIR format. Akin to a standard 
 optimizing compiler, in this assignment, we will implement a module 
 that translates programs in a high level language 
-[minijava](/cs3300_m26/grammar/minijava/) to programs 
+[minijava](/cs3300_m26/grammar/minijava-p2/) to programs 
 in intermediate form [miniIR](https://github.com/fplaunchpad/cs3300_m26/tree/main/assets).
 
 miniIR still permits nested expressions: an operand of an instruction may
@@ -70,7 +70,7 @@ $ git pull
 ```
 
 The MiniJava grammar specification is
-[here](/cs3300_m26/grammar/minijava/).
+[here](/cs3300_m26/grammar/minijava-p2/).
 
 The miniIR grammar specification is 
 [BNF-miniIR](/cs3300_m26/grammar/miniIR/).

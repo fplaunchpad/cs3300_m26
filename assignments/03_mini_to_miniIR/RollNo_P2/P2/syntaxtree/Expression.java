@@ -14,10 +14,8 @@ package syntaxtree;
  *       | MinusExpression()
  *       | TimesExpression()
  *       | DivExpression()
- *       | ArrayLookup()
- *       | ArrayLength()
- *       | MessageSend()
- *       | PrimaryExpression()
+ *       | NotExpression()
+ *       | PostfixExpression()
  */
 public class Expression implements Node {
    public NodeChoice f0;

@@ -238,73 +238,71 @@ public interface Visitor {
     *       | MinusExpression()
     *       | TimesExpression()
     *       | DivExpression()
-    *       | ArrayLookup()
-    *       | ArrayLength()
-    *       | MessageSend()
-    *       | PrimaryExpression()
+    *       | NotExpression()
+    *       | PostfixExpression()
     */
    public void visit(Expression n);
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "&&"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(AndExpression n);
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "||"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(OrExpression n);
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "<="
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(CompareExpression n);
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "!="
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(neqExpression n);
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "+"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(PlusExpression n);
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "-"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(MinusExpression n);
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "*"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(TimesExpression n);
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "/"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(DivExpression n);
 
    /**
     * f0 -> PrimaryExpression()
     * f1 -> "["
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     * f3 -> "]"
     */
    public void visit(ArrayLookup n);
@@ -339,6 +337,20 @@ public interface Visitor {
    public void visit(ExpressionRest n);
 
    /**
+    * f0 -> PrimaryExpression()
+    *       | NotExpression()
+    */
+   public void visit(UnaryExpression n);
+
+   /**
+    * f0 -> ArrayLookup()
+    *       | ArrayLength()
+    *       | MessageSend()
+    *       | PrimaryExpression()
+    */
+   public void visit(PostfixExpression n);
+
+   /**
     * f0 -> IntegerLiteral()
     *       | TrueLiteral()
     *       | FalseLiteral()
@@ -346,7 +358,6 @@ public interface Visitor {
     *       | ThisExpression()
     *       | ArrayAllocationExpression()
     *       | AllocationExpression()
-    *       | NotExpression()
     *       | BracketExpression()
     */
    public void visit(PrimaryExpression n);
@@ -395,7 +406,7 @@ public interface Visitor {
 
    /**
     * f0 -> "!"
-    * f1 -> Expression()
+    * f1 -> ( PostfixExpression() | NotExpression() )
     */
    public void visit(NotExpression n);
 

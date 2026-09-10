@@ -387,19 +387,17 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
     *       | MinusExpression()
     *       | TimesExpression()
     *       | DivExpression()
-    *       | ArrayLookup()
-    *       | ArrayLength()
-    *       | MessageSend()
-    *       | PrimaryExpression()
+    *       | NotExpression()
+    *       | PostfixExpression()
     */
    public void visit(Expression n, A argu) {
       n.f0.accept(this, argu);
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "&&"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(AndExpression n, A argu) {
       n.f0.accept(this, argu);
@@ -408,9 +406,9 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "||"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(OrExpression n, A argu) {
       n.f0.accept(this, argu);
@@ -419,9 +417,9 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "<="
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(CompareExpression n, A argu) {
       n.f0.accept(this, argu);
@@ -430,9 +428,9 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "!="
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(neqExpression n, A argu) {
       n.f0.accept(this, argu);
@@ -441,9 +439,9 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "+"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(PlusExpression n, A argu) {
       n.f0.accept(this, argu);
@@ -452,9 +450,9 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "-"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(MinusExpression n, A argu) {
       n.f0.accept(this, argu);
@@ -463,9 +461,9 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "*"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(TimesExpression n, A argu) {
       n.f0.accept(this, argu);
@@ -474,9 +472,9 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
    }
 
    /**
-    * f0 -> PrimaryExpression()
+    * f0 -> UnaryExpression()
     * f1 -> "/"
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     */
    public void visit(DivExpression n, A argu) {
       n.f0.accept(this, argu);
@@ -487,7 +485,7 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
    /**
     * f0 -> PrimaryExpression()
     * f1 -> "["
-    * f2 -> PrimaryExpression()
+    * f2 -> UnaryExpression()
     * f3 -> "]"
     */
    public void visit(ArrayLookup n, A argu) {
@@ -544,6 +542,24 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
    }
 
    /**
+    * f0 -> PrimaryExpression()
+    *       | NotExpression()
+    */
+   public void visit(UnaryExpression n, A argu) {
+      n.f0.accept(this, argu);
+   }
+
+   /**
+    * f0 -> ArrayLookup()
+    *       | ArrayLength()
+    *       | MessageSend()
+    *       | PrimaryExpression()
+    */
+   public void visit(PostfixExpression n, A argu) {
+      n.f0.accept(this, argu);
+   }
+
+   /**
     * f0 -> IntegerLiteral()
     *       | TrueLiteral()
     *       | FalseLiteral()
@@ -551,7 +567,6 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
     *       | ThisExpression()
     *       | ArrayAllocationExpression()
     *       | AllocationExpression()
-    *       | NotExpression()
     *       | BracketExpression()
     */
    public void visit(PrimaryExpression n, A argu) {
@@ -623,7 +638,7 @@ public class GJVoidDepthFirst<A> implements GJVoidVisitor<A> {
 
    /**
     * f0 -> "!"
-    * f1 -> Expression()
+    * f1 -> ( PostfixExpression() | NotExpression() )
     */
    public void visit(NotExpression n, A argu) {
       n.f0.accept(this, argu);
