@@ -30,7 +30,7 @@ between two topics counts as 0.5 to each.
 
 <br/>
 
-# Lab sessions and upcoming deadlines
+# Lab sessions
 
 Q slot, Tue 14:00 to 16:45, DCF. There is no lab in the first week.
 
@@ -40,11 +40,8 @@ Q slot, Tue 14:00 to 16:45, DCF. There is no lab in the first week.
 | 18/08 | Assignment 1 lab extension |
 | 08/09 | Assignment 2 lab extension |
 | 22/09 | Assignment 3 lab extension |
-| 12/10 | Assignment 4 take-home due, 23:59 |
 | 13/10 | Assignment 4 lab extension |
-| 26/10 | Assignment 5 take-home due, 23:59 |
 | 27/10 | Assignment 5 lab extension |
-| 02/11 | Assignment 6 take-home due, 23:59 |
 | 03/11 | Assignment 6 lab extension |
 
 <br/>
