@@ -41,9 +41,9 @@ Assignments are due at 11:59 PM on the due date.
 | 1 | MacroJava to MiniJava   | 27/07/2026 | 14/08/2026 | 18/08/2026 | 15 | [macro_to_mini](/cs3300_m26/assignments/macro_to_mini.html) |
 | 2 | Type Checker            | 17/08/2026 | 07/09/2026 | 08/09/2026 | 15 | [typechecker](/cs3300_m26/assignments/typechecker.html) |
 | 3 | MiniJava to miniIR      | 07/09/2026 | 18/09/2026 | 22/09/2026 | 15 | [mini_to_miniIR](/cs3300_m26/assignments/mini_to_miniIR.html) |
-| 4 | miniIR to microIR       | 21/09/2026 | 09/10/2026 | 13/10/2026 | 15 | [miniIR_to_micro](/cs3300_m26/assignments/miniIR_to_micro.html) |
-| 5 | microIR to miniRA       | 12/10/2026 | 23/10/2026 | 27/10/2026 | 15 | [micro_to_miniRA](/cs3300_m26/assignments/micro_to_miniRA.html) |
-| 6 | miniRA to MIPS Assembly | 19/10/2026 | 30/10/2026 | 03/11/2026 | 15 | [miniRA_to_mips](/cs3300_m26/assignments/miniRA_to_mips.html) |
+| 4 | miniIR to microIR       | 21/09/2026 | 12/10/2026 | 13/10/2026 | 15 | [miniIR_to_micro](/cs3300_m26/assignments/miniIR_to_micro.html) |
+| 5 | microIR to miniRA       | 12/10/2026 | 26/10/2026 | 27/10/2026 | 15 | [micro_to_miniRA](/cs3300_m26/assignments/micro_to_miniRA.html) |
+| 6 | miniRA to MIPS Assembly | 19/10/2026 | 02/11/2026 | 03/11/2026 | 15 | [miniRA_to_mips](/cs3300_m26/assignments/miniRA_to_mips.html) |
 
 <br/>
 
@@ -58,8 +58,10 @@ which have no network access other than the locally hosted Moodle. You extend
 the code *you* submitted for the take-home part. **The extension is not
 announced in advance.**
 
-* The lab task comes in several variants; which one you get is determined by
-  your roll number and announced at the start of the session.
+* The lab task comes in three variants, assigned by the full numeric suffix
+  of your roll number modulo 3: 0 → a, 1 → b, 2 → c. Use all digits after the
+  final letter as a decimal number: `CS23B009` gets a and `CS23B010` gets b.
+  The task itself is announced at the start of the session.
 * For assignments 1 and 2, the lab handout gives a breakdown of the 6 marks
   by task component. A submission that does not compile receives zero.
 * For assignments 3-6, the 6 lab marks are awarded as **6** if your extension works, **3** if your
