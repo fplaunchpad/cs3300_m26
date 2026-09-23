@@ -3,25 +3,35 @@
   const host = document.getElementById("sdd-demo");
   if (!host) return;
   const S = window.SDD, el = {}, drafts = new Map();
-  const ids = ["presets", "note", "source", "output", "restore", "form", "input", "status", "workspace", "prev", "next", "play", "progress", "finish", "count", "action", "reason", "tree", "node-detail", "result-label", "result-title", "result", "result-note", "dependencies", "attributes", "runtime", "run-form", "env", "run", "run-status", "run-result"];
-  ids.push("program-options", "example", "load-example", "input-label", "replay", "source-preview", "tree-title", "tree-eyebrow", "tree-section", "tree-summary", "run-controls", "run-first", "run-prev", "run-next", "run-progress", "run-count", "run-action", "run-values", "run-output");
+  const ids = ["presets", "note", "source", "output", "restore", "form", "input", "status", "workspace", "prev", "next", "play", "progress", "finish", "count", "tree", "node-detail", "result-label", "result-title", "result", "result-note", "dependencies", "attributes", "runtime", "run-form", "env", "run", "run-status"];
+  ids.push("program-options", "example", "load-example", "input-label", "replay", "source-preview", "tree-title", "tree-section", "tree-summary", "run-controls", "run-first", "run-prev", "run-next", "run-progress", "run-count", "run-action", "run-values", "run-output");
+  ids.push("edit-input", "back", "state-title", "full-value", "apply-rules", "tree-full", "tree-caption", "rule-error");
   ids.forEach(id => { el[id] = document.getElementById(`sdd-${id}`); });
   let active = "ast", model = null, step = 0, selectedNode = 0, selectedKey = null, timer = null;
   let runState = null, runStep = 0, selectedInstruction = null, nodeAttrs = new Map();
+  let fullTree = false;
   const isProgram = () => Boolean(S.presets[active].program);
   const escape = value => String(value).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const shorten = (text, n = 130) => text.length > n ? `${text.slice(0, n)}…` : text;
   const production = node => `${node.symbol} → ${node.prod.rhs.map(p => p.symbol).join(" ") || "ε"}`;
   const known = key => model.initial.has(key) || (model.byKey.has(key) && model.byKey.get(key).step <= step);
   const displayValue = key => known(key) ? S.format(model.values.get(key)) : "not evaluated";
+  function briefValue(key) {
+    if (!known(key)) return "not evaluated";
+    const value = model.values.get(key);
+    return S.isCode(value) ? `${value.length} instruction${value.length === 1 ? "" : "s"}${value.length ? "" : " (empty code)"}` : shorten(S.format(value), 130);
+  }
   function stop() { if (timer) clearInterval(timer); timer = null; el.play.textContent = "Play"; el.play.setAttribute("aria-pressed", "false"); }
   function clearRun() {
-    runState = null; el["run-controls"].hidden = true; el["run-result"].replaceChildren();
+    runState = null; el["run-controls"].hidden = true; host.classList.remove("is-running");
+    el["state-title"].textContent = "Current rule";
     el["run-status"].textContent = ""; el["run-status"].className = "";
   }
   function stale() {
-    stop(); el.workspace.hidden = true; el.status.className = "sdd-status is-stale";
-    el.status.textContent = "Changes pending. Build / reset to evaluate this SDD and input.";
+    stop(); clearRun(); el.workspace.hidden = true; host.classList.add("is-stale", "is-editing");
+    [el.prev, el.next, el.play, el.finish, el.replay, el.progress].forEach(control => { control.disabled = true; });
+    el.status.className = "sdd-status is-stale";
+    el.status.textContent = "Changes pending — Build to translate.";
   }
   function build() {
     stop(); clearRun(); selectedInstruction = null;
@@ -31,13 +41,17 @@
       model.equations.forEach(eq => nodeAttrs.get(eq.target.id).push(eq));
       step = isProgram() ? model.trace.length : 0; selectedNode = 0;
       selectedKey = isProgram() ? model.resultKey : model.trace[0]?.eq.key || null;
+      host.classList.remove("is-stale", "is-editing"); el.replay.disabled = el.progress.disabled = false;
       el.workspace.hidden = false; el.status.className = "sdd-status";
-      el.status.textContent = `Parsed ${model.tokens.length} tokens · ${model.nodes.length} tree nodes · ${model.trace.length} attribute equations. One valid dependency order is shown.`;
+      el["rule-error"].textContent = "";
+      el.status.textContent = `${model.trace.length} attribute equations · Select a node or attribute to inspect.`;
       el.progress.max = model.trace.length; el.runtime.hidden = model.output !== "code";
       el["tree-section"].open = !isProgram();
       render();
     } catch (error) {
-      model = null; el.workspace.hidden = true; el.status.className = "sdd-status is-error"; el.status.textContent = error.message;
+      model = null; host.classList.add("is-stale", "is-editing");
+      [el.prev, el.next, el.play, el.finish, el.replay, el.progress].forEach(control => { control.disabled = true; });
+      el.workspace.hidden = true; el.status.className = "sdd-status is-error"; el.status.textContent = error.message;
     }
   }
   function choose(name, restore = false) {
@@ -51,17 +65,17 @@
     el.env.value = draft?.env ?? preset.env ?? "x=10, y=3, z=1";
     el.note.textContent = preset.note;
     host.classList.toggle("is-program", isProgram());
-    el["program-options"].hidden = el.replay.hidden = el["source-preview"].hidden = el["tree-summary"].hidden = !isProgram();
+    el["program-options"].hidden = el.replay.hidden = el["source-preview"].hidden = el["edit-input"].hidden = !isProgram();
     el.input.rows = isProgram() ? 13 : 1;
     el["input-label"].textContent = isProgram() ? "Source program" : "Expression";
-    el["tree-title"].textContent = isProgram() ? "Source program" : "Annotated parse tree";
-    el["tree-eyebrow"].textContent = isProgram() ? "Select an IR instruction to highlight its source" : "Grammar occurrences · select a node";
+    el["tree-title"].textContent = isProgram() ? "Source program" : "Input & parse tree";
     if (isProgram()) el.example.innerHTML = Object.entries(preset.examples).map(([key, example]) => `<option value="${key}">${escape(example.title)}</option>`).join("");
     history.replaceState(null, "", `#${name}`);
     for (const button of el.presets.children) { const match = button.dataset.preset === name; button.classList.toggle("is-active", match); button.setAttribute("aria-pressed", String(match)); }
     build();
   }
   function move(value) {
+    if (!model) return;
     step = Math.max(0, Math.min(model.trace.length, value));
     selectedKey = model.trace[Math.max(0, step - 1)]?.eq.key || null;
     selectedNode = model.trace[Math.max(0, step - 1)]?.eq.target.id || 0;
@@ -69,23 +83,26 @@
     if (step === model.trace.length) stop();
     clearRun(); render();
   }
-  function treeSVG(root, parseTree) {
+  function treeSVG(root, parseTree, maxDepth = Infinity) {
     const positions = [], edges = []; let x = 0, deepest = 0;
     function layout(node, depth) {
-      const children = node.children || []; const points = children.map(child => layout(child, depth + 1));
-      const point = { node, x: points.length ? (points[0].x + points[points.length - 1].x) / 2 : 56 + x++ * 100, y: 35 + depth * 82 };
+      const children = depth < maxDepth ? node.children || [] : []; const points = children.map(child => layout(child, depth + 1));
+      const point = { node, depth, x: points.length ? (points[0].x + points[points.length - 1].x) / 2 : 56 + x++ * 100, y: 35 + depth * 82 };
       deepest = Math.max(deepest, depth); positions.push(point); points.forEach(child => edges.push([point, child])); return point;
     }
     layout(root, 0);
-    const width = Math.max(240, x * 100 + 12), height = deepest * 82 + 82;
-    const current = step ? model.trace[step - 1].eq : null;
+    const width = Math.max(240, x * 100 + 12);
+    const offset = (width - (x * 100 + 12)) / 2;
+    positions.forEach(point => { point.x += offset; });
+    const height = deepest * 82 + 82;
+    const current = model.byKey.get(selectedKey);
     const deps = new Set(current?.deps.map(key => Number(key.match(/^n(\d+)/)[1])) || []);
     const lines = edges.map(([a,b]) => `<line class="sdd-tree-edge" x1="${a.x}" y1="${a.y+23}" x2="${b.x}" y2="${b.y-23}"/>`).join("");
-    const nodes = positions.map(({ node, x, y }) => {
+    const nodes = positions.map(({ node, depth, x, y }) => {
       const attrs = parseTree ? nodeAttrs.get(node.id) : [];
       const title = parseTree ? `n${node.id}: ${node.symbol}${node.token ? ` = ${node.token.lexeme}` : ""}` : S.format(node);
       const label = parseTree ? node.symbol : node.label;
-      const small = parseTree ? node.token ? node.token.lexeme : `n${node.id} · ${attrs.filter(e => e.step <= step).length}/${attrs.length} attrs` : "";
+      const small = parseTree ? node.token ? node.token.lexeme : depth === maxDepth && node.children?.length ? `n${node.id} · …` : `n${node.id} · ${attrs.filter(e => e.step <= step).length}/${attrs.length} attrs` : "";
       let cls = "sdd-tree-node";
       if (parseTree && node.id === selectedNode) cls += " is-selected";
       if (parseTree && deps.has(node.id)) cls += " is-dependency";
@@ -102,9 +119,14 @@
   }
   function dependencies() {
     if (!selectedKey) { el.dependencies.textContent = "No attribute equations."; return; }
-    const eq = model.byKey.get(selectedKey), deps = eq?.deps || [], users = model.equations.filter(e => e.deps.includes(selectedKey));
-    const button = (key, cls = "") => `<button type="button" class="${cls}" data-key="${escape(key)}" title="${escape(shorten(displayValue(key), 300))}">${escape(key)}</button>`;
-    el.dependencies.innerHTML = `<p>${eq ? `<strong>${escape(production(eq.owner))}</strong> at n${eq.owner.id} · line ${eq.rule.line}: <code>${escape(eq.rule.text)}</code>` : "Lexer-supplied attribute"}</p><div class="sdd-dependency-row"><div><small>Reads these attributes</small>${deps.map(k => button(k)).join("") || "<small>No dependencies</small>"}</div><span aria-label="feeds">→</span><div>${button(selectedKey, "sdd-dep-focus")}<small>${eq ? `${eq.kind} · step ${eq.step}` : "lexical · initially available"}</small></div><span aria-label="feeds">→</span><div><small>Used by these attributes</small>${users.map(e => button(e.key)).join("") || "<small>No consumers</small>"}</div></div><p><strong>${escape(selectedKey)}</strong> = <code>${escape(shorten(displayValue(selectedKey), 700))}</code></p><p class="sdd-note">Arrows run from an input attribute to the attribute that reads it. This is the selected attribute’s immediate neighborhood; select another attribute to follow the graph.</p>`;
+    const eq = model.byKey.get(selectedKey), deps = eq?.deps || [];
+    const fullValue = displayValue(selectedKey);
+    el["full-value"].textContent = `${selectedKey} = ${fullValue}`;
+    el.dependencies.innerHTML = `<p class="sdd-production">${eq ? escape(production(eq.owner)) : "Lexical attribute"}</p>
+      <p class="sdd-note">${eq ? `${eq.kind} · step ${eq.step}${eq.step > step ? " · pending" : ""}` : "Available before evaluation"}</p>
+      ${eq ? `<div class="sdd-equation">${escape(eq.rule.text)}</div>` : ""}
+      <h3>Reads</h3><dl class="sdd-attribute-values${deps.length > 4 ? " sdd-many-attributes" : ""}">${deps.map(key => `<div><dt><button type="button" data-key="${escape(key)}">${escape(key)}</button></dt><dd>${escape(briefValue(key))}</dd></div>`).join("") || '<div class="sdd-note">No input attributes</div>'}</dl>
+      <h3>${escape(selectedKey)}</h3><div class="sdd-value">${escape(briefValue(selectedKey))}</div>`;
   }
   function attributes() {
     const current = step ? model.trace[step - 1].eq : null;
@@ -131,14 +153,15 @@
       }
     }
     el["result-title"].textContent = model.output === "node" ? rootKnown ? "Generated AST" : "AST under construction" : rootKnown ? "Generated IR" : "Code fragment under construction";
-    el["result-label"].textContent = item ? item.key : "Waiting for the first construction rule";
+    el["result-label"].textContent = item ? item.key : "";
     if (!item) el.result.innerHTML = '<p class="sdd-pad sdd-note">Step through the equations to construct the output.</p>';
     else if (model.output === "node") el.result.innerHTML = treeSVG(item.value, false);
-    else if (isProgram() && rootKnown) {
+    else if (rootKnown) {
       el.result.innerHTML = `<ol class="sdd-ir-list">${item.value.map((instruction, i) => `<li><button type="button" data-instruction="${i}" class="${selectedInstruction === i ? "is-current" : ""}"><span class="sdd-line-number">${i + 1}</span><code>${escape(S.formatInstruction(instruction))}</code><small>line ${instruction.origin?.line || "—"}</small></button></li>`).join("")}</ol>`;
     } else el.result.innerHTML = `<pre>${escape(S.format(item.value))}</pre>`;
-    el["result-note"].textContent = !item ? "Lexemes are already available from the lexer." : rootKnown ? model.output === "node" ? `Root AST: ${S.format(item.value)}` : isProgram() ? `${item.value.length} instructions. Select one to inspect its source and SDD equation. Run IR below, or replay the translation above.` : `Root code is available.${known("n0.addr") ? ` Result address: ${displayValue("n0.addr")}.` : " L_true and L_false are the enclosing context's exit destinations."}` : `Showing the most recently computed ${model.output === "node" ? "AST subtree" : "code fragment"}. The complete root output appears when ${model.resultKey} is evaluated.`;
+    el["result-note"].textContent = !item ? "Lexemes are already available from the lexer." : rootKnown ? model.output === "node" ? `Root AST: ${S.format(item.value)}` : isProgram() ? `${item.value.length} instructions · Click to inspect source and rule.` : `Generated IR${known("n0.addr") ? ` · result: ${displayValue("n0.addr")}` : " · exits: L_true / L_false"}` : `Current ${model.output === "node" ? "subtree" : "code fragment"} · waiting for ${model.resultKey}`;
     el.run.disabled = step !== model.trace.length;
+    el.runtime.hidden = model.output !== "code" || step !== model.trace.length;
   }
   function sourcePreview(line) {
     if (!isProgram()) return;
@@ -161,27 +184,15 @@
     el.progress.value = step; el.count.textContent = `${step} / ${model.trace.length} equations`;
     el.prev.disabled = step === 0; el.next.disabled = el.finish.disabled = step === model.trace.length;
     el.play.disabled = step === model.trace.length;
-    if (!step) {
-      el.action.textContent = "Parse complete. Attribute evaluation has not started.";
-      el.reason.textContent = "Terminal .lexeme attributes are available. Next equation evaluates a rule whose dependencies are all ready.";
-    } else {
-      const entry = model.trace[step - 1], eq = entry.eq;
-      el.action.textContent = `${eq.key} ← ${eq.rule.text.split(" = ")[1]} = ${shorten(S.format(entry.value), 150)}`;
-      el.reason.textContent = `${eq.kind === "inherited" ? "Inherited: set on a child occurrence" : "Synthesized: set on this production's left-hand side"}. ${eq.deps.length ? `Ready because ${eq.deps.join(", ")} ${eq.deps.length === 1 ? "is" : "are"} available.` : "This equation has no attribute dependencies."}${step === model.trace.length ? " Evaluation complete." : ""}`;
-    }
     sourcePreview();
     if (el["tree-section"].open) renderTree();
     nodeDetail(); dependencies(); attributes(); result();
   }
   function renderTree() {
-    const scrollLeft = el.tree.scrollLeft, scrollTop = el.tree.scrollTop;
-    el.tree.innerHTML = treeSVG(model.root, true); el.tree.scrollLeft = scrollLeft; el.tree.scrollTop = scrollTop;
-    const activeNode = el.tree.querySelector(`[data-node="${selectedNode}"]`);
-    if (activeNode) {
-      const viewport = el.tree.getBoundingClientRect(), bounds = activeNode.getBoundingClientRect();
-      if (bounds.left < viewport.left || bounds.right > viewport.right) el.tree.scrollLeft += (bounds.left + bounds.right - viewport.left - viewport.right) / 2;
-      if (bounds.top < viewport.top || bounds.bottom > viewport.bottom) el.tree.scrollTop += (bounds.top + bounds.bottom - viewport.top - viewport.bottom) / 2;
-    }
+    const eq = model.byKey.get(selectedKey);
+    const root = fullTree ? model.root : eq?.owner || model.nodes[selectedNode] || model.root;
+    el["tree-caption"].textContent = fullTree ? "Complete parse tree" : `Local tree · n${root.id} · ${root.symbol}`;
+    el.tree.innerHTML = treeSVG(root, true, fullTree ? Infinity : 2);
   }
   function inspect(event) {
     const target = event.target.closest("[data-key], [data-node], [data-instruction]");
@@ -192,13 +203,31 @@
     if (target.dataset.key) {
       selectedKey = target.dataset.key; selectedNode = Number(selectedKey.match(/^n(\d+)/)[1]);
       dependencies(); nodeDetail(); sourcePreview();
-    } else { selectedNode = Number(target.dataset.node); nodeDetail(); }
+    } else {
+      selectedNode = Number(target.dataset.node);
+      selectedKey = nodeAttrs.get(selectedNode)[0]?.key || `n${selectedNode}.lexeme`;
+      nodeDetail(); dependencies();
+    }
+    if (!isProgram()) renderTree();
     for (const group of el.tree.querySelectorAll("[data-node]")) group.classList.toggle("is-selected", Number(group.dataset.node) === selectedNode);
   }
   for (const [name, preset] of Object.entries(S.presets)) {
-    const button = document.createElement("button"); button.type = "button"; button.dataset.preset = name; button.textContent = preset.title;
+    const button = document.createElement("button"); button.type = "button"; button.dataset.preset = name; button.textContent = ({ ast: "AST · synthesized", inherited: "AST · inherited", arithmetic: "IR · arithmetic", boolean: "IR · boolean", program: "Whole program" })[name] || preset.title;
     button.addEventListener("click", () => choose(name)); el.presets.append(button);
   }
+  host.querySelectorAll("[data-dialog]").forEach(button => button.addEventListener("click", () => {
+    stop();
+    if (button.dataset.dialog === "inspection" && !model) return;
+    document.getElementById(`sdd-${button.dataset.dialog}-dialog`).showModal();
+  }));
+  host.querySelectorAll("[data-close]").forEach(button => button.addEventListener("click", () => button.closest("dialog").close()));
+  el["apply-rules"].addEventListener("click", () => { build(); if (model) document.getElementById("sdd-rules-dialog").close(); else el["rule-error"].textContent = el.status.textContent; });
+  el["edit-input"].addEventListener("click", () => { stop(); host.classList.add("is-editing"); el.input.focus(); });
+  el["back"].addEventListener("click", () => { clearRun(); render(); });
+  el["tree-full"].addEventListener("click", () => {
+    fullTree = !fullTree; el["tree-full"].textContent = fullTree ? "Local tree" : "Full tree";
+    el["tree-full"].setAttribute("aria-pressed", String(fullTree)); if (model) renderTree();
+  });
   el.form.addEventListener("submit", event => { event.preventDefault(); build(); });
   el.input.addEventListener("keydown", event => {
     if (!isProgram() && event.key === "Enter" && !event.shiftKey) { event.preventDefault(); build(); }
@@ -212,7 +241,7 @@
   [el.source, el.input, el.output].forEach(input => input.addEventListener("input", stale));
   el.restore.addEventListener("click", () => choose(active, true));
   el.env.addEventListener("input", () => {
-    clearRun();
+    clearRun(); if (model) result();
     el["run-status"].textContent = "Variable values changed. Run IR to evaluate again.";
   });
   el.prev.addEventListener("click", () => { stop(); move(step - 1); });
@@ -238,16 +267,25 @@
     el["run-prev"].disabled = el["run-first"].disabled = runStep === 0;
     el["run-next"].disabled = runStep === runState.trace.length;
     el["run-action"].textContent = current ? `${S.formatInstruction(model.result[current.index])} — ${current.effect}` : "Before the first instruction. Initial variable values are shown.";
-    el["run-values"].textContent = [...values].filter(([name]) => !name.startsWith("%t")).map(([name, value]) => `${name} = ${value}`).join("\n") || "(no variables assigned)";
+    el["run-values"].textContent = [...values].map(([name, value]) => `${name} = ${value}`).join("\n") || "(no variables assigned)";
     el["run-output"].textContent = output.length ? output.join("\n") : "(no output yet)";
     const complete = runStep === runState.trace.length;
-    el["run-result"].innerHTML = `<ol class="sdd-runtime-code">${model.result.map((instruction, i) => `<li class="${counts.has(i) ? "is-visited" : "is-skipped"}${current?.index === i ? " is-current" : ""}"><button type="button" data-instruction="${i}">${i+1}. ${escape(S.formatInstruction(instruction))}</button><small>${counts.has(i) ? `executed × ${counts.get(i)}` : !complete ? "not yet executed" : runState.error ? "not reached" : "skipped"}</small></li>`).join("")}</ol><details><summary>Execution trace${runStep > 100 ? " (last 100 steps at this position)" : ""}</summary><ol start="${Math.max(1, runStep - 99)}">${runState.trace.slice(Math.max(0, runStep - 100), runStep).map(t => `<li><code>${escape(S.formatInstruction(model.result[t.index]))}</code> — ${escape(t.effect)}</li>`).join("")}</ol></details>`;
-    if (isProgram()) {
-      if (current) showInstruction(current.index);
-      else {
-        selectedInstruction = null; sourcePreview(0);
-        el.result.querySelectorAll(".is-current").forEach(node => node.classList.remove("is-current"));
+    for (const button of el.result.querySelectorAll("[data-instruction]")) {
+      const index = Number(button.dataset.instruction), count = counts.get(index) || 0;
+      button.classList.toggle("is-visited", count > 0);
+      button.classList.toggle("is-skipped", count === 0);
+      button.classList.toggle("is-current", current?.index === index);
+      button.querySelector("small").textContent = count ? `×${count}` : complete ? runState.error ? "not reached" : "skipped" : "—";
+    }
+    if (current) {
+      showInstruction(current.index);
+      const row = el.result.querySelector(".is-current");
+      if (row) {
+        const view = el.result.getBoundingClientRect(), bounds = row.getBoundingClientRect();
+        if (bounds.top < view.top || bounds.bottom > view.bottom) el.result.scrollTop += bounds.top - view.top - 24;
       }
+    } else {
+      selectedInstruction = null; sourcePreview(0);
     }
   }
   function moveRun(value) {
@@ -266,6 +304,7 @@
       runStep = runState.trace.length;
       el["run-status"].className = runState.error ? "is-error" : "";
       el["run-status"].textContent = runState.error ? `Stopped: ${runState.error} Trace retained through ${runStep} completed instructions.` : `${isProgram() ? "Program finished" : `Result: ${runState.result === null ? "reached end of code" : runState.result}`} · ${runStep} instructions executed.`;
+      host.classList.add("is-running"); el["state-title"].textContent = "Runtime state";
       el["run-controls"].hidden = false; el["run-progress"].max = runStep;
       renderRun();
     } catch (error) { el["run-status"].className = "is-error"; el["run-status"].textContent = error.message; }

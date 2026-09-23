@@ -21,7 +21,7 @@ python3 tests/sdd-browser.py http://127.0.0.1:4000/cs3300_m26/demos/sdd-workbenc
 Optional environment variables: `SDD_CHROMIUM` selects a Chromium executable;
 `SDD_SCREENSHOTS` selects a directory for desktop/mobile screenshots. The browser
 checks cover all presets, stepping, playback, editing, errors, IR execution,
-HTML escaping, and mobile page overflow.
+HTML escaping, and viewport fit at 1366×768, 1280×720, 1024×768, and 390×844.
 
 The demo is a static Jekyll page with no external runtime dependencies.
 `assets/sdd-engine.js` contains the lecture presets, the interpreted rule language,
@@ -35,3 +35,13 @@ instructions, source locations, and larger input limits. Program tests include
 nested control flow, real division and remainder, runtime errors, trace replay,
 and source-to-equation mappings. The runtime trace stores writes instead of
 copying an entire variable environment at each step.
+
+The workbench uses `_layouts/workbench.html` to devote the viewport to three
+panels: input/local parse tree, current attribute rule (or runtime state), and
+AST/IR. The local tree shows the selected production and two levels of children;
+Full tree fits the complete tree into the same panel. Edit SDD, Help, and the
+full attribute inspector open dialogs. Long source/IR listings scroll inside
+their panels and automatically follow the active instruction; the page stays
+fixed. Source editing replaces the program preview, and execution reuses the
+translation's IR listing. Narrow screens place input and output side by side
+above the current state.
