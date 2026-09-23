@@ -20,13 +20,15 @@ between two topics counts as 0.5 to each.
 | 3 | Parsing | 04/08, 05/08, 10/08, 11/08, 12/08, 17/08 | 5.5 | [03_parsing.pdf](/cs3300_m26/lectures/03_parsing/03_parsing.pdf) | • [Recursive descent parser demo](/cs3300_m26/demos/recursive-descent/)<br>• [LL(1) table parser workbench](/cs3300_m26/demos/ll1-workbench/)<br>• [Dangling-else equivalence, proved in Lean](https://github.com/fplaunchpad/cs3300_m26/blob/main/lectures/03_parsing/dangling_else_equivalence.lean) |
 | 4 | Bottom-up Parsing | 17/08, 18/08, 19/08, 24/08, 25/08, 28/08, 31/08 | 6.5 | [04_bottom_up_parsing.pdf](/cs3300_m26/lectures/04_bottom_up_parsing/04_bottom_up_parsing.pdf) | • [LR(0) item-set and table workbench](/cs3300_m26/demos/lr0-workbench/)<br>• [SLR(1) workbench](/cs3300_m26/demos/slr1-workbench/)<br>• [LR(1) workbench](/cs3300_m26/demos/lr1-workbench/) |
 | 5 | Semantic Analysis | 02/09, 04/09, 07/09, 08/09 | 4 | [05_semantic_analysis.pdf](/cs3300_m26/lectures/05_semantic_analysis/05_semantic_analysis.pdf) | [MiniJava Type System (CS3300 revision)](/cs3300_m26/assets/miniJava-typesystem-cs3300.pdf) |
-| 6 | Syntax Directed Translation | 09/09, 16/09, 18/09 | 2.5 | [06_sdt.pdf](/cs3300_m26/lectures/06_sdt/06_sdt.pdf) | |
-| 7 | Intermediate Representation | 18/09 | 0.5 | [07_ir.pdf](/cs3300_m26/lectures/07_ir/07_ir.pdf) | |
+| 6 | Syntax Directed Translation | 09/09, 16/09, 18/09 | 2.5 | [06_sdt.pdf](/cs3300_m26/lectures/06_sdt/06_sdt.pdf) | [Executable SDD workbench](/cs3300_m26/demos/sdd-workbench/) |
+| 7 | Intermediate Representation | 18/09, 21/09 | 1.5 | [07_ir.pdf](/cs3300_m26/lectures/07_ir/07_ir.pdf) | [AST and IR generation workbench](/cs3300_m26/demos/sdd-workbench/) |
 | 8 | Runtime Management | | | [08_runtime.pdf](/cs3300_m26/lectures/08_runtime/08_runtime.pdf) | |
 | 9 | Liveness Analysis and Register Allocation | | | [09_register_allocation.pdf](/cs3300_m26/lectures/09_register_allocation/09_register_allocation.pdf) | [Linear Scan Register Allocation Paper](http://web.cs.ucla.edu/~palsberg/course/cs132/linearscan.pdf) |
 | 10 | Basic Blocks and CFG | | | [10_basic_blocks_cfg.pdf](/cs3300_m26/lectures/10_basic_blocks_cfg/10_basic_blocks_cfg.pdf) | |
 | 11 | Basic Block Optimizations | | | [11_basic_block_opt.pdf](/cs3300_m26/lectures/11_basic_block_opt/11_basic_block_opt.pdf) | |
 | 12 | Global Optimizations | | | [12_global_opt.pdf](/cs3300_m26/lectures/12_global_opt/12_global_opt.pdf) | |
+
+**Total lectures so far: 25** (as of 21/09).
 
 <br/>
 
