@@ -67,7 +67,7 @@ The core syntax below follows the original reference. The
 \textit{Statement}\quad s &::= \{s_1\ldots s_q\}\mid\id=e;\mid\id[e_1]=e_2;\\
  &\mid\kw{if}\ (e)\ s_1\ \kw{else}\ s_2\mid\kw{while}\ (e)\ s\\
  &\mid\kw{System.out.println}(e);\\
-\textit{Expression}\quad e &::= p_1\mathbin{\kw{\&\&}}p_2\mid p_1<p_2\mid p_1+p_2\mid p_1-p_2\mid p_1*p_2\\
+\textit{Expression}\quad e &::= p_1\mathbin{\kw{\&\&}}p_2\mid p_1<p_2\mid p_1\mathbin{\kw{!=}} p_2\mid p_1+p_2\mid p_1-p_2\mid p_1*p_2\\
  &\mid p_1[p_2]\mid p.\kw{length}\mid p.\id(e_1,\ldots,e_n)\mid p\\
 \textit{PrimaryExpression}\quad p &::= c\mid\kw{true}\mid\kw{false}\mid\id\mid\kw{this}\\
  &\mid\kw{new\ int}[e]\mid\kw{new}\ \id()\mid {!e}\mid(e)\\
@@ -255,6 +255,7 @@ $t$. This check applies to every method, whether or not it overrides another.
 \begingroup
 \setlength{\abovedisplayskip}{7pt}\setlength{\belowdisplayskip}{7pt}
 \ruleeq{28}{A,C\vdash p_1:\kw{boolean}\qquad A,C\vdash p_2:\kw{boolean}}{A,C\vdash p_1\mathbin{\kw{\&\&}}p_2:\kw{boolean}}
+\ruleeq{28}{A,C\vdash p_1:t_1\qquad A,C\vdash p_2:t_2\qquad t_1 \leq t_2 \lor t_2 \leq t_1}{A,C\vdash p_1\mathbin{\kw{!=}}p_2:\kw{boolean}}
 \ruleeq{29}{A,C\vdash p_1:\kw{int}\qquad A,C\vdash p_2:\kw{int}}{A,C\vdash p_1<p_2:\kw{boolean}}
 \ruleeq{30}{A,C\vdash p_1:\kw{int}\qquad A,C\vdash p_2:\kw{int}}{A,C\vdash p_1+p_2:\kw{int}}
 \ruleeq{31}{A,C\vdash p_1:\kw{int}\qquad A,C\vdash p_2:\kw{int}}{A,C\vdash p_1-p_2:\kw{int}}
