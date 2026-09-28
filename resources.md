@@ -4,6 +4,11 @@ title: Resources
 permalink: /resources/
 ---
 
+## Practice exercises
+
+[Dragon Book practice for lectures 1–7]({{ site.baseurl }}/practice/)
+organises suggested exercises by topic, with a starting set and further practice.
+
 ## Development environment
 
 Across the six assignments you need a JDK, `flex`, `bison`, a C and C++

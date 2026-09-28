@@ -6,6 +6,8 @@ permalink: /schedule/
 
 # Lectures
 
+[Suggested Dragon Book exercises for lectures 1–7]({{ site.baseurl }}/practice/).
+
 Dates are filled in as the course progresses; the table below is the planned
 sequence of topics, not a schedule. Assignment deadlines and lab session dates
 are fixed and are on the [assignments page](/cs3300_m26/assignments/).
