@@ -31,8 +31,6 @@ included in the lecture counts.
 | 11 | Basic Block Optimizations | | | [11_basic_block_opt.pdf](/cs3300_m26/lectures/11_basic_block_opt/11_basic_block_opt.pdf) | |
 | 12 | Global Optimizations | | | [12_global_opt.pdf](/cs3300_m26/lectures/12_global_opt/12_global_opt.pdf) | |
 
-06/10: Quiz 2; no lecture.
-
 **Total lectures so far: 32** (as of 07/10).
 
 <br/>
