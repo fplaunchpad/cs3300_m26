@@ -26,12 +26,12 @@ included in the lecture counts.
 | 6 | Syntax Directed Translation | 09/09, 16/09, 18/09 | 2.5 | [06_sdt.pdf](/cs3300_m26/lectures/06_sdt/06_sdt.pdf) | [Executable SDD workbench](/cs3300_m26/demos/sdd-workbench/) |
 | 7 | Intermediate Representation | 18/09, 21/09, 22/09, 23/09, 28/09, 29/09 | 5.5 | [07_ir.pdf](/cs3300_m26/lectures/07_ir/07_ir.pdf) | [AST and IR generation workbench](/cs3300_m26/demos/sdd-workbench/) |
 | 8 | Runtime Management | 30/09, 05/10, 07/10 | 3 | [08_runtime.pdf](/cs3300_m26/lectures/08_runtime/08_runtime.pdf) | |
-| 9 | Liveness Analysis and Register Allocation | 09/10 | 1 | [09_register_allocation.pdf](/cs3300_m26/lectures/09_register_allocation/09_register_allocation.pdf) | [Linear Scan Register Allocation Paper](http://web.cs.ucla.edu/~palsberg/course/cs132/linearscan.pdf) |
+| 9 | Liveness Analysis and Register Allocation | 09/10, 13/10 | 2 | [09_register_allocation.pdf](/cs3300_m26/lectures/09_register_allocation/09_register_allocation.pdf) | [Linear Scan Register Allocation Paper](http://web.cs.ucla.edu/~palsberg/course/cs132/linearscan.pdf) |
 | 10 | Basic Blocks and CFG | | | [10_basic_blocks_cfg.pdf](/cs3300_m26/lectures/10_basic_blocks_cfg/10_basic_blocks_cfg.pdf) | |
 | 11 | Basic Block Optimizations | | | [11_basic_block_opt.pdf](/cs3300_m26/lectures/11_basic_block_opt/11_basic_block_opt.pdf) | |
 | 12 | Global Optimizations | | | [12_global_opt.pdf](/cs3300_m26/lectures/12_global_opt/12_global_opt.pdf) | |
 
-**Total lectures so far: 33** (as of 09/10).
+**Total lectures so far: 34** (as of 13/10).
 
 <br/>
 
