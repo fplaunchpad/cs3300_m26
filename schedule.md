@@ -27,11 +27,11 @@ included in the lecture counts.
 | 7 | Intermediate Representation | 18/09, 21/09, 22/09, 23/09, 28/09, 29/09 | 5.5 | [07_ir.pdf](/cs3300_m26/lectures/07_ir/07_ir.pdf) | [AST and IR generation workbench](/cs3300_m26/demos/sdd-workbench/) |
 | 8 | Runtime Management | 30/09, 05/10, 07/10 | 3 | [08_runtime.pdf](/cs3300_m26/lectures/08_runtime/08_runtime.pdf) | |
 | 9 | Liveness Analysis and Register Allocation | 09/10, 12/10, 13/10 | 3 | [09_register_allocation.pdf](/cs3300_m26/lectures/09_register_allocation/09_register_allocation.pdf) | [Linear Scan Register Allocation Paper](http://web.cs.ucla.edu/~palsberg/course/cs132/linearscan.pdf) |
-| 10 | Basic Blocks and CFG | 14/10 | 1 | [10_basic_blocks_cfg.pdf](/cs3300_m26/lectures/10_basic_blocks_cfg/10_basic_blocks_cfg.pdf) | |
-| 11 | Basic Block Optimizations | | | [11_basic_block_opt.pdf](/cs3300_m26/lectures/11_basic_block_opt/11_basic_block_opt.pdf) | |
+| 10 | Basic Blocks and CFG | 14/10, 19/10 | 1.5 | [10_basic_blocks_cfg.pdf](/cs3300_m26/lectures/10_basic_blocks_cfg/10_basic_blocks_cfg.pdf) | |
+| 11 | Basic Block Optimizations | 19/10, 21/10 | 1.5 | [11_basic_block_opt.pdf](/cs3300_m26/lectures/11_basic_block_opt/11_basic_block_opt.pdf) | |
 | 12 | Global Optimizations | | | [12_global_opt.pdf](/cs3300_m26/lectures/12_global_opt/12_global_opt.pdf) | |
 
-**Total lectures so far: 36** (as of 14/10).
+**Total lectures so far: 38** (as of 21/10).
 
 <br/>
 
