@@ -28,10 +28,10 @@ included in the lecture counts.
 | 8 | Runtime Management | 30/09, 05/10, 07/10 | 3 | [08_runtime.pdf](/cs3300_m26/lectures/08_runtime/08_runtime.pdf) | |
 | 9 | Liveness Analysis and Register Allocation | 09/10, 12/10, 13/10 | 3 | [09_register_allocation.pdf](/cs3300_m26/lectures/09_register_allocation/09_register_allocation.pdf) | [Linear Scan Register Allocation Paper](http://web.cs.ucla.edu/~palsberg/course/cs132/linearscan.pdf) |
 | 10 | Basic Blocks and CFG | 14/10, 19/10 | 1.5 | [10_basic_blocks_cfg.pdf](/cs3300_m26/lectures/10_basic_blocks_cfg/10_basic_blocks_cfg.pdf) | |
-| 11 | Basic Block Optimizations | 19/10, 21/10 | 1.5 | [11_basic_block_opt.pdf](/cs3300_m26/lectures/11_basic_block_opt/11_basic_block_opt.pdf) | |
-| 12 | Global Optimizations | | | [12_global_opt.pdf](/cs3300_m26/lectures/12_global_opt/12_global_opt.pdf) | |
+| 11 | Basic Block Optimizations | 19/10, 21/10, 26/10 | 2 | [11_basic_block_opt.pdf](/cs3300_m26/lectures/11_basic_block_opt/11_basic_block_opt.pdf) | |
+| 12 | Global Optimizations | 26/10 | 0.5 | [12_global_opt.pdf](/cs3300_m26/lectures/12_global_opt/12_global_opt.pdf) | |
 
-**Total lectures so far: 38** (as of 21/10).
+**Total lectures so far: 39** (as of 26/10).
 
 <br/>
 
