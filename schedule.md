@@ -8,13 +8,12 @@ permalink: /schedule/
 
 [Suggested Dragon Book exercises for lectures 1–7]({{ site.baseurl }}/practice/).
 
-Dates are filled in as the course progresses; the table below is the planned
-sequence of topics, not a schedule. Assignment deadlines and lab session dates
-are fixed and are on the [assignments page](/cs3300_m26/assignments/).
+Lectures concluded on 28 October 2026. The table below records the topics
+covered and their lecture dates. Assignment deadlines and lab session dates
+are on the [assignments page](/cs3300_m26/assignments/).
 
-*Lectures* counts the classes spent on each topic so far. A class split
-between two topics counts as 0.5 to each. Dates marked planned are not yet
-included in the lecture counts.
+*Lectures* counts the classes spent on each topic. A class split
+between two topics counts as 0.5 to each.
 
 | # | Topic | Dates | Lectures | Slides | Resources |
 |--:|-------|-------|---------:|--------|----------|
@@ -29,9 +28,9 @@ included in the lecture counts.
 | 9 | Liveness Analysis and Register Allocation | 09/10, 12/10, 13/10 | 3 | [09_register_allocation.pdf](/cs3300_m26/lectures/09_register_allocation/09_register_allocation.pdf) | [Linear Scan Register Allocation Paper](http://web.cs.ucla.edu/~palsberg/course/cs132/linearscan.pdf) |
 | 10 | Basic Blocks and CFG | 14/10, 19/10 | 1.5 | [10_basic_blocks_cfg.pdf](/cs3300_m26/lectures/10_basic_blocks_cfg/10_basic_blocks_cfg.pdf) | |
 | 11 | Basic Block Optimizations | 19/10, 21/10, 26/10 | 2 | [11_basic_block_opt.pdf](/cs3300_m26/lectures/11_basic_block_opt/11_basic_block_opt.pdf) | |
-| 12 | Global Optimizations | 26/10 | 0.5 | [12_global_opt.pdf](/cs3300_m26/lectures/12_global_opt/12_global_opt.pdf) | |
+| 12 | Global Optimizations | 26/10, 27/10, 28/10 | 2.5 | [12_global_opt.pdf](/cs3300_m26/lectures/12_global_opt/12_global_opt.pdf) | |
 
-**Total lectures so far: 39** (as of 26/10).
+**Total lectures: 41** (final lecture on 28/10).
 
 <br/>
 
